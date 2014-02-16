@@ -1,6 +1,6 @@
 Pantry 
 
-Description: Pantry is an iPhone app that keeps track of what is in your pantry and finds dishes that you can either make with the ingredients you already have or that you are very close to making.  
+Description: Pantry is an iPhone app that keeps track of what is in your pantry and finds dishes that you can either make with the ingredients you already have or that you are very close to making.  Wireframes can be found at: https://www.fluidui.com/editor/live/preview/p_VCcNLncphdxlkRhn6trK8FAQTkIQwzGl.1392150671993
 
 Copyright 2014 Phil Wee and David Law
 
