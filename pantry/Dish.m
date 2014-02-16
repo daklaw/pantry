@@ -8,6 +8,8 @@
 
 #import "Dish.h"
 
+static const NSString *imageDimension = @"320";
+
 @implementation Dish
 
 -(id)initWithDictionary:(NSDictionary *)data {
@@ -28,7 +30,7 @@
             NSString *url = imageUrls[key];
 
             self.imageURL = [NSURL URLWithString:[url stringByReplacingOccurrencesOfString:key
-                                                 withString:@"360"
+                                                 withString:(NSString * const)imageDimension
                                                     options:0
                                                       range:NSMakeRange([url length]-5, 4)]];
         }
