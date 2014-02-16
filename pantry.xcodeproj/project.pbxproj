@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B6918FD112424DC697747A1E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3792FE549F224990A6847CDB /* libPods.a */; };
 		C528D4371899F3BC00BCE380 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4361899F3BC00BCE380 /* Foundation.framework */; };
 		C528D4391899F3BC00BCE380 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4381899F3BC00BCE380 /* CoreGraphics.framework */; };
 		C528D43B1899F3BC00BCE380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D43A1899F3BC00BCE380 /* UIKit.framework */; };
@@ -19,6 +20,9 @@
 		C528D4521899F3BC00BCE380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D43A1899F3BC00BCE380 /* UIKit.framework */; };
 		C528D45A1899F3BC00BCE380 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C528D4581899F3BC00BCE380 /* InfoPlist.strings */; };
 		C528D45C1899F3BC00BCE380 /* pantryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C528D45B1899F3BC00BCE380 /* pantryTests.m */; };
+		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
+		C596434318AEDD0800E0AF13 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434218AEDD0800E0AF13 /* SampleViewController.m */; };
+		C596434718AEE18F00E0AF13 /* Dish.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Dish.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D0A93978D494D95BAAC36FE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		3792FE549F224990A6847CDB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C528D4331899F3BC00BCE380 /* pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C528D4361899F3BC00BCE380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C528D4381899F3BC00BCE380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -48,6 +54,12 @@
 		C528D4571899F3BC00BCE380 /* pantryTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pantryTests-Info.plist"; sourceTree = "<group>"; };
 		C528D4591899F3BC00BCE380 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C528D45B1899F3BC00BCE380 /* pantryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pantryTests.m; sourceTree = "<group>"; };
+		C596433E18AECEEA00E0AF13 /* YummlyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YummlyClient.h; sourceTree = "<group>"; };
+		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
+		C596434118AEDD0800E0AF13 /* SampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
+		C596434218AEDD0800E0AF13 /* SampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
+		C596434518AEE18F00E0AF13 /* Dish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dish.h; sourceTree = "<group>"; };
+		C596434618AEE18F00E0AF13 /* Dish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dish.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,7 @@
 				C528D4391899F3BC00BCE380 /* CoreGraphics.framework in Frameworks */,
 				C528D43B1899F3BC00BCE380 /* UIKit.framework in Frameworks */,
 				C528D4371899F3BC00BCE380 /* Foundation.framework in Frameworks */,
+				B6918FD112424DC697747A1E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C522E88C18AE9C7F001CE480 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C596433E18AECEEA00E0AF13 /* YummlyClient.h */,
+				C596433F18AECEEA00E0AF13 /* YummlyClient.m */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		C528D42A1899F3BC00BCE380 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +103,7 @@
 				C528D4551899F3BC00BCE380 /* pantryTests */,
 				C528D4351899F3BC00BCE380 /* Frameworks */,
 				C528D4341899F3BC00BCE380 /* Products */,
+				2D0A93978D494D95BAAC36FE /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +123,7 @@
 				C528D4381899F3BC00BCE380 /* CoreGraphics.framework */,
 				C528D43A1899F3BC00BCE380 /* UIKit.framework */,
 				C528D44F1899F3BC00BCE380 /* XCTest.framework */,
+				3792FE549F224990A6847CDB /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -107,10 +131,14 @@
 		C528D43C1899F3BC00BCE380 /* pantry */ = {
 			isa = PBXGroup;
 			children = (
+				C596434418AEE17A00E0AF13 /* Models */,
+				C522E88C18AE9C7F001CE480 /* API */,
 				C528D4451899F3BC00BCE380 /* AppDelegate.h */,
 				C528D4461899F3BC00BCE380 /* AppDelegate.m */,
 				C528D4481899F3BC00BCE380 /* Images.xcassets */,
 				C528D43D1899F3BC00BCE380 /* Supporting Files */,
+				C596434118AEDD0800E0AF13 /* SampleViewController.h */,
+				C596434218AEDD0800E0AF13 /* SampleViewController.m */,
 			);
 			path = pantry;
 			sourceTree = "<group>";
@@ -144,6 +172,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C596434418AEE17A00E0AF13 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C596434518AEE18F00E0AF13 /* Dish.h */,
+				C596434618AEE18F00E0AF13 /* Dish.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,9 +188,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C528D45F1899F3BC00BCE380 /* Build configuration list for PBXNativeTarget "pantry" */;
 			buildPhases = (
+				F621BF9767C24D33B892BEEA /* Check Pods Manifest.lock */,
 				C528D42F1899F3BC00BCE380 /* Sources */,
 				C528D4301899F3BC00BCE380 /* Frameworks */,
 				C528D4311899F3BC00BCE380 /* Resources */,
+				B2A0ACCD639E4D3E82842A76 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -234,12 +273,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B2A0ACCD639E4D3E82842A76 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F621BF9767C24D33B892BEEA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C528D42F1899F3BC00BCE380 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C596434718AEE18F00E0AF13 /* Dish.m in Sources */,
 				C528D4471899F3BC00BCE380 /* AppDelegate.m in Sources */,
+				C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */,
+				C596434318AEDD0800E0AF13 /* SampleViewController.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -356,6 +431,7 @@
 		};
 		C528D4601899F3BC00BCE380 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D0A93978D494D95BAAC36FE /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -369,6 +445,7 @@
 		};
 		C528D4611899F3BC00BCE380 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D0A93978D494D95BAAC36FE /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -441,6 +518,7 @@
 				C528D4611899F3BC00BCE380 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C528D4621899F3BC00BCE380 /* Build configuration list for PBXNativeTarget "pantryTests" */ = {
 			isa = XCConfigurationList;
@@ -449,6 +527,7 @@
 				C528D4641899F3BC00BCE380 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
