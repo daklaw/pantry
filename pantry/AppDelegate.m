@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "SampleViewController.h"
+//#import "SampleViewController.h"
+#import "RecipeViewController.h"
 
 @implementation AppDelegate
 
@@ -16,8 +17,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    SampleViewController *sampleViewController = [[SampleViewController alloc] init];
-    self.window.rootViewController = sampleViewController;
+    //SampleViewController *sampleViewController = [[SampleViewController alloc] init];
+    //self.window.rootViewController = sampleViewController;
+    
+    RecipeViewController *recipeViewController = [[RecipeViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:recipeViewController];
+    self.window.rootViewController = nvc;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
