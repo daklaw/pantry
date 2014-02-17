@@ -54,18 +54,19 @@
 - (void)addAllowedIngredient:(NSString *)ingredient {
     /* Add an ingredient to the list of allowed ingredient to the query on Yummly's API */
     
-    [self.params[@"allowedIngredient"] addObject:ingredient];
+    [self.params[@"allowedIngredient"] addObject:[ingredient lowercaseString]];
 }
 
 - (void)addAllowedIngredients:(NSArray *)ingredients {
     /* Add a list of ingredients to the list of allowed ingredients to the query on Yummly's API */
-    [self.params[@"allowedIngredient"] addObjectsFromArray:ingredients];
+    [self.params[@"allowedIngredient"] addObjectsFromArray:[ingredients valueForKey:@"lowercaseString"]];
 }
 
 - (AFHTTPRequestOperation *)search:(void (^) (AFHTTPRequestOperation *operation, id response))success
                                   failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
     /* Given the established parameters, search the Yummly API for dishes/recipes */
     
+    NSLog(@"%@", self.params);
     return [self GET:@"recipes" parameters:self.params
              success:success failure:failure];
 }

@@ -15,17 +15,25 @@
 @interface RecipeViewController ()
 
 @property (nonatomic, strong) NSMutableArray *dishes;
+@property (nonatomic, strong) NSMutableArray *selectedIngredients;
 
 @end
 
 @implementation RecipeViewController
 
+- (id)initWithIngredients:(NSMutableArray *)ingredients {
+    self = [super init];
+    if (self) {
+        self.selectedIngredients = ingredients;
+        [self reload];
+    }
+    
+    return self;
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
-        [self reload];
     }
     return self;
 }
@@ -68,7 +76,7 @@
     Dish *dish = self.dishes[indexPath.row];
     cell.nameLabel.text = dish.name;
     cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%d", dish.ingredients.count];
-    NSLog(@"%@", dish.imageURL);
+
     [cell.recipeImage setImageWithURL:dish.imageURL];
     
     return cell;
@@ -78,45 +86,6 @@
     // Currently hardwired to be the size of a RecipeCell
     return 321.0f;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation
@@ -137,25 +106,15 @@
     self.dishes = [[NSMutableArray alloc] init];
     
     YummlyClient *client = [[YummlyClient alloc] init];
-    [client setSearchQuery:@"Garlic"];
+
+    [client addAllowedIngredients:self.selectedIngredients];
     [client search:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"%@", response);
         for (id data in response[@"matches"]) {
             [self.dishes addObject:[[Dish alloc] initWithDictionary:data]];
         }
         [self.tableView reloadData];
-        /*
-        for (id dish in self.dishes) {
-            Dish *d = dish;
-            [client getRecipe:d.yummlyID
-                      success:^(AFHTTPRequestOperation *operation, id response) {
-                          NSLog(@"%@", response);
-                      }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          NSLog(@"%@", error);
-                      }];
-            NSLog(@"%@", d.yummlyID);
-        }
-        */
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
