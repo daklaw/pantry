@@ -11,6 +11,8 @@
 #import "Recipe.h"
 #import "RecipeCell.h"
 #import "RecipeDetailViewController.h"
+#import "InventoryViewController.h"
+#import "GroceryViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface RecipeViewController ()
@@ -34,6 +36,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Navigation buttons
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Fridge" style:UIBarButtonItemStylePlain target:self action:@selector(onGotoFridge:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Grocery List" style:UIBarButtonItemStylePlain target:self action:@selector(onGotoGroceryList:)];
+    
     
     // Load custom UITableViewCell from nib
     UINib *customNib = [UINib nibWithNibName:@"RecipeCell" bundle:nil];
@@ -186,6 +193,18 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
+}
+
+- (IBAction)onGotoFridge:(id)sender
+{
+    InventoryViewController *vc = [[InventoryViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (IBAction)onGotoGroceryList:(id)sender
+{
+    GroceryViewController *vc = [[GroceryViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

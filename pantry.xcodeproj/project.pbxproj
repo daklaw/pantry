@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2229A4B418B2161A00423113 /* InventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2229A4B218B2161A00423113 /* InventoryViewController.m */; };
+		2229A4B518B2161A00423113 /* InventoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2229A4B318B2161A00423113 /* InventoryViewController.xib */; };
+		2229A4B918B216BC00423113 /* GroceryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2229A4B718B216BC00423113 /* GroceryViewController.m */; };
+		2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2229A4B818B216BC00423113 /* GroceryViewController.xib */; };
 		22F0269018B0C6A400865313 /* RecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F0268F18B0C6A400865313 /* RecipeCell.m */; };
 		22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22F0269118B0C7A000865313 /* RecipeCell.xib */; };
 		22F0269518B0CAB500865313 /* RecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F0269418B0CAB500865313 /* RecipeViewController.m */; };
@@ -41,6 +45,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2229A4B118B2161A00423113 /* InventoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryViewController.h; sourceTree = "<group>"; };
+		2229A4B218B2161A00423113 /* InventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryViewController.m; sourceTree = "<group>"; };
+		2229A4B318B2161A00423113 /* InventoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryViewController.xib; sourceTree = "<group>"; };
+		2229A4B618B216BC00423113 /* GroceryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroceryViewController.h; sourceTree = "<group>"; };
+		2229A4B718B216BC00423113 /* GroceryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroceryViewController.m; sourceTree = "<group>"; };
+		2229A4B818B216BC00423113 /* GroceryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroceryViewController.xib; sourceTree = "<group>"; };
 		22F0268E18B0C6A400865313 /* RecipeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeCell.h; sourceTree = "<group>"; };
 		22F0268F18B0C6A400865313 /* RecipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeCell.m; sourceTree = "<group>"; };
 		22F0269118B0C7A000865313 /* RecipeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeCell.xib; sourceTree = "<group>"; };
@@ -113,11 +123,17 @@
 		22F0268D18B0C58500865313 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2229A4B118B2161A00423113 /* InventoryViewController.h */,
+				2229A4B218B2161A00423113 /* InventoryViewController.m */,
+				2229A4B318B2161A00423113 /* InventoryViewController.xib */,
 				22F0269318B0CAB500865313 /* RecipeViewController.h */,
 				22F0269418B0CAB500865313 /* RecipeViewController.m */,
 				22F0269918B1768000865313 /* RecipeDetailViewController.h */,
 				22F0269A18B1768000865313 /* RecipeDetailViewController.m */,
 				22F0269B18B1768000865313 /* RecipeDetailViewController.xib */,
+				2229A4B618B216BC00423113 /* GroceryViewController.h */,
+				2229A4B718B216BC00423113 /* GroceryViewController.m */,
+				2229A4B818B216BC00423113 /* GroceryViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -297,7 +313,9 @@
 			files = (
 				C528D4411899F3BC00BCE380 /* InfoPlist.strings in Resources */,
 				22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */,
+				2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */,
 				22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */,
+				2229A4B518B2161A00423113 /* InventoryViewController.xib in Resources */,
 				C528D4491899F3BC00BCE380 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2229A4B918B216BC00423113 /* GroceryViewController.m in Sources */,
 				C596434718AEE18F00E0AF13 /* Recipe.m in Sources */,
 				22F0269C18B1768000865313 /* RecipeDetailViewController.m in Sources */,
 				C528D4471899F3BC00BCE380 /* AppDelegate.m in Sources */,
@@ -358,6 +377,7 @@
 				C596434318AEDD0800E0AF13 /* SampleViewController.m in Sources */,
 				22F0269518B0CAB500865313 /* RecipeViewController.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
+				2229A4B418B2161A00423113 /* InventoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
