@@ -10,6 +10,7 @@
 #import "YummlyClient.h"
 #import "Dish.h"
 #import "RecipeCell.h"
+#import "RecipeDetailViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface RecipeViewController ()
@@ -130,6 +131,16 @@
 
  */
 
+#pragma mark - Table view delegate methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    // navigate to Recipe Detail view controller
+    RecipeDetailViewController *vc = [[RecipeDetailViewController alloc] initWithNibName:@"RecipeDetailViewController" bundle:nil];
+    vc.dish = self.dishes[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark - Private methods
 - (void)reload
