@@ -139,7 +139,23 @@
     // navigate to Recipe Detail view controller
     RecipeDetailViewController *vc = [[RecipeDetailViewController alloc] initWithNibName:@"RecipeDetailViewController" bundle:nil];
     vc.recipe = self.recipes[indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];
+
+    YummlyClient *client = [[YummlyClient alloc] init];
+    [client getRecipe:vc.recipe.yummlyID
+              success:^(AFHTTPRequestOperation *operation, id response) {
+                  NSLog(@"%@", response);
+                  
+                  // Populate additional fields from recipe details
+                  vc.recipe.ingredientLines = response[@"ingredientLines"];
+                  NSDictionary *source = response[@"source"];
+                  vc.recipe.sourceRecipeURL = [NSURL URLWithString:[source objectForKey:@"sourceRecipeUrl"]];
+                  
+                  // Navigate to recipe details
+                  [self.navigationController pushViewController:vc animated:YES];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"%@", error);
+              }];
 }
 
 #pragma mark - Private methods

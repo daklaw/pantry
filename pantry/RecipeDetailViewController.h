@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Recipe.h"
 
-@interface RecipeDetailViewController : UIViewController
+@interface RecipeDetailViewController : UIViewController <UITableViewDataSource>
 
 @property (nonatomic, weak) Recipe *recipe;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;

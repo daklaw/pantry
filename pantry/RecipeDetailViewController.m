@@ -7,6 +7,7 @@
 //
 
 #import "RecipeDetailViewController.h"
+#import "Recipe.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface RecipeDetailViewController ()
@@ -32,18 +33,44 @@
     // Populate view with recipe details
     self.nameLabel.text = self.recipe.name;
     [self.recipeImage setImageWithURL:self.recipe.imageURL];
-    //self.ingredientsView.visibleCells = self.dish.ingredients;
+
+    if (self.recipe.ingredientLines.count > 0) {
+        self.ingredientsView.dataSource = self;
+        [self.ingredientsView reloadData];
+    }
     
-    NSString *fullURL = [NSString stringWithFormat:@"http://www.yummly.com/recipe/%@", self.recipe.yummlyID];
-    NSURL *url = [NSURL URLWithString:fullURL];
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    [self.directionsView loadRequest:requestObj];
+    if (self.recipe.sourceRecipeURL) {
+        NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.recipe.sourceRecipeURL];
+        [self.directionsView loadRequest:requestObj];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return self.recipe.ingredientLines.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    NSString *ingredientLine = self.recipe.ingredientLines[indexPath.row];
+    cell.textLabel.text = ingredientLine;
+    
+    return cell;
 }
 
 @end

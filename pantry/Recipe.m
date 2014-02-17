@@ -44,5 +44,4 @@ static const NSString *imageDimension = @"320";
     self.recipeURL = [NSURL URLWithString:url];
 }
 
-
 @end
