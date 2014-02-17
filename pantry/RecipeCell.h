@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Dish.h"
+#import "Recipe.h"
 
 @interface RecipeCell : UITableViewCell
 

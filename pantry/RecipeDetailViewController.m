@@ -30,11 +30,11 @@
     // Do any additional setup after loading the view from its nib.
     
     // Populate view with recipe details
-    self.nameLabel.text = self.dish.name;
-    [self.recipeImage setImageWithURL:self.dish.imageURL];
+    self.nameLabel.text = self.recipe.name;
+    [self.recipeImage setImageWithURL:self.recipe.imageURL];
     //self.ingredientsView.visibleCells = self.dish.ingredients;
     
-    NSString *fullURL = [NSString stringWithFormat:@"http://www.yummly.com/recipe/%@", self.dish.yummlyID];
+    NSString *fullURL = [NSString stringWithFormat:@"http://www.yummly.com/recipe/%@", self.recipe.yummlyID];
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.directionsView loadRequest:requestObj];

@@ -27,7 +27,7 @@
 		C528D45C1899F3BC00BCE380 /* pantryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C528D45B1899F3BC00BCE380 /* pantryTests.m */; };
 		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
 		C596434318AEDD0800E0AF13 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434218AEDD0800E0AF13 /* SampleViewController.m */; };
-		C596434718AEE18F00E0AF13 /* Dish.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Dish.m */; };
+		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +71,8 @@
 		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
 		C596434118AEDD0800E0AF13 /* SampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
 		C596434218AEDD0800E0AF13 /* SampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
-		C596434518AEE18F00E0AF13 /* Dish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dish.h; sourceTree = "<group>"; };
-		C596434618AEE18F00E0AF13 /* Dish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dish.m; sourceTree = "<group>"; };
+		C596434518AEE18F00E0AF13 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
+		C596434618AEE18F00E0AF13 /* Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recipe.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,8 +212,8 @@
 		C596434418AEE17A00E0AF13 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C596434518AEE18F00E0AF13 /* Dish.h */,
-				C596434618AEE18F00E0AF13 /* Dish.m */,
+				C596434518AEE18F00E0AF13 /* Recipe.h */,
+				C596434618AEE18F00E0AF13 /* Recipe.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -350,7 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C596434718AEE18F00E0AF13 /* Dish.m in Sources */,
+				C596434718AEE18F00E0AF13 /* Recipe.m in Sources */,
 				22F0269C18B1768000865313 /* RecipeDetailViewController.m in Sources */,
 				C528D4471899F3BC00BCE380 /* AppDelegate.m in Sources */,
 				C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */,

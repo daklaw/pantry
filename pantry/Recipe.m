@@ -1,16 +1,16 @@
 //
-//  Dish.m
+//  Recipe.m
 //  pantry
 //
 //  Created by David Law on 2/14/14.
 //  Copyright (c) 2014 CodePath. All rights reserved.
 //
 
-#import "Dish.h"
+#import "Recipe.h"
 
 static const NSString *imageDimension = @"320";
 
-@implementation Dish
+@implementation Recipe
 
 -(id)initWithDictionary:(NSDictionary *)data {
     self = [super init];

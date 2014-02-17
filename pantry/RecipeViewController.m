@@ -8,14 +8,14 @@
 
 #import "RecipeViewController.h"
 #import "YummlyClient.h"
-#import "Dish.h"
+#import "Recipe.h"
 #import "RecipeCell.h"
 #import "RecipeDetailViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface RecipeViewController ()
 
-@property (nonatomic, strong) NSMutableArray *dishes;
+@property (nonatomic, strong) NSMutableArray *recipes;
 
 @end
 
@@ -57,7 +57,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.dishes.count;
+    return self.recipes.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,11 +66,11 @@
     RecipeCell *cell = (RecipeCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    Dish *dish = self.dishes[indexPath.row];
-    cell.nameLabel.text = dish.name;
-    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%d", dish.ingredients.count];
-    NSLog(@"%@", dish.imageURL);
-    [cell.recipeImage setImageWithURL:dish.imageURL];
+    Recipe *recipe = self.recipes[indexPath.row];
+    cell.nameLabel.text = recipe.name;
+    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%d", recipe.ingredients.count];
+    NSLog(@"%@", recipe.imageURL);
+    [cell.recipeImage setImageWithURL:recipe.imageURL];
     
     return cell;
 }
@@ -138,20 +138,20 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // navigate to Recipe Detail view controller
     RecipeDetailViewController *vc = [[RecipeDetailViewController alloc] initWithNibName:@"RecipeDetailViewController" bundle:nil];
-    vc.dish = self.dishes[indexPath.row];
+    vc.recipe = self.recipes[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Private methods
 - (void)reload
 {
-    self.dishes = [[NSMutableArray alloc] init];
+    self.recipes = [[NSMutableArray alloc] init];
     
     YummlyClient *client = [[YummlyClient alloc] init];
     [client setSearchQuery:@"Garlic"];
     [client search:^(AFHTTPRequestOperation *operation, id response) {
         for (id data in response[@"matches"]) {
-            [self.dishes addObject:[[Dish alloc] initWithDictionary:data]];
+            [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
         [self.tableView reloadData];
         /*

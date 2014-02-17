@@ -1,5 +1,5 @@
 //
-//  Dish.h
+//  Recipe.h
 //  pantry
 //
 //  Created by David Law on 2/14/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Dish : NSObject
+@interface Recipe : NSObject
 
 @property (nonatomic, strong) NSString *yummlyID;
 @property (nonatomic, strong) NSString *name;

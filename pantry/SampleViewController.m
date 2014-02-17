@@ -8,11 +8,11 @@
 
 #import "SampleViewController.h"
 #import "YummlyClient.h"
-#import "Dish.h"
+#import "Recipe.h"
 
 @interface SampleViewController ()
 
-@property (nonatomic, strong) NSMutableArray *dishes;
+@property (nonatomic, strong) NSMutableArray *recipes;
 
 @end
 
@@ -30,16 +30,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.dishes = [[NSMutableArray alloc] init];
+    self.recipes = [[NSMutableArray alloc] init];
     
     YummlyClient *client = [[YummlyClient alloc] init];
     [client setSearchQuery:@"Garlic"];
     [client search:^(AFHTTPRequestOperation *operation, id response) {
         for (id data in response[@"matches"]) {
-            [self.dishes addObject:[[Dish alloc] initWithDictionary:data]];
+            [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
-        for (id dish in self.dishes) {
-            Dish *d = dish;
+        for (id recipe in self.recipes) {
+            Recipe *d = recipe;
             [client getRecipe:d.yummlyID
                       success:^(AFHTTPRequestOperation *operation, id response) {
                           NSLog(@"%@", response);
