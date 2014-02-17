@@ -45,6 +45,8 @@
     return self;
 }
 
+#pragma mark - Yummly Search Recipes API
+
 - (void)setSearchQuery:(NSString *)query {
     /* Set string to query for on Yummly's API */
     
@@ -66,9 +68,11 @@
                                   failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
     /* Given the established parameters, search the Yummly API for dishes/recipes */
     
-    return [self GET:@"recipes" parameters:self.params
-             success:success failure:failure];
+    [self.params setObject:@"true" forKey:@"requirePictures"];
+    return [self GET:@"recipes" parameters:self.params success:success failure:failure];
 }
+
+#pragma mark - Yummly Get Recipe API
 
 - (AFHTTPRequestOperation *)getRecipe:(NSString *)recipeId
                               success:(void (^) (AFHTTPRequestOperation *operation, id response))success
@@ -77,6 +81,14 @@
     
     return [self GET:[NSString stringWithFormat:@"recipe/%@", recipeId] parameters:nil success:success failure:failure];
 }
+
+#pragma mark - Yummly Search Metadata Dictionaries
+
+- (AFHTTPRequestOperation *)ingredient:(void (^) (AFHTTPRequestOperation *operation, id response))success
+                           failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    /* Get the dictionary of ingredients from the Yummly API */
     
+    return [self GET:@"metadata/ingredient" parameters:nil success:success failure:failure];
+}
 
 @end
