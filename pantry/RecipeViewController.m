@@ -8,13 +8,15 @@
 
 #import "RecipeViewController.h"
 #import "YummlyClient.h"
-#import "Dish.h"
+#import "Recipe.h"
 #import "RecipeCell.h"
+#import "RecipeDetailViewController.h"
+#import "GroceryViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface RecipeViewController ()
 
-@property (nonatomic, strong) NSMutableArray *dishes;
+@property (nonatomic, strong) NSMutableArray *recipes;
 @property (nonatomic, strong) NSMutableArray *selectedIngredients;
 
 @end
@@ -42,6 +44,11 @@
 {
     [super viewDidLoad];
     
+    // Navigation buttons
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"<" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Grocery List" style:UIBarButtonItemStylePlain target:self action:@selector(onGotoGroceryList:)];
+    
+    
     // Load custom UITableViewCell from nib
     UINib *customNib = [UINib nibWithNibName:@"RecipeCell" bundle:nil];
     [self.tableView registerNib:customNib forCellReuseIdentifier:@"MyRecipeCell"];
@@ -64,7 +71,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.dishes.count;
+    return self.recipes.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,11 +80,11 @@
     RecipeCell *cell = (RecipeCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    Dish *dish = self.dishes[indexPath.row];
-    cell.nameLabel.text = dish.name;
-    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%d", dish.ingredients.count];
-
-    [cell.recipeImage setImageWithURL:dish.imageURL];
+    Recipe *recipe = self.recipes[indexPath.row];
+    cell.nameLabel.text = recipe.name;
+    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)recipe.ingredients.count];
+    
+    [cell.recipeImage setImageWithURL:recipe.imageURL];
     
     return cell;
 }
@@ -99,25 +106,61 @@
 
  */
 
+#pragma mark - Table view delegate methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    // navigate to Recipe Detail view controller
+    RecipeDetailViewController *vc = [[RecipeDetailViewController alloc] initWithNibName:@"RecipeDetailViewController" bundle:nil];
+    vc.recipe = self.recipes[indexPath.row];
+
+    YummlyClient *client = [[YummlyClient alloc] init];
+    [client getRecipe:vc.recipe.yummlyID
+              success:^(AFHTTPRequestOperation *operation, id response) {
+                  NSLog(@"%@", response);
+                  
+                  // Populate additional fields from recipe details
+                  vc.recipe.ingredientLines = response[@"ingredientLines"];
+                  NSDictionary *source = response[@"source"];
+                  vc.recipe.sourceRecipeURL = [NSURL URLWithString:[source objectForKey:@"sourceRecipeUrl"]];
+                  
+                  // Navigate to recipe details
+                  [self.navigationController pushViewController:vc animated:YES];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  NSLog(@"%@", error);
+              }];
+}
 
 #pragma mark - Private methods
 - (void)reload
 {
-    self.dishes = [[NSMutableArray alloc] init];
+    self.recipes = [[NSMutableArray alloc] init];
     
     YummlyClient *client = [[YummlyClient alloc] init];
 
     [client addAllowedIngredients:self.selectedIngredients];
     [client search:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"%@", response);
         for (id data in response[@"matches"]) {
-            [self.dishes addObject:[[Dish alloc] initWithDictionary:data]];
+            [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
         [self.tableView reloadData];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
+}
+
+- (IBAction)goBack:(id)sender
+{
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
+- (IBAction)onGotoGroceryList:(id)sender
+{
+    GroceryViewController *vc = [[GroceryViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  Dish.h
+//  Recipe.h
 //  pantry
 //
 //  Created by David Law on 2/14/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Dish : NSObject
+@interface Recipe : NSObject
 
 @property (nonatomic, strong) NSString *yummlyID;
 @property (nonatomic, strong) NSString *name;
@@ -18,6 +18,9 @@
 @property (nonatomic, strong) NSDictionary *data;
 @property NSInteger rating;
 @property NSInteger cookTime;
+// properties that are retrieved only from recipe details
+@property (nonatomic, strong) NSArray *ingredientLines;
+@property (nonatomic, strong) NSURL *sourceRecipeURL;
 
 - (id)initWithDictionary:(NSDictionary *)data;
 

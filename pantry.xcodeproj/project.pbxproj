@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2229A4B918B216BC00423113 /* GroceryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2229A4B718B216BC00423113 /* GroceryViewController.m */; };
+		2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2229A4B818B216BC00423113 /* GroceryViewController.xib */; };
 		22F0269018B0C6A400865313 /* RecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F0268F18B0C6A400865313 /* RecipeCell.m */; };
 		22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22F0269118B0C7A000865313 /* RecipeCell.xib */; };
 		22F0269518B0CAB500865313 /* RecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F0269418B0CAB500865313 /* RecipeViewController.m */; };
+		22F0269C18B1768000865313 /* RecipeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F0269A18B1768000865313 /* RecipeDetailViewController.m */; };
+		22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22F0269B18B1768000865313 /* RecipeDetailViewController.xib */; };
 		B6918FD112424DC697747A1E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3792FE549F224990A6847CDB /* libPods.a */; };
 		C528D4371899F3BC00BCE380 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4361899F3BC00BCE380 /* Foundation.framework */; };
 		C528D4391899F3BC00BCE380 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4381899F3BC00BCE380 /* CoreGraphics.framework */; };
@@ -25,7 +29,7 @@
 		C528D45C1899F3BC00BCE380 /* pantryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C528D45B1899F3BC00BCE380 /* pantryTests.m */; };
 		C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52F73F818B12901006C37D1 /* IngredientListViewController.m */; };
 		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
-		C596434718AEE18F00E0AF13 /* Dish.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Dish.m */; };
+		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,11 +43,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2229A4B618B216BC00423113 /* GroceryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroceryViewController.h; sourceTree = "<group>"; };
+		2229A4B718B216BC00423113 /* GroceryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroceryViewController.m; sourceTree = "<group>"; };
+		2229A4B818B216BC00423113 /* GroceryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroceryViewController.xib; sourceTree = "<group>"; };
 		22F0268E18B0C6A400865313 /* RecipeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeCell.h; sourceTree = "<group>"; };
 		22F0268F18B0C6A400865313 /* RecipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeCell.m; sourceTree = "<group>"; };
 		22F0269118B0C7A000865313 /* RecipeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeCell.xib; sourceTree = "<group>"; };
 		22F0269318B0CAB500865313 /* RecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeViewController.h; sourceTree = "<group>"; };
 		22F0269418B0CAB500865313 /* RecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeViewController.m; sourceTree = "<group>"; };
+		22F0269918B1768000865313 /* RecipeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeDetailViewController.h; sourceTree = "<group>"; };
+		22F0269A18B1768000865313 /* RecipeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeDetailViewController.m; sourceTree = "<group>"; };
+		22F0269B18B1768000865313 /* RecipeDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeDetailViewController.xib; sourceTree = "<group>"; };
 		2D0A93978D494D95BAAC36FE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		3792FE549F224990A6847CDB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C528D4331899F3BC00BCE380 /* pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,8 +76,8 @@
 		C52F73F818B12901006C37D1 /* IngredientListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IngredientListViewController.m; sourceTree = "<group>"; };
 		C596433E18AECEEA00E0AF13 /* YummlyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YummlyClient.h; sourceTree = "<group>"; };
 		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
-		C596434518AEE18F00E0AF13 /* Dish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dish.h; sourceTree = "<group>"; };
-		C596434618AEE18F00E0AF13 /* Dish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dish.m; sourceTree = "<group>"; };
+		C596434518AEE18F00E0AF13 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
+		C596434618AEE18F00E0AF13 /* Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recipe.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +122,14 @@
 				22F0269418B0CAB500865313 /* RecipeViewController.m */,
 				C52F73F718B12901006C37D1 /* IngredientListViewController.h */,
 				C52F73F818B12901006C37D1 /* IngredientListViewController.m */,
+				22F0269318B0CAB500865313 /* RecipeViewController.h */,
+				22F0269418B0CAB500865313 /* RecipeViewController.m */,
+				22F0269918B1768000865313 /* RecipeDetailViewController.h */,
+				22F0269A18B1768000865313 /* RecipeDetailViewController.m */,
+				22F0269B18B1768000865313 /* RecipeDetailViewController.xib */,
+				2229A4B618B216BC00423113 /* GroceryViewController.h */,
+				2229A4B718B216BC00423113 /* GroceryViewController.m */,
+				2229A4B818B216BC00423113 /* GroceryViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -204,8 +222,8 @@
 		C596434418AEE17A00E0AF13 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C596434518AEE18F00E0AF13 /* Dish.h */,
-				C596434618AEE18F00E0AF13 /* Dish.m */,
+				C596434518AEE18F00E0AF13 /* Recipe.h */,
+				C596434618AEE18F00E0AF13 /* Recipe.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -288,6 +306,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C528D4411899F3BC00BCE380 /* InfoPlist.strings in Resources */,
+				22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */,
+				2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */,
 				22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */,
 				C528D4491899F3BC00BCE380 /* Images.xcassets in Resources */,
 			);
@@ -341,7 +361,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C596434718AEE18F00E0AF13 /* Dish.m in Sources */,
+				2229A4B918B216BC00423113 /* GroceryViewController.m in Sources */,
+				C596434718AEE18F00E0AF13 /* Recipe.m in Sources */,
+				22F0269C18B1768000865313 /* RecipeDetailViewController.m in Sources */,
 				C528D4471899F3BC00BCE380 /* AppDelegate.m in Sources */,
 				C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */,
 				22F0269018B0C6A400865313 /* RecipeCell.m in Sources */,

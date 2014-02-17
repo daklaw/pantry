@@ -18,6 +18,8 @@
 - (AFHTTPRequestOperation *)getRecipe:(NSString *)recipeId
                               success:(void (^) (AFHTTPRequestOperation *operation, id response))success
                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+- (AFHTTPRequestOperation *)ingredient:(void (^) (AFHTTPRequestOperation *operation, id response))success
+                               failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 @end
