@@ -21,8 +21,12 @@ static const NSString *imageDimension = @"320";
         self.name = [data valueForKey:@"recipeName"];
         self.ingredients = [data objectForKey:@"ingredients"];
         self.rating = [[data valueForKey:@"rating"] integerValue];
-        self.cookTime = [[data valueForKey:@"totalTimeInSeconds"] integerValue];
+        NSString *seconds = [data valueForKey:@"totalTimeInSeconds"];
         
+        // Cook Time can be null
+        if (seconds && ![seconds isKindOfClass:[NSNull class]]) {
+            self.cookTime = [seconds integerValue];
+        }
         // Extract a URL from the response, then replace the Size Value with 360 px
         NSDictionary *imageUrls = data[@"imageUrlsBySize"];
         if ([imageUrls count] > 0) {

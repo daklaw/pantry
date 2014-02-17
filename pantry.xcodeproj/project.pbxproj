@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2229A4B418B2161A00423113 /* InventoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2229A4B218B2161A00423113 /* InventoryViewController.m */; };
-		2229A4B518B2161A00423113 /* InventoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2229A4B318B2161A00423113 /* InventoryViewController.xib */; };
 		2229A4B918B216BC00423113 /* GroceryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2229A4B718B216BC00423113 /* GroceryViewController.m */; };
 		2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2229A4B818B216BC00423113 /* GroceryViewController.xib */; };
 		22F0269018B0C6A400865313 /* RecipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F0268F18B0C6A400865313 /* RecipeCell.m */; };
@@ -29,8 +27,8 @@
 		C528D4521899F3BC00BCE380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D43A1899F3BC00BCE380 /* UIKit.framework */; };
 		C528D45A1899F3BC00BCE380 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C528D4581899F3BC00BCE380 /* InfoPlist.strings */; };
 		C528D45C1899F3BC00BCE380 /* pantryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C528D45B1899F3BC00BCE380 /* pantryTests.m */; };
+		C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52F73F818B12901006C37D1 /* IngredientListViewController.m */; };
 		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
-		C596434318AEDD0800E0AF13 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434218AEDD0800E0AF13 /* SampleViewController.m */; };
 		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 /* End PBXBuildFile section */
 
@@ -45,9 +43,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2229A4B118B2161A00423113 /* InventoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryViewController.h; sourceTree = "<group>"; };
-		2229A4B218B2161A00423113 /* InventoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryViewController.m; sourceTree = "<group>"; };
-		2229A4B318B2161A00423113 /* InventoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InventoryViewController.xib; sourceTree = "<group>"; };
 		2229A4B618B216BC00423113 /* GroceryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroceryViewController.h; sourceTree = "<group>"; };
 		2229A4B718B216BC00423113 /* GroceryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroceryViewController.m; sourceTree = "<group>"; };
 		2229A4B818B216BC00423113 /* GroceryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroceryViewController.xib; sourceTree = "<group>"; };
@@ -77,10 +72,10 @@
 		C528D4571899F3BC00BCE380 /* pantryTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pantryTests-Info.plist"; sourceTree = "<group>"; };
 		C528D4591899F3BC00BCE380 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C528D45B1899F3BC00BCE380 /* pantryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pantryTests.m; sourceTree = "<group>"; };
+		C52F73F718B12901006C37D1 /* IngredientListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IngredientListViewController.h; sourceTree = "<group>"; };
+		C52F73F818B12901006C37D1 /* IngredientListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IngredientListViewController.m; sourceTree = "<group>"; };
 		C596433E18AECEEA00E0AF13 /* YummlyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YummlyClient.h; sourceTree = "<group>"; };
 		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
-		C596434118AEDD0800E0AF13 /* SampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
-		C596434218AEDD0800E0AF13 /* SampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
 		C596434518AEE18F00E0AF13 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
 		C596434618AEE18F00E0AF13 /* Recipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recipe.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,9 +118,10 @@
 		22F0268D18B0C58500865313 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2229A4B118B2161A00423113 /* InventoryViewController.h */,
-				2229A4B218B2161A00423113 /* InventoryViewController.m */,
-				2229A4B318B2161A00423113 /* InventoryViewController.xib */,
+				22F0269318B0CAB500865313 /* RecipeViewController.h */,
+				22F0269418B0CAB500865313 /* RecipeViewController.m */,
+				C52F73F718B12901006C37D1 /* IngredientListViewController.h */,
+				C52F73F818B12901006C37D1 /* IngredientListViewController.m */,
 				22F0269318B0CAB500865313 /* RecipeViewController.h */,
 				22F0269418B0CAB500865313 /* RecipeViewController.m */,
 				22F0269918B1768000865313 /* RecipeDetailViewController.h */,
@@ -190,8 +186,6 @@
 				C528D4461899F3BC00BCE380 /* AppDelegate.m */,
 				C528D4481899F3BC00BCE380 /* Images.xcassets */,
 				C528D43D1899F3BC00BCE380 /* Supporting Files */,
-				C596434118AEDD0800E0AF13 /* SampleViewController.h */,
-				C596434218AEDD0800E0AF13 /* SampleViewController.m */,
 			);
 			path = pantry;
 			sourceTree = "<group>";
@@ -315,7 +309,6 @@
 				22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */,
 				2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */,
 				22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */,
-				2229A4B518B2161A00423113 /* InventoryViewController.xib in Resources */,
 				C528D4491899F3BC00BCE380 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,10 +367,9 @@
 				C528D4471899F3BC00BCE380 /* AppDelegate.m in Sources */,
 				C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */,
 				22F0269018B0C6A400865313 /* RecipeCell.m in Sources */,
-				C596434318AEDD0800E0AF13 /* SampleViewController.m in Sources */,
+				C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */,
 				22F0269518B0CAB500865313 /* RecipeViewController.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
-				2229A4B418B2161A00423113 /* InventoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
