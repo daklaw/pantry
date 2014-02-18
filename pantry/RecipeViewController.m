@@ -13,6 +13,7 @@
 #import "RecipeDetailViewController.h"
 #import "GroceryViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "MMDrawerBarButtonItem.h"
 
 @interface RecipeViewController ()
 
@@ -27,7 +28,6 @@
     self = [super init];
     if (self) {
         self.selectedIngredients = ingredients;
-        [self reload];
     }
     
     return self;
@@ -43,15 +43,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Recipes";
     
     // Navigation buttons
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"<" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Grocery List" style:UIBarButtonItemStylePlain target:self action:@selector(onGotoGroceryList:)];
-    
+    self.navigationItem.leftBarButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
     
     // Load custom UITableViewCell from nib
     UINib *customNib = [UINib nibWithNibName:@"RecipeCell" bundle:nil];
     [self.tableView registerNib:customNib forCellReuseIdentifier:@"MyRecipeCell"];
+    [self reload];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,7 +141,10 @@
     
     YummlyClient *client = [[YummlyClient alloc] init];
 
-    [client addAllowedIngredients:self.selectedIngredients];
+    if (self.selectedIngredients) {
+        [client addAllowedIngredients:self.selectedIngredients];
+    }
+    
     [client search:^(AFHTTPRequestOperation *operation, id response) {
         for (id data in response[@"matches"]) {
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
@@ -152,15 +156,9 @@
     }];
 }
 
-- (IBAction)goBack:(id)sender
-{
-    [[self navigationController] popViewControllerAnimated:YES];
+- (void) onMenu:(id)sender {
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-- (IBAction)onGotoGroceryList:(id)sender
-{
-    GroceryViewController *vc = [[GroceryViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
 
 @end

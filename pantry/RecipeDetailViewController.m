@@ -43,6 +43,8 @@
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.recipe.sourceRecipeURL];
         [self.directionsView loadRequest:requestObj];
     }
+    
+    [self.ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 }
 
 - (void)didReceiveMemoryWarning

@@ -15,6 +15,8 @@
 		22F0269C18B1768000865313 /* RecipeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F0269A18B1768000865313 /* RecipeDetailViewController.m */; };
 		22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22F0269B18B1768000865313 /* RecipeDetailViewController.xib */; };
 		B6918FD112424DC697747A1E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3792FE549F224990A6847CDB /* libPods.a */; };
+		C523291918B3EF5F00CF906D /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C523291718B3EF5F00CF906D /* MenuViewController.m */; };
+		C523291A18B3EF5F00CF906D /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C523291818B3EF5F00CF906D /* MenuViewController.xib */; };
 		C528D4371899F3BC00BCE380 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4361899F3BC00BCE380 /* Foundation.framework */; };
 		C528D4391899F3BC00BCE380 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4381899F3BC00BCE380 /* CoreGraphics.framework */; };
 		C528D43B1899F3BC00BCE380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D43A1899F3BC00BCE380 /* UIKit.framework */; };
@@ -56,6 +58,9 @@
 		22F0269B18B1768000865313 /* RecipeDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeDetailViewController.xib; sourceTree = "<group>"; };
 		2D0A93978D494D95BAAC36FE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		3792FE549F224990A6847CDB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C523291618B3EF5F00CF906D /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		C523291718B3EF5F00CF906D /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		C523291818B3EF5F00CF906D /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		C528D4331899F3BC00BCE380 /* pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C528D4361899F3BC00BCE380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C528D4381899F3BC00BCE380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,6 +135,9 @@
 				2229A4B618B216BC00423113 /* GroceryViewController.h */,
 				2229A4B718B216BC00423113 /* GroceryViewController.m */,
 				2229A4B818B216BC00423113 /* GroceryViewController.xib */,
+				C523291618B3EF5F00CF906D /* MenuViewController.h */,
+				C523291718B3EF5F00CF906D /* MenuViewController.m */,
+				C523291818B3EF5F00CF906D /* MenuViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -141,6 +149,13 @@
 				C596433F18AECEEA00E0AF13 /* YummlyClient.m */,
 			);
 			name = API;
+			sourceTree = "<group>";
+		};
+		C523291B18B4071700CF906D /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		C528D42A1899F3BC00BCE380 = {
@@ -178,6 +193,7 @@
 		C528D43C1899F3BC00BCE380 /* pantry */ = {
 			isa = PBXGroup;
 			children = (
+				C523291B18B4071700CF906D /* Objects */,
 				C522E88C18AE9C7F001CE480 /* API */,
 				C596434418AEE17A00E0AF13 /* Models */,
 				22F0268C18B0C53900865313 /* Views */,
@@ -306,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C528D4411899F3BC00BCE380 /* InfoPlist.strings in Resources */,
+				C523291A18B3EF5F00CF906D /* MenuViewController.xib in Resources */,
 				22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */,
 				2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */,
 				22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */,
@@ -370,6 +387,7 @@
 				C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */,
 				22F0269518B0CAB500865313 /* RecipeViewController.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
+				C523291918B3EF5F00CF906D /* MenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

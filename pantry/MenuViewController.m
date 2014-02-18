@@ -1,26 +1,27 @@
 //
-//  GroceryViewController.m
+//  MenuViewController.m
 //  pantry
 //
-//  Created by Phil Wee on 2/17/14.
+//  Created by David Law on 2/18/14.
 //  Copyright (c) 2014 CodePath. All rights reserved.
 //
 
+#import "MenuViewController.h"
+#import "IngredientListViewController.h"
+#import "RecipeViewController.h"
 #import "GroceryViewController.h"
-#import "MMDrawerBarButtonItem.h"
 
-@interface GroceryViewController ()
+@interface MenuViewController ()
 
 @end
 
-@implementation GroceryViewController
+@implementation MenuViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.title = @"Grocery List";
     }
     return self;
 }
@@ -28,13 +29,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,30 +49,55 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 7;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    if (indexPath.row == 0) {
+        cell.textLabel.text = @"Get Recipes";
+    }
+    else if (indexPath.row == 1) {
+        cell.textLabel.text = @"Filter by Ingredients";
+    }
+    else {
+        cell.textLabel.text = @"Grocery List";
+    }
+    
     // Configure the cell...
-    cell.textLabel.text = [NSString stringWithFormat:@"Grocery item %d", indexPath.row];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.row == 0) {
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+            [self setRootCenterViewController:self.mm_drawerController controller:[[RecipeViewController alloc] init]];
+         }];
+    }
+    else if (indexPath.row == 1) {
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+            [self setRootCenterViewController:self.mm_drawerController controller:[[IngredientListViewController alloc] initWithStyle:UITableViewStyleGrouped]];
+         }];
+        
+    }
+    else if (indexPath.row == 2) {
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+            [self setRootCenterViewController:self.mm_drawerController controller:[[GroceryViewController alloc] init]];
+        }];
+        
+    }
 }
 
 /*
@@ -128,10 +157,13 @@
  
  */
 
-# pragma mark - Private Methods
+#pragma mark - Private Methods
 
-- (void) onMenu:(id)sender {
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+- (void)setRootCenterViewController:(MMDrawerController *)mm_drawerController controller:(UIViewController *)controller {
+    UINavigationController *nvc = [[UINavigationController alloc] init];
+    [nvc setViewControllers:[NSArray arrayWithObject:controller]];
+    mm_drawerController.centerViewController = nvc;
+    [mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
 }
 
 @end

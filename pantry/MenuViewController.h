@@ -1,14 +1,14 @@
 //
-//  GroceryViewController.h
+//  MenuViewController.h
 //  pantry
 //
-//  Created by Phil Wee on 2/17/14.
+//  Created by David Law on 2/18/14.
 //  Copyright (c) 2014 CodePath. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "UIViewController+MMDrawerController.h"
 
-@interface GroceryViewController : UITableViewController
+@interface MenuViewController : UITableViewController
 
 @end

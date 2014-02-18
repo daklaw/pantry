@@ -8,6 +8,7 @@
 
 #import "IngredientListViewController.h"
 #import "RecipeViewController.h"
+#import "MMDrawerBarButtonItem.h"
 
 static const NSInteger MEAT_SECTION = 0;
 static const NSInteger PRODUCE_SECTION = 1;
@@ -21,6 +22,7 @@ static const NSInteger OTHERS_SECTION = 2;
 @property (nonatomic, strong) NSMutableArray *selectedIngredients;
 
 - (void) searchForRecipes;
+- (void) onMenu:(id)sender;
 
 @end
 
@@ -47,9 +49,13 @@ static const NSInteger OTHERS_SECTION = 2;
 {
     [super viewDidLoad];
 
+    self.title = @"Ingredient Picker";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
                                                                                           target:self
                                                                                           action:@selector(searchForRecipes)];
+    
+    MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
+    self.navigationItem.leftBarButtonItem = button;
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,7 +89,7 @@ static const NSInteger OTHERS_SECTION = 2;
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d", indexPath.section];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     if (indexPath.section == MEAT_SECTION) {
@@ -117,6 +123,10 @@ static const NSInteger OTHERS_SECTION = 2;
 - (void) searchForRecipes {
     RecipeViewController *recipeViewController = [[RecipeViewController alloc] initWithIngredients:self.selectedIngredients];
     [self.navigationController pushViewController:recipeViewController animated:YES];
+}
+
+- (void) onMenu:(id)sender {
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 /*
