@@ -8,6 +8,7 @@
 
 #import "GroceryViewController.h"
 #import "MMDrawerBarButtonItem.h"
+#import "GroceryList.h"
 
 @interface GroceryViewController ()
 
@@ -54,7 +55,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 7;
+    return [[[GroceryList sharedList] list] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,7 +67,7 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = [NSString stringWithFormat:@"Grocery item %d", indexPath.row];
+    cell.textLabel.text = [[GroceryList sharedList] list][indexPath.row];
     
     return cell;
 }

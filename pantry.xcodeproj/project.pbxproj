@@ -17,6 +17,7 @@
 		B6918FD112424DC697747A1E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3792FE549F224990A6847CDB /* libPods.a */; };
 		C523291918B3EF5F00CF906D /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C523291718B3EF5F00CF906D /* MenuViewController.m */; };
 		C523291A18B3EF5F00CF906D /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C523291818B3EF5F00CF906D /* MenuViewController.xib */; };
+		C523291E18B48DB100CF906D /* GroceryList.m in Sources */ = {isa = PBXBuildFile; fileRef = C523291D18B48DB100CF906D /* GroceryList.m */; };
 		C528D4371899F3BC00BCE380 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4361899F3BC00BCE380 /* Foundation.framework */; };
 		C528D4391899F3BC00BCE380 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D4381899F3BC00BCE380 /* CoreGraphics.framework */; };
 		C528D43B1899F3BC00BCE380 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C528D43A1899F3BC00BCE380 /* UIKit.framework */; };
@@ -61,6 +62,8 @@
 		C523291618B3EF5F00CF906D /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		C523291718B3EF5F00CF906D /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		C523291818B3EF5F00CF906D /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
+		C523291C18B48DB100CF906D /* GroceryList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroceryList.h; sourceTree = "<group>"; };
+		C523291D18B48DB100CF906D /* GroceryList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroceryList.m; sourceTree = "<group>"; };
 		C528D4331899F3BC00BCE380 /* pantry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pantry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C528D4361899F3BC00BCE380 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C528D4381899F3BC00BCE380 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -154,6 +157,8 @@
 		C523291B18B4071700CF906D /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				C523291C18B48DB100CF906D /* GroceryList.h */,
+				C523291D18B48DB100CF906D /* GroceryList.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -388,6 +393,7 @@
 				22F0269518B0CAB500865313 /* RecipeViewController.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
 				C523291918B3EF5F00CF906D /* MenuViewController.m in Sources */,
+				C523291E18B48DB100CF906D /* GroceryList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

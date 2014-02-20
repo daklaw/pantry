@@ -9,8 +9,10 @@
 #import "RecipeDetailViewController.h"
 #import "Recipe.h"
 #import "UIImageView+AFNetworking.h"
+#import "GroceryList.h"
 
 @interface RecipeDetailViewController ()
+- (IBAction)addToGroceryList:(id)sender;
 
 @end
 
@@ -32,12 +34,10 @@
     
     // Populate view with recipe details
     self.nameLabel.text = self.recipe.name;
+    [self.nameLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:16]];
+    self.nameLabel.textColor = [UIColor whiteColor];
+    
     [self.recipeImage setImageWithURL:self.recipe.imageURL];
-
-    if (self.recipe.ingredientLines.count > 0) {
-        self.ingredientsView.dataSource = self;
-        [self.ingredientsView reloadData];
-    }
     
     if (self.recipe.sourceRecipeURL) {
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.recipe.sourceRecipeURL];
@@ -45,6 +45,14 @@
     }
     
     [self.ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    
+    self.ingredientsView.delegate = self;
+    self.ingredientsView.dataSource = self;
+    self.ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    if (self.recipe.ingredientLines.count > 0) {
+        [self.ingredientsView reloadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,9 +69,13 @@
     return self.recipe.ingredientLines.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 20.0f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell"];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -71,8 +83,18 @@
     
     NSString *ingredientLine = self.recipe.ingredientLines[indexPath.row];
     cell.textLabel.text = ingredientLine;
+    cell.textLabel.font = [UIFont systemFontOfSize:12.0f];
+    [cell.textLabel sizeToFit];
     
     return cell;
 }
 
+
+
+- (IBAction)addToGroceryList:(id)sender {
+    for (id item in self.recipe.ingredientLines) {
+        [[GroceryList sharedList] addItem:item];
+    }
+    [sender setUserInteractionEnabled:NO];
+}
 @end

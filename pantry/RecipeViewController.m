@@ -146,6 +146,7 @@
     }
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"Matches: %@", response);
         for (id data in response[@"matches"]) {
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
