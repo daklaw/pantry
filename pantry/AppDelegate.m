@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "RecipeViewController.h"
-#import "IngredientListViewController.h"
+#import "MMDrawerController.h"
+#import "MMDrawerVisualState.h"
+#import "MenuViewController.h"
 
 @implementation AppDelegate
 
@@ -17,9 +19,22 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    IngredientListViewController *ingredientListViewController = [[IngredientListViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ingredientListViewController];
-    self.window.rootViewController = nvc;
+    
+    //IngredientListViewController *ingredientListViewController = [[IngredientListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    RecipeViewController *recipeViewController = [[RecipeViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:recipeViewController];
+    
+    
+    // Drawer Code
+    MMDrawerController *drawerController = [[MMDrawerController alloc] initWithCenterViewController:nvc
+            leftDrawerViewController:[[MenuViewController alloc] init]];
+    [drawerController setMaximumLeftDrawerWidth:200.0];
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    drawerController.centerViewController = nvc;
+    
+    self.window.rootViewController = drawerController;
+    
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
