@@ -39,6 +39,9 @@
     self.tableView.dataSource = self;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+
+    // Adjust offset in iOS7 so table view controller doesn't overlap status bar
+    [self.tableView setContentInset:UIEdgeInsetsMake(20, self.tableView.contentInset.left, self.tableView.contentInset.bottom, self.tableView.contentInset.right)];
 }
 
 - (void)didReceiveMemoryWarning
