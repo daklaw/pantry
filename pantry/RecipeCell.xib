@@ -47,7 +47,6 @@
                     <constraint firstAttribute="bottom" secondItem="Llt-T0-4rb" secondAttribute="bottom" id="PUW-56-VGy"/>
                     <constraint firstItem="Llt-T0-4rb" firstAttribute="leading" secondItem="MBQ-jO-5oJ" secondAttribute="leading" id="RN1-ff-8cX"/>
                     <constraint firstAttribute="bottom" secondItem="zOi-m1-zd9" secondAttribute="bottom" constant="20" id="Z6G-IL-sD3"/>
-                    <constraint firstItem="Llt-T0-4rb" firstAttribute="top" secondItem="MBQ-jO-5oJ" secondAttribute="top" id="k6g-RZ-WN7"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
