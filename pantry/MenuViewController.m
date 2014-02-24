@@ -55,7 +55,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return 3;
 }
@@ -68,7 +67,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.backgroundColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor blackColor];
     cell.textLabel.textColor = [UIColor lightGrayColor];
     
     if (indexPath.row == 0) {

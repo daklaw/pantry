@@ -12,6 +12,7 @@
 
 @interface GroceryViewController ()
 
+- (void) clearList;
 @end
 
 @implementation GroceryViewController
@@ -30,6 +31,16 @@
 {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
+    
+    UIImage *resetIcon = [UIImage imageNamed:@"Reset"];
+    CGRect resetFrame = CGRectMake(0, 0, 20, 20);
+    UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
+    [resetButton setBackgroundImage:resetIcon forState:UIControlStateNormal];
+    [resetButton addTarget:self action:@selector(clearList) forControlEvents:UIControlEventTouchUpInside];
+    [resetButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *resetBarButton = [[UIBarButtonItem alloc] initWithCustomView:resetButton];
+    
+    self.navigationItem.rightBarButtonItem = resetBarButton;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -133,6 +144,11 @@
 
 - (void) onMenu:(id)sender {
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+- (void) clearList {
+    [[GroceryList sharedList] clearGroceryList];
+    [self.tableView reloadData];
 }
 
 @end
