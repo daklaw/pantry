@@ -37,6 +37,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor blackColor];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
@@ -66,6 +67,9 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+    cell.textLabel.backgroundColor = [UIColor blackColor];
+    cell.textLabel.textColor = [UIColor lightGrayColor];
     
     if (indexPath.row == 0) {
         cell.textLabel.text = @"Get Recipes";

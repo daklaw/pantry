@@ -31,6 +31,7 @@
 		C528D45A1899F3BC00BCE380 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C528D4581899F3BC00BCE380 /* InfoPlist.strings */; };
 		C528D45C1899F3BC00BCE380 /* pantryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C528D45B1899F3BC00BCE380 /* pantryTests.m */; };
 		C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52F73F818B12901006C37D1 /* IngredientListViewController.m */; };
+		C57C076F18BAD8260029BC8C /* IngredientsFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C57C076E18BAD8260029BC8C /* IngredientsFilter.m */; };
 		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
 		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 /* End PBXBuildFile section */
@@ -82,6 +83,8 @@
 		C528D45B1899F3BC00BCE380 /* pantryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pantryTests.m; sourceTree = "<group>"; };
 		C52F73F718B12901006C37D1 /* IngredientListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IngredientListViewController.h; sourceTree = "<group>"; };
 		C52F73F818B12901006C37D1 /* IngredientListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IngredientListViewController.m; sourceTree = "<group>"; };
+		C57C076D18BAD8260029BC8C /* IngredientsFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IngredientsFilter.h; sourceTree = "<group>"; };
+		C57C076E18BAD8260029BC8C /* IngredientsFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IngredientsFilter.m; sourceTree = "<group>"; };
 		C596433E18AECEEA00E0AF13 /* YummlyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YummlyClient.h; sourceTree = "<group>"; };
 		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
 		C596434518AEE18F00E0AF13 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -159,6 +162,8 @@
 			children = (
 				C523291C18B48DB100CF906D /* GroceryList.h */,
 				C523291D18B48DB100CF906D /* GroceryList.m */,
+				C57C076D18BAD8260029BC8C /* IngredientsFilter.h */,
+				C57C076E18BAD8260029BC8C /* IngredientsFilter.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				22F0269018B0C6A400865313 /* RecipeCell.m in Sources */,
 				C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */,
 				22F0269518B0CAB500865313 /* RecipeViewController.m in Sources */,
+				C57C076F18BAD8260029BC8C /* IngredientsFilter.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
 				C523291918B3EF5F00CF906D /* MenuViewController.m in Sources */,
 				C523291E18B48DB100CF906D /* GroceryList.m in Sources */,
