@@ -9,6 +9,7 @@
 #import "IngredientListViewController.h"
 #import "RecipeViewController.h"
 #import "MMDrawerBarButtonItem.h"
+#import "IngredientsFilter.h"
 
 static const NSInteger MEAT_SECTION = 0;
 static const NSInteger PRODUCE_SECTION = 1;
@@ -21,7 +22,9 @@ static const NSInteger OTHERS_SECTION = 2;
 @property (nonatomic, strong) NSArray *others;
 @property (nonatomic, strong) NSMutableArray *selectedIngredients;
 
+- (void) resetFilters;
 - (void) searchForRecipes;
+- (void) cancelSearch;
 - (void) onMenu:(id)sender;
 
 @end
@@ -49,10 +52,34 @@ static const NSInteger OTHERS_SECTION = 2;
 {
     [super viewDidLoad];
 
-    self.title = @"Ingredient Picker";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-                                                                                          target:self
-                                                                                          action:@selector(searchForRecipes)];
+    self.title = @"Filters";
+    UIImage *resetIcon = [UIImage imageNamed:@"Reset Filters"];
+    CGRect resetFrame = CGRectMake(0, 0, 20, 20);
+    UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
+    [resetButton setBackgroundImage:resetIcon forState:UIControlStateNormal];
+    [resetButton addTarget:self action:@selector(resetFilters) forControlEvents:UIControlEventTouchUpInside];
+    [resetButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *resetBarButton = [[UIBarButtonItem alloc] initWithCustomView:resetButton];
+    
+    /*
+    UIImage *cancelIcon = [UIImage imageNamed:@"Cancel"];
+    CGRect cancelFrame = CGRectMake(0, 0, 20, 20);
+    UIButton *cancelButton = [[UIButton alloc] initWithFrame:cancelFrame];
+    [cancelButton setBackgroundImage:cancelIcon forState:UIControlStateNormal];
+    [cancelButton addTarget:self action:@selector(cancelSearch) forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    */
+    
+    UIImage *searchIcon = [UIImage imageNamed:@"Search"];
+    CGRect searchFrame = CGRectMake(0, 0, 20, 20);
+    UIButton *searchButton = [[UIButton alloc] initWithFrame:searchFrame];
+    [searchButton setBackgroundImage:searchIcon forState:UIControlStateNormal];
+    [searchButton addTarget:self action:@selector(searchForRecipes) forControlEvents:UIControlEventTouchUpInside];
+    [searchButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:resetBarButton, searchBarButton, nil];
     
     MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
     self.navigationItem.leftBarButtonItem = button;
@@ -102,7 +129,9 @@ static const NSInteger OTHERS_SECTION = 2;
         cell.textLabel.text = self.others[indexPath.row];
     }
     
-    
+    if([[IngredientsFilter instance] hasFilter:cell.textLabel.text]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
     // Configure the cell...
     
     return cell;
@@ -113,15 +142,25 @@ static const NSInteger OTHERS_SECTION = 2;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell.accessoryType == UITableViewCellAccessoryNone) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        [self.selectedIngredients addObject:cell.textLabel.text];
+        [[IngredientsFilter instance] addFilter:cell.textLabel.text];
     } else if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
         cell.accessoryType = UITableViewCellAccessoryNone;
-        [self.selectedIngredients removeObject:cell.textLabel.text];
+        [[IngredientsFilter instance] removeFilter:cell.textLabel.text];
+    }
+}
+
+- (void) resetFilters {
+    for (int section = 0, sectionCount = self.tableView.numberOfSections; section < sectionCount; ++section) {
+        for (int row = 0, rowCount = [self.tableView numberOfRowsInSection:section]; row < rowCount; ++row) {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.accessoryView = nil;
+        }
     }
 }
 
 - (void) searchForRecipes {
-    RecipeViewController *recipeViewController = [[RecipeViewController alloc] initWithIngredients:self.selectedIngredients];
+    RecipeViewController *recipeViewController = [[RecipeViewController alloc] init];
     [self.navigationController pushViewController:recipeViewController animated:YES];
 }
 

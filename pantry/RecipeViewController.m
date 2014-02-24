@@ -8,6 +8,7 @@
 
 #import "RecipeViewController.h"
 #import "YummlyClient.h"
+#import "IngredientsFilter.h"
 #import "Recipe.h"
 #import "RecipeCell.h"
 #import "RecipeDetailViewController.h"
@@ -18,20 +19,11 @@
 @interface RecipeViewController ()
 
 @property (nonatomic, strong) NSMutableArray *recipes;
-@property (nonatomic, strong) NSMutableArray *selectedIngredients;
 
 @end
 
 @implementation RecipeViewController
 
-- (id)initWithIngredients:(NSMutableArray *)ingredients {
-    self = [super init];
-    if (self) {
-        self.selectedIngredients = ingredients;
-    }
-    
-    return self;
-}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -119,7 +111,7 @@
     YummlyClient *client = [[YummlyClient alloc] init];
     [client getRecipe:vc.recipe.yummlyID
               success:^(AFHTTPRequestOperation *operation, id response) {
-                  NSLog(@"%@", response);
+
                   
                   // Populate additional fields from recipe details
                   vc.recipe.ingredientLines = response[@"ingredientLines"];
@@ -141,12 +133,13 @@
     
     YummlyClient *client = [[YummlyClient alloc] init];
 
-    if (self.selectedIngredients) {
-        [client addAllowedIngredients:self.selectedIngredients];
+    if ([[IngredientsFilter instance] filters]) {
+        NSLog(@"%@", [[IngredientsFilter instance] filters]);
+        [client addAllowedIngredients:[[IngredientsFilter instance] filters]];
     }
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"Matches: %@", response);
+        NSLog(@"%@", response[@"totalMatchCount"]);
         for (id data in response[@"matches"]) {
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }

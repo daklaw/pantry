@@ -11,6 +11,4 @@
 
 @interface RecipeViewController : UITableViewController
 
-- (id)initWithIngredients:(NSMutableArray *)ingredients;
-
 @end
