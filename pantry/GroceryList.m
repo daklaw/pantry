@@ -16,16 +16,31 @@
     static GroceryList *sharedGroceryList = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedGroceryList = [[self alloc] init];
-        sharedGroceryList.list = [[NSMutableArray alloc] init];
+        NSMutableArray *groceryList = [[NSUserDefaults standardUserDefaults] objectForKey:@"groceryList"];
+        if (groceryList) {
+            sharedGroceryList = [[self alloc] initWithList:groceryList];
+        }
+        else {
+            sharedGroceryList = [[self alloc] init];
+            sharedGroceryList.list = [[NSMutableArray alloc] init];
+        }
     });
     
     return sharedGroceryList;
 }
 
+- (id)initWithList:(NSMutableArray *)groceryList {
+    self = [super init];
+    
+    if (self) {
+        self.list = groceryList;
+    }
+    
+    return self;
+}
+
 + (NSString *)sanitizeItem:(NSString *)item {
     NSMutableString *s = [NSMutableString stringWithString:item];
-    NSLog(@"Here");
     NSRange start = [s rangeOfString:@","];
     
     if (start.location != NSNotFound) {
@@ -44,11 +59,14 @@
 
 - (void)addItem:(NSString *)item {
     [self.list addObject:[GroceryList sanitizeItem:item]];
-    NSLog(@"%@", self.list);
+    [[NSUserDefaults standardUserDefaults] setObject:self.list forKey:@"groceryList"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)clearGroceryList {
     [self.list removeAllObjects];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groceryList"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

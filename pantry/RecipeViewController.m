@@ -15,6 +15,7 @@
 #import "GroceryViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "MMDrawerBarButtonItem.h"
+#import "NSMutableArray+Additions.h"
 
 @interface RecipeViewController ()
 
@@ -105,18 +106,18 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // navigate to Recipe Detail view controller
-    RecipeDetailViewController *vc = [[RecipeDetailViewController alloc] initWithNibName:@"RecipeDetailViewController" bundle:nil];
+    RecipeDetailViewController *vc = [[RecipeDetailViewController alloc]
+                                      initWithNibName:@"RecipeDetailViewController"
+                                               bundle:nil];
     vc.recipe = self.recipes[indexPath.row];
 
     YummlyClient *client = [[YummlyClient alloc] init];
     [client getRecipe:vc.recipe.yummlyID
               success:^(AFHTTPRequestOperation *operation, id response) {
-
-                  
                   // Populate additional fields from recipe details
-                  vc.recipe.ingredientLines = response[@"ingredientLines"];
-                  NSDictionary *source = response[@"source"];
-                  vc.recipe.sourceRecipeURL = [NSURL URLWithString:[source objectForKey:@"sourceRecipeUrl"]];
+                  vc.recipe.ingredientLines = [NSMutableArray removeDuplicates:response[@"ingredientLines"]];
+                  vc.recipe.sourceRecipeURL = [NSURL URLWithString:[response[@"source"]
+                                                                    objectForKey:@"sourceRecipeUrl"]];
                   
                   // Navigate to recipe details
                   [self.navigationController pushViewController:vc animated:YES];
@@ -134,12 +135,10 @@
     YummlyClient *client = [[YummlyClient alloc] init];
 
     if ([[IngredientsFilter instance] filters]) {
-        NSLog(@"%@", [[IngredientsFilter instance] filters]);
         [client addAllowedIngredients:[[IngredientsFilter instance] filters]];
     }
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"%@", response[@"totalMatchCount"]);
         for (id data in response[@"matches"]) {
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }

@@ -24,7 +24,6 @@ static const NSInteger OTHERS_SECTION = 2;
 
 - (void) resetFilters;
 - (void) searchForRecipes;
-- (void) cancelSearch;
 - (void) onMenu:(id)sender;
 
 @end
@@ -53,7 +52,7 @@ static const NSInteger OTHERS_SECTION = 2;
     [super viewDidLoad];
 
     self.title = @"Filters";
-    UIImage *resetIcon = [UIImage imageNamed:@"Reset Filters"];
+    UIImage *resetIcon = [UIImage imageNamed:@"Reset"];
     CGRect resetFrame = CGRectMake(0, 0, 20, 20);
     UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
     [resetButton setBackgroundImage:resetIcon forState:UIControlStateNormal];
