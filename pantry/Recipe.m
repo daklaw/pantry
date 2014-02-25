@@ -48,4 +48,9 @@ static const NSString *imageDimension = @"320";
     self.recipeURL = [NSURL URLWithString:url];
 }
 
+- (NSUInteger)ingredientCount {
+    return [self.ingredients count];
+}
+
+
 @end
