@@ -115,7 +115,9 @@
     [client getRecipe:vc.recipe.yummlyID
               success:^(AFHTTPRequestOperation *operation, id response) {
                   // Populate additional fields from recipe details
-                  vc.recipe.ingredientLines = [NSMutableArray removeDuplicates:response[@"ingredientLines"]];
+                  
+                  // Details contains a more detailed list of ingredients, so use this one
+                  vc.recipe.ingredients = [NSMutableArray removeDuplicates:response[@"ingredientLines"]];
                   vc.recipe.sourceRecipeURL = [NSURL URLWithString:[response[@"source"]
                                                                     objectForKey:@"sourceRecipeUrl"]];
                   

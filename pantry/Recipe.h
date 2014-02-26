@@ -19,9 +19,9 @@
 @property NSInteger rating;
 @property NSInteger cookTime;
 // properties that are retrieved only from recipe details
-@property (nonatomic, strong) NSArray *ingredientLines;
 @property (nonatomic, strong) NSURL *sourceRecipeURL;
 
 - (id)initWithDictionary:(NSDictionary *)data;
+- (NSUInteger)ingredientCount;
 
 @end

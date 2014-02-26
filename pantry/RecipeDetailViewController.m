@@ -50,7 +50,7 @@
     self.ingredientsView.dataSource = self;
     self.ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    if (self.recipe.ingredientLines.count > 0) {
+    if ([self.recipe.ingredients count] > 0) {
         [self.ingredientsView reloadData];
     }
 }
@@ -66,7 +66,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.recipe.ingredientLines.count;
+    return [self.recipe.ingredients count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,7 +81,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    NSString *ingredientLine = self.recipe.ingredientLines[indexPath.row];
+    NSString *ingredientLine = self.recipe.ingredients[indexPath.row];
     cell.textLabel.text = ingredientLine;
     cell.textLabel.font = [UIFont systemFontOfSize:12.0f];
     [cell.textLabel sizeToFit];
@@ -92,7 +92,7 @@
 
 
 - (IBAction)addToGroceryList:(id)sender {
-    for (id item in self.recipe.ingredientLines) {
+    for (id item in self.recipe.ingredients) {
         [[GroceryList sharedList] addItem:item];
     }
     [sender setUserInteractionEnabled:NO];
