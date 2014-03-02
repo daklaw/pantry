@@ -17,7 +17,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         ingredients= [[self alloc] init];
-        ingredients.filters = [[NSMutableArray alloc] init];
+        ingredients.filters = [[NSMutableSet alloc] init];
     });
     
     return ingredients;

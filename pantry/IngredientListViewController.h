@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIViewController+MMDrawerController.h"
-
-@interface IngredientListViewController : UITableViewController
+#import "TiTokenField.h"
+@interface IngredientListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TITokenFieldDelegate>
 
 @end

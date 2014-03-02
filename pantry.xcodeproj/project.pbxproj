@@ -39,6 +39,7 @@
 		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 		C5E7443218BD60640000F123 /* RecipeIngredient.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E7443118BD60640000F123 /* RecipeIngredient.m */; };
 		C5E7443518BDB9680000F123 /* NSRegularExpression+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E7443418BDB9680000F123 /* NSRegularExpression+Additions.m */; };
+		C5F6B4FE18C3278100EA626A /* IngredientListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5F6B4FD18C3278100EA626A /* IngredientListViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		C5E7443118BD60640000F123 /* RecipeIngredient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeIngredient.m; sourceTree = "<group>"; };
 		C5E7443318BDB9680000F123 /* NSRegularExpression+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSRegularExpression+Additions.h"; sourceTree = "<group>"; };
 		C5E7443418BDB9680000F123 /* NSRegularExpression+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSRegularExpression+Additions.m"; sourceTree = "<group>"; };
+		C5F6B4FD18C3278100EA626A /* IngredientListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IngredientListViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				C523291618B3EF5F00CF906D /* MenuViewController.h */,
 				C523291718B3EF5F00CF906D /* MenuViewController.m */,
 				C523291818B3EF5F00CF906D /* MenuViewController.xib */,
+				C5F6B4FD18C3278100EA626A /* IngredientListViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 			files = (
 				C528D4411899F3BC00BCE380 /* InfoPlist.strings in Resources */,
 				C523291A18B3EF5F00CF906D /* MenuViewController.xib in Resources */,
+				C5F6B4FE18C3278100EA626A /* IngredientListViewController.xib in Resources */,
 				22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */,
 				2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */,
 				22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */,

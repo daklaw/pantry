@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface IngredientsFilter : NSObject {
-    NSMutableArray *filters;
+    NSMutableSet *filters;
 }
-@property (nonatomic, strong) NSMutableArray *filters;
+@property (nonatomic, strong) NSMutableSet *filters;
 
 +(id) instance;
 

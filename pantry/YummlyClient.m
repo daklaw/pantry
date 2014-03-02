@@ -27,7 +27,7 @@
     if (self) {
         // establish empty parameters
         self.params = [[NSMutableDictionary alloc] init];
-        [self.params setObject:[[NSMutableArray alloc] init] forKey:@"allowedIngredient"];
+        [self.params setObject:[[NSMutableSet alloc] init] forKey:@"allowedIngredient"];
     }
     
     return self;
@@ -61,7 +61,7 @@
 
 - (void)addAllowedIngredients:(NSArray *)ingredients {
     /* Add a list of ingredients to the list of allowed ingredients to the query on Yummly's API */
-    [self.params[@"allowedIngredient"] addObjectsFromArray:[ingredients valueForKey:@"lowercaseString"]];
+    [self.params[@"allowedIngredient"] addObjectsFromArray:[[ingredients valueForKey:@"lowercaseString"] allObjects]];
 }
 
 - (AFHTTPRequestOperation *)search:(void (^) (AFHTTPRequestOperation *operation, id response))success

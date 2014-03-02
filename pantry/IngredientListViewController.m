@@ -17,6 +17,9 @@ static const NSInteger OTHERS_SECTION = 2;
 
 @interface IngredientListViewController ()
 
+@property (strong, nonatomic) IBOutlet TITokenField *tokenField;
+@property (nonatomic, assign) CGFloat tokenFieldHeight;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *meats;
 @property (nonatomic, strong) NSArray *produce;
 @property (nonatomic, strong) NSArray *others;
@@ -30,20 +33,16 @@ static const NSInteger OTHERS_SECTION = 2;
 
 @implementation IngredientListViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        
-        /* TODO: Get these into a real data store like Parse */
         self.meats = @[@"Chicken", @"Chicken Breast", @"Chicken Thigh", @"Pork", @"Pork Shoulder", @"Pork Belly", @"Beef", @"Ground Beef", @"Ribeye", @"Turkey", @"Salmon"];
         self.produce = @[@"Celery", @"Carrots", @"Lettuce", @"Cabbage", @"Onions", @"Garlic", @"Ginger", @"Potatoes", @"Sweet Potatoes", @"Avocados", @"Basil", @"Thyme"];
         self.others = @[@"Salt", @"Pepper", @"Eggs", @"Olive Oil", @"Flour", @"Spaghetti", @"Fettuccine", @"Paprika"];
         
         self.selectedIngredients = [[NSMutableArray alloc] init];
-        
     }
+    
     return self;
 }
 
@@ -60,16 +59,6 @@ static const NSInteger OTHERS_SECTION = 2;
     [resetButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *resetBarButton = [[UIBarButtonItem alloc] initWithCustomView:resetButton];
     
-    /*
-    UIImage *cancelIcon = [UIImage imageNamed:@"Cancel"];
-    CGRect cancelFrame = CGRectMake(0, 0, 20, 20);
-    UIButton *cancelButton = [[UIButton alloc] initWithFrame:cancelFrame];
-    [cancelButton setBackgroundImage:cancelIcon forState:UIControlStateNormal];
-    [cancelButton addTarget:self action:@selector(cancelSearch) forControlEvents:UIControlEventTouchUpInside];
-    [cancelButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
-    */
-    
     UIImage *searchIcon = [UIImage imageNamed:@"Search"];
     CGRect searchFrame = CGRectMake(0, 0, 20, 20);
     UIButton *searchButton = [[UIButton alloc] initWithFrame:searchFrame];
@@ -77,6 +66,21 @@ static const NSInteger OTHERS_SECTION = 2;
     [searchButton addTarget:self action:@selector(searchForRecipes) forControlEvents:UIControlEventTouchUpInside];
     [searchButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
+    
+
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    self.tokenField.delegate = self;
+    [self.tokenField setPromptText:@"Ingredients"];
+    self.tokenFieldHeight = self.tokenField.frame.size.height;
+    
+    // Place back all previous filters
+    for (id filter in [[[IngredientsFilter instance] filters] copy]) {
+        [self.tokenField addTokenWithTitle:(NSString *)filter];
+    }
 
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:resetBarButton, searchBarButton, nil];
     
@@ -110,6 +114,10 @@ static const NSInteger OTHERS_SECTION = 2;
     return [self.others count];
 }
 
+-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+        return 20.0f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d", indexPath.section];
@@ -128,9 +136,6 @@ static const NSInteger OTHERS_SECTION = 2;
         cell.textLabel.text = self.others[indexPath.row];
     }
     
-    if([[IngredientsFilter instance] hasFilter:cell.textLabel.text]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
     // Configure the cell...
     
     return cell;
@@ -139,23 +144,22 @@ static const NSInteger OTHERS_SECTION = 2;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell.accessoryType == UITableViewCellAccessoryNone) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        [[IngredientsFilter instance] addFilter:cell.textLabel.text];
-    } else if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        [[IngredientsFilter instance] removeFilter:cell.textLabel.text];
+    [self.tokenField addTokenWithTitle:cell.textLabel.text];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"Meats";
     }
+    if (section == 1) {
+        return @"Vegetables";
+    }
+    return @"Other";
 }
 
 - (void) resetFilters {
-    for (int section = 0, sectionCount = self.tableView.numberOfSections; section < sectionCount; ++section) {
-        for (int row = 0, rowCount = [self.tableView numberOfRowsInSection:section]; row < rowCount; ++row) {
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.accessoryView = nil;
-        }
-    }
+    [self.tokenField removeAllTokens];
 }
 
 - (void) searchForRecipes {
@@ -167,16 +171,41 @@ static const NSInteger OTHERS_SECTION = 2;
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) updateTableViewFrame {
+    CGRect tokenFrame = self.tokenField.frame;
+    if (tokenFrame.size.height > self.tokenFieldHeight) {
+        CGFloat offset = tokenFrame.size.height - self.tokenFieldHeight;
+        CGRect oldTableFrame = self.tableView.frame;
+        self.tableView.frame = CGRectMake(oldTableFrame.origin.x, oldTableFrame.origin.y+offset, oldTableFrame.size.width, oldTableFrame.size.height-offset);
+    }
+    else if (tokenFrame.size.height < self.tokenFieldHeight) {
+        CGFloat offset = self.tokenFieldHeight - tokenFrame.size.height;
+        CGRect oldTableFrame = self.tableView.frame;
+        self.tableView.frame = CGRectMake(oldTableFrame.origin.x, oldTableFrame.origin.y-offset, oldTableFrame.size.width, oldTableFrame.size.height+offset);
+    }
+    self.tokenFieldHeight = tokenFrame.size.height;
 }
 
- */
+#pragma mark - TiTokenField Methods
+
+- (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token {
+    
+    [[IngredientsFilter instance] addFilter:token.title];
+    [self.tokenField layoutTokensAnimated:YES];
+    [self updateTableViewFrame];
+}
+
+- (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token {
+    [[IngredientsFilter instance] removeFilter:token.title];
+    [self.tokenField layoutTokensAnimated:YES];
+    [self updateTableViewFrame];
+}
+
+- (BOOL)tokenField:(TITokenField *)tokenField willAddToken:(TIToken *)token {
+    return ![[self.tokenField tokenTitles] containsObject:token.title];
+}
+
+#pragma mark - TextField Delegate
+
 
 @end
