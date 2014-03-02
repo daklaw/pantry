@@ -94,7 +94,7 @@
     }
     else if (indexPath.row == 1) {
         [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
-            [self setRootCenterViewController:self.mm_drawerController controller:[[IngredientListViewController alloc] initWithStyle:UITableViewStyleGrouped]];
+            [self setRootCenterViewController:self.mm_drawerController controller:[[IngredientListViewController alloc] init]];
          }];
         
     }
