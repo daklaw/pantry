@@ -7,6 +7,7 @@
 //
 
 #import "GroceryList.h"
+#import "Recipe.h"
 
 @implementation GroceryList
 
@@ -16,20 +17,20 @@
     static GroceryList *sharedGroceryList = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSMutableArray *groceryList = [[NSUserDefaults standardUserDefaults] objectForKey:@"groceryList"];
+        NSMutableDictionary *groceryList = [[NSUserDefaults standardUserDefaults] objectForKey:@"groceryList"];
         if (groceryList) {
             sharedGroceryList = [[self alloc] initWithList:groceryList];
         }
         else {
             sharedGroceryList = [[self alloc] init];
-            sharedGroceryList.list = [[NSMutableArray alloc] init];
+            sharedGroceryList.list = [[NSMutableDictionary alloc] init];
         }
     });
     
     return sharedGroceryList;
 }
 
-- (id)initWithList:(NSMutableArray *)groceryList {
+- (id)initWithList:(NSMutableDictionary *)groceryList {
     self = [super init];
     
     if (self) {
@@ -57,10 +58,31 @@
     return s;
 }
 
-- (void)addItem:(NSString *)item {
-    [self.list addObject:[GroceryList sanitizeItem:item]];
+- (void)addRecipe:(Recipe *)recipe {
+    for (id ingredient in recipe.ingredients) {
+        NSString *ingredientName = [[[GroceryList sanitizeItem:[ingredient valueForKey:@"ingredientName"]] capitalizedString] stringByTrimmingCharactersInSet:
+        [NSCharacterSet whitespaceCharacterSet]];
+        NSLog(@"%@", ingredientName);
+        NSString *totalIngredient = [[GroceryList sanitizeItem:[ingredient valueForKey:@"totalString"]] capitalizedString];
+        NSMutableDictionary *item = [self.list objectForKey:ingredientName];
+        if (item) {
+            NSLog(@"Found");
+            NSLog(@"%@", [self.list allKeys]);
+            [item setObject:totalIngredient forKey:recipe.name];
+        }
+        else {
+            NSLog(@"Not found");
+            NSLog(@"%@", [self.list allKeys]);
+            item = [[NSMutableDictionary alloc] init];
+            [self.list setObject:item forKey:ingredientName];
+            [item setObject:totalIngredient forKey:recipe.name];
+        }
+        
+    }
     [[NSUserDefaults standardUserDefaults] setObject:self.list forKey:@"groceryList"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+
+    
 }
 
 - (void)clearGroceryList {

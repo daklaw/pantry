@@ -19,8 +19,8 @@ static const NSString *imageDimension = @"320";
         self.data = data;
         self.yummlyID = [data valueForKey:@"id"];
         self.name = [data valueForKey:@"recipeName"];
-        self.ingredients = [data objectForKey:@"ingredients"];
         self.rating = [[data valueForKey:@"rating"] integerValue];
+        self.ingredients = [[NSMutableArray alloc] init];
         NSString *seconds = [data valueForKey:@"totalTimeInSeconds"];
         
         // Cook Time can be null
@@ -49,7 +49,39 @@ static const NSString *imageDimension = @"320";
 }
 
 - (NSUInteger)ingredientCount {
-    return [self.ingredients count];
+    if ([self.ingredients count]) {
+        return [self.ingredients count];
+    }
+    
+    return [[self.data valueForKey:@"ingredients"] count];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    if (self = [super init]) {
+        self.yummlyID = [decoder decodeObjectForKey:@"yummlyID"];
+        self.name = [decoder decodeObjectForKey:@"name"];
+        self.ingredients = [decoder decodeObjectForKey:@"ingredients"];
+        self.imageURL = [decoder decodeObjectForKey:@"imageURL"];
+        self.recipeURL = [decoder decodeObjectForKey:@"recipeURL"];
+        self.sourceRecipeURL = [decoder decodeObjectForKey:@"sourceRecipeURL"];
+        self.data = [decoder decodeObjectForKey:@"data"];
+        self.rating = [decoder decodeIntegerForKey:@"rating"];
+        self.cookTime = [decoder decodeIntegerForKey:@"cookTime"];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.yummlyID forKey:@"yummlyID"];
+    [encoder encodeObject:self.name forKey:@"name"];
+    [encoder encodeObject:self.ingredients forKey:@"ingredients"];
+    [encoder encodeObject:self.imageURL forKey:@"imageURL"];
+    [encoder encodeObject:self.recipeURL forKey:@"recipeURL"];
+    [encoder encodeObject:self.sourceRecipeURL forKey:@"sourceRecipeURL"];
+    [encoder encodeObject:self.data forKey:@"data"];
+    [encoder encodeInteger:self.rating forKey:@"rating"];
+    [encoder encodeInteger:self.cookTime forKey:@"cookTime"];
 }
 
 

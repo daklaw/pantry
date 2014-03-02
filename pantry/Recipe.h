@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSString *yummlyID;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSArray *ingredients;
+@property (nonatomic, strong) NSMutableArray *ingredients;
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong) NSURL *recipeURL;
 @property (nonatomic, strong) NSDictionary *data;

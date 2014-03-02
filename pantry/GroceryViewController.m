@@ -9,8 +9,16 @@
 #import "GroceryViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "GroceryList.h"
+#import "GroceryListCell.h"
+
+static const NSInteger RECIPE_CHECKBOX_BUTTON_TAG_OFFSET = 1000;
+static const CGFloat CELL_INGREDIENT_MAIN_HEIGHT = 25.0f;
+static const CGFloat CELL_RECIPE_HEIGHT = 26.0f;
+static const CGFloat CELL_RECIPE_DETAIL_HEIGHT = 13.0f;
+static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
 
 @interface GroceryViewController ()
+@property (nonatomic, strong) NSMutableArray *ingredientsList;
 
 - (void) clearList;
 @end
@@ -41,6 +49,11 @@
     UIBarButtonItem *resetBarButton = [[UIBarButtonItem alloc] initWithCustomView:resetButton];
     
     self.navigationItem.rightBarButtonItem = resetBarButton;
+    self.ingredientsList = [[[[GroceryList sharedList] list] allKeys] copy];
+    
+    // Necessary to use GroceryListCell
+    UINib *customNib = [UINib nibWithNibName:@"GroceryListCell" bundle:nil];
+    [self.tableView registerNib:customNib forCellReuseIdentifier:@"GroceryListCell"];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -69,16 +82,65 @@
     return [[[GroceryList sharedList] list] count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO: Actually dynamically alter height
+    NSDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[indexPath.row]];
+    
+                             
+    // How to get the UITableViewCell associated with this indexPath?
+    return CELL_INGREDIENT_MAIN_HEIGHT + CELL_RECIPE_HEIGHT * [[dict allKeys] count];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"GroceryListCell";
+    GroceryListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[GroceryListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
-    cell.textLabel.text = [[GroceryList sharedList] list][indexPath.row];
+    NSString *ingredientString = self.ingredientsList[indexPath.row];
+    
+    NSDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[indexPath.row]];
+    
+    [cell.checkBox setImage:[UIImage imageNamed:@"checkboxClosed"] forState:UIControlStateSelected];
+    [cell.checkBox addTarget:self action:@selector(selectIngredient:) forControlEvents:UIControlEventTouchUpInside];
+    cell.checkBox.tag = indexPath.row;
+    
+    cell.ingredientLabel.text = ingredientString;
+    
+    UIView *recipeSubview = [[UIView alloc] initWithFrame:CGRectMake(35, 25, cell.frame.size.width-35, CELL_RECIPE_HEIGHT)];
+    
+    NSInteger enumeration = 0;
+    for (NSString *recipe in [dict allKeys]) {
+        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0+enumeration*CELL_RECIPE_HEIGHT, 10, 10)];
+        [detailButton setImage:[UIImage imageNamed:@"checkboxUnmarked"] forState:UIControlStateNormal];
+        [detailButton setImage:[UIImage imageNamed:@"checkboxClosed"] forState:UIControlStateSelected];
+        [detailButton addTarget:self action:@selector(selectIngredient:) forControlEvents:UIControlEventTouchUpInside];
+        [detailButton setTag:RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration];
+        
+        UILabel *ingredientLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, 13.0f)];
+        ingredientLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
+        ingredientLabel.backgroundColor = [UIColor clearColor];
+        ingredientLabel.textColor = [UIColor blackColor];
+        ingredientLabel.text = [dict objectForKey:recipe];
+        
+        UILabel *recipeLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, CELL_RECIPE_INGREDIENT_HEIGHT+enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, CELL_RECIPE_DETAIL_HEIGHT)];
+        recipeLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
+        recipeLabel.backgroundColor = [UIColor clearColor];
+        recipeLabel.textColor = [UIColor blackColor];
+        recipeLabel.text = recipe;
+        
+        [recipeSubview addSubview:detailButton];
+        [recipeSubview addSubview:ingredientLabel];
+        [recipeSubview addSubview:recipeLabel];
+        [cell.contentView addSubview:recipeSubview];
+        
+        enumeration += 1;
+    }
+
     
     return cell;
 }
@@ -151,4 +213,17 @@
     [self.tableView reloadData];
 }
 
+- (void) selectIngredient:(UIButton *)sender {
+    [sender setSelected:!sender.selected];
+    
+    if (sender.tag < RECIPE_CHECKBOX_BUTTON_TAG_OFFSET) {
+        GroceryListCell *cell = (GroceryListCell *)[[[sender superview] superview] superview];
+        NSDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[sender.tag]];
+        for (int i = 0; i < [[dict allKeys] count]; i++) {
+            UIButton *detailButton = (UIButton *)[cell.contentView viewWithTag:RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+i];
+            [detailButton setSelected:sender.selected];
+        }
+    }
+    
+}
 @end
