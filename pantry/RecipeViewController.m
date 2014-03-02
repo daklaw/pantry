@@ -16,6 +16,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "MMDrawerBarButtonItem.h"
 #import "NSMutableArray+Additions.h"
+#import "RecipeIngredient.h"
 
 @interface RecipeViewController ()
 
@@ -76,7 +77,7 @@
     // Configure the cell...
     Recipe *recipe = self.recipes[indexPath.row];
     cell.nameLabel.text = recipe.name;
-    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)recipe.ingredients.count];
+    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%lu", [recipe ingredientCount]];
     
     [cell.recipeImage setImageWithURL:recipe.imageURL];
     
@@ -116,8 +117,10 @@
               success:^(AFHTTPRequestOperation *operation, id response) {
                   // Populate additional fields from recipe details
                   
-                  // Details contains a more detailed list of ingredients, so use this one
-                  vc.recipe.ingredients = [NSMutableArray removeDuplicates:response[@"ingredientLines"]];
+                  // Create Recipe Ingredients
+                  for (id ingredient in [NSMutableArray removeDuplicates:response[@"ingredientLines"]]) {
+                      [vc.recipe.ingredients addObject:[[RecipeIngredient alloc] initWithString:ingredient]];
+                  }
                   vc.recipe.sourceRecipeURL = [NSURL URLWithString:[response[@"source"]
                                                                     objectForKey:@"sourceRecipeUrl"]];
                   

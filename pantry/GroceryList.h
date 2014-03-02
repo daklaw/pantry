@@ -7,16 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Recipe.h"
 
 @interface GroceryList : NSObject {
-    NSMutableArray *list;
+    NSMutableDictionary *list;
 }
 
-@property (nonatomic, strong) NSMutableArray *list;
+@property (nonatomic, strong) NSMutableDictionary *list;
 
 + (id)sharedList;
 
-- (void)addItem:(NSString *)item;
+- (void)addRecipe:(Recipe *)recipe;
 - (void)clearGroceryList;
 
 @end

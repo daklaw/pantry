@@ -81,7 +81,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    NSString *ingredientLine = self.recipe.ingredients[indexPath.row];
+    NSString *ingredientLine = [self.recipe.ingredients[indexPath.row] valueForKey:@"totalString"];
     cell.textLabel.text = ingredientLine;
     cell.textLabel.font = [UIFont systemFontOfSize:12.0f];
     [cell.textLabel sizeToFit];
@@ -92,9 +92,7 @@
 
 
 - (IBAction)addToGroceryList:(id)sender {
-    for (id item in self.recipe.ingredients) {
-        [[GroceryList sharedList] addItem:item];
-    }
+    [[GroceryList sharedList] addRecipe:self.recipe];
     [sender setUserInteractionEnabled:NO];
 }
 @end
