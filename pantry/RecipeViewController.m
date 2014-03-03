@@ -22,6 +22,9 @@
 @interface RecipeViewController ()
 
 @property (nonatomic, strong) NSMutableArray *recipes;
+@property (nonatomic, strong) NSString *attributionLogo;
+@property (nonatomic, strong) NSString *attributionText;
+@property (nonatomic, strong) NSString *attributionURL;
 
 @end
 
@@ -81,6 +84,18 @@
     cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%lu", [recipe ingredientCount]];
     
     [cell.recipeImage setImageWithURL:recipe.imageURL];
+    
+    // Yummly attribution button
+    UIButton *attrButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    attrButton.frame = CGRectMake(cell.bounds.size.width-108, 20, 88, 20);
+    [attrButton setBackgroundImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.attributionLogo]]] forState:UIControlStateNormal];
+    //[attrButton setTitleEdgeInsets:UIEdgeInsetsMake(22.0, 5.0, 5.0, 5.0)];
+    //[attrButton setTitle:self.attributionText forState:UIControlStateNormal];
+    //attrButton.titleLabel.font = [UIFont boldSystemFontOfSize:10.0];
+    //attrButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    //attrButton.titleLabel.numberOfLines = 2;
+    [attrButton addTarget:self action:@selector(onAttributionButton:) forControlEvents:UIControlEventTouchUpInside];
+    [cell addSubview:attrButton];
     
     return cell;
 }
@@ -153,6 +168,11 @@
     }
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {
+        // Yummly attribution
+        self.attributionLogo = response[@"attribution"][@"logo"];
+        self.attributionText = response[@"attribution"][@"text"];
+        self.attributionURL = response[@"attribution"][@"url"];
+        
         for (id data in response[@"matches"]) {
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
@@ -167,5 +187,8 @@
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
+- (IBAction)onAttributionButton:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.attributionURL]];
+}
 
 @end
