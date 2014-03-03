@@ -11,19 +11,19 @@
 #import "MMDrawerBarButtonItem.h"
 #import "IngredientsFilter.h"
 
-static const NSInteger MEAT_SECTION = 0;
-static const NSInteger PRODUCE_SECTION = 1;
-static const NSInteger OTHERS_SECTION = 2;
-
 @interface IngredientListViewController ()
 
 @property (strong, nonatomic) IBOutlet TITokenField *tokenField;
-@property (nonatomic, assign) CGFloat tokenFieldHeight;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UITableView *autocompleteTableView;
+@property (strong, nonatomic) IBOutlet UITableView *selectorTableView;
+@property (strong, nonatomic) NSArray *autocompleteIngredients;
 @property (nonatomic, strong) NSArray *meats;
 @property (nonatomic, strong) NSArray *produce;
 @property (nonatomic, strong) NSArray *others;
-@property (nonatomic, strong) NSMutableArray *selectedIngredients;
+@property (nonatomic, strong) NSMutableArray *allIngredients;
+@property (nonatomic, strong) NSMutableArray *personalIngredients;
+@property (nonatomic, assign) BOOL canAddPersonalIngredient;
 
 - (void) resetFilters;
 - (void) searchForRecipes;
@@ -38,9 +38,8 @@ static const NSInteger OTHERS_SECTION = 2;
     if (self) {
         self.meats = @[@"Chicken", @"Chicken Breast", @"Chicken Thigh", @"Pork", @"Pork Shoulder", @"Pork Belly", @"Beef", @"Ground Beef", @"Ribeye", @"Turkey", @"Salmon"];
         self.produce = @[@"Celery", @"Carrots", @"Lettuce", @"Cabbage", @"Onions", @"Garlic", @"Ginger", @"Potatoes", @"Sweet Potatoes", @"Avocados", @"Basil", @"Thyme"];
-        self.others = @[@"Salt", @"Pepper", @"Eggs", @"Olive Oil", @"Flour", @"Spaghetti", @"Fettuccine", @"Paprika"];
+        self.others = @[@"Salt", @"Pepper", @"Eggs", @"Olive Oil", @"Flour", @"Butter", @"Spaghetti"];
         
-        self.selectedIngredients = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -67,15 +66,17 @@ static const NSInteger OTHERS_SECTION = 2;
     [searchButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
     
-
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    self.selectorTableView.delegate = self;
+    self.selectorTableView.dataSource = self;
+    self.selectorTableView.scrollEnabled = YES;
+    // Selector Table View is the default tableView
+    [self swapTableView:self.selectorTableView];
     
     self.tokenField.delegate = self;
     [self.tokenField setPromptText:@"Ingredients"];
-    self.tokenFieldHeight = self.tokenField.frame.size.height;
+    self.tokenField.removesTokensOnEndEditing = NO;
     
     // Place back all previous filters
     for (id filter in [[[IngredientsFilter instance] filters] copy]) {
@@ -86,6 +87,21 @@ static const NSInteger OTHERS_SECTION = 2;
     
     MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
     self.navigationItem.leftBarButtonItem = button;
+    
+    self.autocompleteTableView = [[UITableView alloc] initWithFrame:
+                             self.tableView.frame style:UITableViewStylePlain];
+    self.autocompleteTableView.delegate = self;
+    self.autocompleteTableView.dataSource = self;
+    self.autocompleteTableView.scrollEnabled = YES;
+    self.autocompleteTableView.hidden = YES;
+    [self.view addSubview:self.autocompleteTableView];
+    
+    self.allIngredients = [[NSMutableArray alloc] init];
+    [self.allIngredients addObjectsFromArray:self.meats];
+    [self.allIngredients addObjectsFromArray:self.produce];
+    [self.allIngredients addObjectsFromArray:self.others];
+    
+    self.personalIngredients = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,19 +115,36 @@ static const NSInteger OTHERS_SECTION = 2;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
+    if (tableView == self.autocompleteTableView) {
+        return 1;
+    }
+    else if ([[self personalIngredients] count]) {
+        return 4;
+    }
     return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == MEAT_SECTION) {
+    if (tableView == self.autocompleteTableView) {
+        if (self.canAddPersonalIngredient) {
+            return [self.autocompleteIngredients count] + 1;
+        }
+        else {
+            return [self.autocompleteIngredients count];
+        }
+    }
+    else if (section == [self meatIndex]) {
         return [self.meats count];
     }
-    else if (section == PRODUCE_SECTION) {
+    else if (section == [self produceIndex]) {
         return [self.produce count];
     }
+    else if (section == [self othersIndex]) {
+        return [self.others count];
+    }
     
-    return [self.others count];
+    return [self.personalIngredients count];
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -126,14 +159,32 @@ static const NSInteger OTHERS_SECTION = 2;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    if (indexPath.section == MEAT_SECTION) {
+    if (tableView == self.autocompleteTableView) {
+        if (indexPath.row == 0 && self.canAddPersonalIngredient) {
+            cell.textLabel.text = @"Add Ingredient";
+        }
+        else {
+            if (self.canAddPersonalIngredient) {
+                cell.textLabel.text = self.autocompleteIngredients[indexPath.row - 1];
+            }
+            else {
+                cell.textLabel.text = self.autocompleteIngredients[indexPath.row];
+            }
+            
+        }
+    }
+    else if (indexPath.section == [self meatIndex]) {
         cell.textLabel.text = self.meats[indexPath.row];
     }
-    else if (indexPath.section == PRODUCE_SECTION){
+    else if (indexPath.section == [self produceIndex]){
         cell.textLabel.text = self.produce[indexPath.row];
     }
-    else {
+    else if (indexPath.section == [self othersIndex]){
         cell.textLabel.text = self.others[indexPath.row];
+    }
+    else {
+        NSLog(@"%d", indexPath.row);
+        cell.textLabel.text = self.personalIngredients[indexPath.row];
     }
     
     // Configure the cell...
@@ -142,21 +193,85 @@ static const NSInteger OTHERS_SECTION = 2;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [self.tokenField addTokenWithTitle:cell.textLabel.text];
+    if (tableView == self.autocompleteTableView && indexPath.row == 0) {
+        [self.personalIngredients addObject:[self.tokenField.text capitalizedString]];
+        [self.tokenField addTokenWithTitle:[self.tokenField.text capitalizedString]];
+        [self.selectorTableView reloadData];
+    }
+    else {
+        [self.tokenField addTokenWithTitle:cell.textLabel.text];
+    }
+    [(UITextField *)self.tokenField resignFirstResponder];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (tableView == self.autocompleteTableView) {
+        return nil;
+    }
+    if (section == [self meatIndex]) {
         return @"Meats";
     }
-    if (section == 1) {
+    else if (section == [self produceIndex]) {
         return @"Vegetables";
     }
-    return @"Other";
+    else if (section == [self othersIndex]) {
+        return @"Other";
+    }
+    
+    return @"Personal Ingredients";
 }
+
+
+#pragma mark - TiTokenField Delegate Methods
+
+- (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token {
+    
+    token.title = [token.title capitalizedString];
+    [[IngredientsFilter instance] addFilter:token.title];
+
+    [self swapTableView:self.selectorTableView];
+    [self updateTableViewFrame:self.tableView];
+}
+
+- (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token {
+    [[IngredientsFilter instance] removeFilter:token.title];
+    [self updateTableViewFrame:self.tableView];
+}
+
+- (BOOL)tokenField:(TITokenField *)tokenField willAddToken:(TIToken *)token {
+    return ![[self.tokenField tokenTitles] containsObject:token.title];
+}
+
+#pragma mark - TextField Delegate Methods
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *query = [[textField.text stringByAppendingString:string] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [self searchAutocompleteEntriesWithSubString:query];
+    [self swapTableView:self.autocompleteTableView];
+    [self updateTableViewFrame:self.tableView];
+
+    return YES;
+}
+
+- (void)searchAutocompleteEntriesWithSubString:(NSString *)substring {
+    NSString *predicateStr = [NSString stringWithFormat:@"SELF BEGINSWITH[c] '%@'", substring];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateStr];
+    self.autocompleteIngredients = [[self.allIngredients copy] filteredArrayUsingPredicate:predicate];
+    if ([self.autocompleteIngredients containsObject:[substring capitalizedString]]) {
+        self.canAddPersonalIngredient = NO;
+    }
+    else {
+        self.canAddPersonalIngredient = YES;
+    }
+    [self.autocompleteTableView reloadData];
+}
+
+
+# pragma mark - Private Methods
 
 - (void) resetFilters {
     [self.tokenField removeAllTokens];
@@ -171,41 +286,53 @@ static const NSInteger OTHERS_SECTION = 2;
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-- (void) updateTableViewFrame {
-    CGRect tokenFrame = self.tokenField.frame;
-    if (tokenFrame.size.height > self.tokenFieldHeight) {
-        CGFloat offset = tokenFrame.size.height - self.tokenFieldHeight;
-        CGRect oldTableFrame = self.tableView.frame;
-        self.tableView.frame = CGRectMake(oldTableFrame.origin.x, oldTableFrame.origin.y+offset, oldTableFrame.size.width, oldTableFrame.size.height-offset);
-    }
-    else if (tokenFrame.size.height < self.tokenFieldHeight) {
-        CGFloat offset = self.tokenFieldHeight - tokenFrame.size.height;
-        CGRect oldTableFrame = self.tableView.frame;
-        self.tableView.frame = CGRectMake(oldTableFrame.origin.x, oldTableFrame.origin.y-offset, oldTableFrame.size.width, oldTableFrame.size.height+offset);
-    }
-    self.tokenFieldHeight = tokenFrame.size.height;
-}
-
-#pragma mark - TiTokenField Methods
-
-- (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token {
+- (void) updateTableViewFrame:(UITableView *)tableView {
+    // First update tokenField to ensure it has the right frame
+    [self.tokenField layoutTokensAnimated:YES];
     
-    [[IngredientsFilter instance] addFilter:token.title];
-    [self.tokenField layoutTokensAnimated:YES];
-    [self updateTableViewFrame];
+    CGRect tokenFrame = self.tokenField.frame;
+    
+    // Take the offset between the tokenFrame and tableView adjust accordingly
+    CGFloat offset = tokenFrame.origin.y + tokenFrame.size.height - tableView.frame.origin.y;
+    
+    if (offset != 0.0f) {
+        CGRect oldTableFrame = tableView.frame;
+        tableView.frame = CGRectMake(oldTableFrame.origin.x, oldTableFrame.origin.y+offset, oldTableFrame.size.width, oldTableFrame.size.height-offset);
+    }
 }
 
-- (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token {
-    [[IngredientsFilter instance] removeFilter:token.title];
-    [self.tokenField layoutTokensAnimated:YES];
-    [self updateTableViewFrame];
+- (NSInteger)meatIndex {
+    if ([self.personalIngredients count] > 0) {
+        return 1;
+    }
+    
+    return 0;
 }
 
-- (BOOL)tokenField:(TITokenField *)tokenField willAddToken:(TIToken *)token {
-    return ![[self.tokenField tokenTitles] containsObject:token.title];
+- (NSInteger)produceIndex {
+    if ([self.personalIngredients count] > 0) {
+        return 2;
+    }
+    
+    return 1;
 }
 
-#pragma mark - TextField Delegate
+- (NSInteger)othersIndex {
+    if ([self.personalIngredients count] > 0) {
+        return 3;
+    }
+    
+    return 2;
+}
+
+- (void)swapTableView:(UITableView *)tableView {
+    if (self.tableView != tableView) {
+        self.tableView.hidden = YES;
+        tableView.hidden = NO;
+        self.tableView = tableView;
+    }
+}
+
 
 
 @end
