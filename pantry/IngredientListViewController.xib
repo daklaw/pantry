@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IngredientListViewController">
             <connections>
-                <outlet property="tableView" destination="V6r-No-ET6" id="yHN-yQ-h3R"/>
+                <outlet property="selectorTableView" destination="V6r-No-ET6" id="Tt8-TF-9js"/>
                 <outlet property="tokenField" destination="v7m-C4-LQq" id="8Gz-uR-yRF"/>
                 <outlet property="view" destination="1" id="zp1-Yf-678"/>
             </connections>
