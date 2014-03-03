@@ -11,7 +11,8 @@
 #import "IngredientsFilter.h"
 #import "Recipe.h"
 #import "RecipeCell.h"
-#import "RecipeDetailViewController.h"
+//#import "RecipeDetailViewController.h"
+#import "RecipeDetailSwipeViewController.h"
 #import "GroceryViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "MMDrawerBarButtonItem.h"
@@ -106,6 +107,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    /*
     // navigate to Recipe Detail view controller
     RecipeDetailViewController *vc = [[RecipeDetailViewController alloc]
                                       initWithNibName:@"RecipeDetailViewController"
@@ -130,6 +132,13 @@
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   NSLog(@"%@", error);
               }];
+    */
+
+    // navigate to Recipe Detail view controller
+    RecipeDetailSwipeViewController *vc = [[RecipeDetailSwipeViewController alloc] init];
+    vc.recipes = self.recipes;
+    vc.recipeIndex = indexPath.row;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Private methods
