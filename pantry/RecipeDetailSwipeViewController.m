@@ -80,6 +80,15 @@
         self.ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     
+    //set background color
+    CGFloat red = arc4random() / (CGFloat)INT_MAX;
+    CGFloat green = arc4random() / (CGFloat)INT_MAX;
+    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
+    view.backgroundColor = [UIColor colorWithRed:red
+                                           green:green
+                                            blue:blue
+                                           alpha:1.0];
+    
     // Populate view with recipe details
     Recipe *recipe = self.recipes[index];
     self.nameLabel.text = recipe.name;
