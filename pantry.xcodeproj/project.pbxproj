@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2229A4B918B216BC00423113 /* GroceryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2229A4B718B216BC00423113 /* GroceryViewController.m */; };
 		2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2229A4B818B216BC00423113 /* GroceryViewController.xib */; };
+		226ADB3218C49A2D00EE9E80 /* RecipeWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 226ADB3018C49A2D00EE9E80 /* RecipeWebViewController.m */; };
+		226ADB3318C49A2D00EE9E80 /* RecipeWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 226ADB3118C49A2D00EE9E80 /* RecipeWebViewController.xib */; };
 		22C6D9E818C402810025B898 /* RecipeDetailSwipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C6D9E618C402810025B898 /* RecipeDetailSwipeViewController.m */; };
 		22C6D9E918C402810025B898 /* RecipeDetailSwipeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C6D9E718C402810025B898 /* RecipeDetailSwipeViewController.xib */; };
 		22C6D9EC18C402A90025B898 /* RecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C6D9EB18C402A90025B898 /* RecipeViewController.m */; };
@@ -58,6 +60,9 @@
 		2229A4B618B216BC00423113 /* GroceryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroceryViewController.h; sourceTree = "<group>"; };
 		2229A4B718B216BC00423113 /* GroceryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroceryViewController.m; sourceTree = "<group>"; };
 		2229A4B818B216BC00423113 /* GroceryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroceryViewController.xib; sourceTree = "<group>"; };
+		226ADB2F18C49A2D00EE9E80 /* RecipeWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeWebViewController.h; sourceTree = "<group>"; };
+		226ADB3018C49A2D00EE9E80 /* RecipeWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeWebViewController.m; sourceTree = "<group>"; };
+		226ADB3118C49A2D00EE9E80 /* RecipeWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeWebViewController.xib; sourceTree = "<group>"; };
 		22C6D9E518C402810025B898 /* RecipeDetailSwipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecipeDetailSwipeViewController.h; sourceTree = "<group>"; };
 		22C6D9E618C402810025B898 /* RecipeDetailSwipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecipeDetailSwipeViewController.m; sourceTree = "<group>"; };
 		22C6D9E718C402810025B898 /* RecipeDetailSwipeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecipeDetailSwipeViewController.xib; sourceTree = "<group>"; };
@@ -170,6 +175,9 @@
 				22C6D9E518C402810025B898 /* RecipeDetailSwipeViewController.h */,
 				22C6D9E618C402810025B898 /* RecipeDetailSwipeViewController.m */,
 				22C6D9E718C402810025B898 /* RecipeDetailSwipeViewController.xib */,
+				226ADB2F18C49A2D00EE9E80 /* RecipeWebViewController.h */,
+				226ADB3018C49A2D00EE9E80 /* RecipeWebViewController.m */,
+				226ADB3118C49A2D00EE9E80 /* RecipeWebViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -382,6 +390,7 @@
 				C528D4411899F3BC00BCE380 /* InfoPlist.strings in Resources */,
 				C523291A18B3EF5F00CF906D /* MenuViewController.xib in Resources */,
 				C5F6B4FE18C3278100EA626A /* IngredientListViewController.xib in Resources */,
+				226ADB3318C49A2D00EE9E80 /* RecipeWebViewController.xib in Resources */,
 				22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */,
 				2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */,
 				22C6D9E918C402810025B898 /* RecipeDetailSwipeViewController.xib in Resources */,
@@ -450,6 +459,7 @@
 				C57C076F18BAD8260029BC8C /* IngredientsFilter.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
 				C523291918B3EF5F00CF906D /* MenuViewController.m in Sources */,
+				226ADB3218C49A2D00EE9E80 /* RecipeWebViewController.m in Sources */,
 				C57C077418BBF1FD0029BC8C /* NSMutableArray+Additions.m in Sources */,
 				22C6D9E818C402810025B898 /* RecipeDetailSwipeViewController.m in Sources */,
 				C5E7443218BD60640000F123 /* RecipeIngredient.m in Sources */,

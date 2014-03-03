@@ -11,6 +11,7 @@
 #import "NSMutableArray+Additions.h"
 #import "Recipe.h"
 #import "RecipeIngredient.h"
+#import "RecipeWebViewController.h"
 #import "SwipeView.h"
 #import "UIImageView+AFNetworking.h"
 #import "YummlyClient.h"
@@ -133,6 +134,10 @@
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
 {
     // Navigate to web view controller
+    RecipeWebViewController *vc = [[RecipeWebViewController alloc] init];
+    Recipe *recipe = self.recipes[index];
+    vc.recipeURL = recipe.sourceRecipeURL;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Table view data source
