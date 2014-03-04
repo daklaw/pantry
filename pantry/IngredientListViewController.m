@@ -75,7 +75,8 @@
     [self swapTableView:self.selectorTableView];
     
     self.tokenField.delegate = self;
-    [self.tokenField setPromptText:@"Ingredients"];
+    [self.tokenField setPromptText:nil];
+    [self.tokenField setPlaceholder:@"Enter ingredients here"];
     self.tokenField.removesTokensOnEndEditing = NO;
     
     // Place back all previous filters
@@ -94,6 +95,7 @@
     self.autocompleteTableView.dataSource = self;
     self.autocompleteTableView.scrollEnabled = YES;
     self.autocompleteTableView.hidden = YES;
+    [self.autocompleteTableView setBackgroundColor:[UIColor darkGrayColor]];
     [self.view addSubview:self.autocompleteTableView];
     
     self.allIngredients = [[NSMutableArray alloc] init];
@@ -106,6 +108,9 @@
     if (!self.personalIngredients) {
         self.personalIngredients = [[NSMutableArray alloc] init];
     }
+    
+
+    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -159,6 +164,10 @@
         return 20.0f;
 }
 
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 35.0f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d", indexPath.section];
@@ -195,7 +204,9 @@
     }
     
     // Configure the cell...
-    
+    [cell setBackgroundColor:[UIColor darkGrayColor]];
+    [cell.textLabel setTextColor:[UIColor whiteColor]];
+    [cell.textLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
     return cell;
 }
 
@@ -298,7 +309,7 @@
     CGRect tokenFrame = self.tokenField.frame;
     
     // Take the offset between the tokenFrame and tableView adjust accordingly
-    CGFloat offset = tokenFrame.origin.y + tokenFrame.size.height - tableView.frame.origin.y + 9;
+    CGFloat offset = tokenFrame.origin.y + tokenFrame.size.height - tableView.frame.origin.y + 1;
     
     if ((NSInteger)offset != 0) {
         CGRect oldTableFrame = tableView.frame;

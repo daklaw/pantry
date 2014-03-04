@@ -54,6 +54,7 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     // Necessary to use GroceryListCell
     UINib *customNib = [UINib nibWithNibName:@"GroceryListCell" bundle:nil];
     [self.tableView registerNib:customNib forCellReuseIdentifier:@"GroceryListCell"];
+    [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -100,6 +101,10 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
         cell = [[GroceryListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    [cell setBackgroundColor:[UIColor darkGrayColor]];
+    [cell.ingredientLabel setTextColor:[UIColor whiteColor]];
+    [cell.ingredientLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
+    
     // Configure the cell...
     NSString *ingredientString = self.ingredientsList[indexPath.row];
     
@@ -122,15 +127,15 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
         [detailButton setTag:RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration];
         
         UILabel *ingredientLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, 13.0f)];
-        ingredientLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
+        ingredientLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
         ingredientLabel.backgroundColor = [UIColor clearColor];
-        ingredientLabel.textColor = [UIColor blackColor];
+        ingredientLabel.textColor = [UIColor whiteColor];
         ingredientLabel.text = [dict objectForKey:recipe];
         
         UILabel *recipeLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, CELL_RECIPE_INGREDIENT_HEIGHT+enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, CELL_RECIPE_DETAIL_HEIGHT)];
-        recipeLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
+        recipeLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
         recipeLabel.backgroundColor = [UIColor clearColor];
-        recipeLabel.textColor = [UIColor blackColor];
+        recipeLabel.textColor = [UIColor whiteColor];
         recipeLabel.text = recipe;
         
         [recipeSubview addSubview:detailButton];
@@ -142,65 +147,9 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     }
 
     
+    
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-}
- 
- */
 
 # pragma mark - Private Methods
 
