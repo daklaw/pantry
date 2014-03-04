@@ -193,7 +193,6 @@
 #pragma mark - Private methods
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender {
-    NSLog(@"item index %d", self.swipeView.currentItemIndex);
     [[GroceryList sharedList] addRecipe:self.recipes[self.swipeView.currentItemIndex]];
     [sender setUserInteractionEnabled:NO];
 }

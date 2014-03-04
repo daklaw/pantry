@@ -187,7 +187,6 @@
         cell.textLabel.text = self.others[indexPath.row];
     }
     else {
-        NSLog(@"%d", indexPath.row);
         cell.textLabel.text = self.personalIngredients[indexPath.row];
     }
     

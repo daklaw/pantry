@@ -11,6 +11,7 @@
 @interface IngredientsFilter : NSObject {
     NSMutableSet *filters;
 }
+
 @property (nonatomic, strong) NSMutableSet *filters;
 
 +(id) instance;

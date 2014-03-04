@@ -12,7 +12,7 @@
 
 - (void)setSearchQuery:(NSString *)query;
 - (void)addAllowedIngredient:(NSString *)ingredient;
-- (void)addAllowedIngredients:(NSMutableSet *)ingredients;
+- (void)addAllowedIngredients:(NSArray *)ingredients;
 - (AFHTTPRequestOperation *)search:(void (^) (AFHTTPRequestOperation *operation, id response))success
                            failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 - (AFHTTPRequestOperation *)getRecipe:(NSString *)recipeId
