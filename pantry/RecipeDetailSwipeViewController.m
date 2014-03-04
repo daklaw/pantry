@@ -43,6 +43,9 @@
     self.swipeView.dataSource = self;
     self.swipeView.delegate = self;
     
+    // Adjust for 3.5" and 4" sizes
+    self.swipeView.bounds = [[UIScreen mainScreen] bounds];
+    
     // Configure swipeView
     self.swipeView.pagingEnabled = YES;
     self.swipeView.currentItemIndex = self.recipeIndex;
@@ -72,14 +75,13 @@
     if (!view) {
         view = [[UIView alloc] initWithFrame:self.swipeView.bounds];
         view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        view.backgroundColor = [UIColor grayColor];
         
         recipeImage = [[UIImageView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.origin.y, 320, 320)];
         recipeImage.tag = 1;
         [view addSubview:recipeImage];
         
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, view.bounds.origin.y + 72, 280, 21)];
-        nameLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:16];
+        nameLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:20];
         nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         nameLabel.numberOfLines = 0;
         nameLabel.textColor = [UIColor whiteColor];
@@ -109,7 +111,7 @@
     
     [recipeImage setImageWithURL:recipe.imageURL];
 
-    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 160, view.bounds.size.width, 160)];
+    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 240, view.bounds.size.width, 240)];
     [ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     ingredientsView.allowsSelection = NO;
     ingredientsView.delegate = self;
