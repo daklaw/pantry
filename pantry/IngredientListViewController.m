@@ -101,7 +101,11 @@
     [self.allIngredients addObjectsFromArray:self.produce];
     [self.allIngredients addObjectsFromArray:self.others];
     
-    self.personalIngredients = [[NSMutableArray alloc] init];
+    
+    self.personalIngredients = [[NSUserDefaults standardUserDefaults] objectForKey:@"personalIngredients"];
+    if (!self.personalIngredients) {
+        self.personalIngredients = [[NSMutableArray alloc] init];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -197,9 +201,7 @@
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (tableView == self.autocompleteTableView && indexPath.row == 0) {
-        [self.personalIngredients addObject:[self.tokenField.text capitalizedString]];
-        [self.tokenField addTokenWithTitle:[self.tokenField.text capitalizedString]];
-        [self.selectorTableView reloadData];
+        [self addPersonalIngredient:self.tokenField.text];
     }
     else {
         [self.tokenField addTokenWithTitle:cell.textLabel.text];
@@ -331,6 +333,14 @@
         tableView.hidden = NO;
         self.tableView = tableView;
     }
+}
+
+- (void)addPersonalIngredient:(NSString *)ingredient {
+    [self.personalIngredients addObject:[ingredient capitalizedString]];
+    [[NSUserDefaults standardUserDefaults] setObject:self.personalIngredients forKey:@"personalIngredients"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.tokenField addTokenWithTitle:[self.tokenField.text capitalizedString]];
+    [self.selectorTableView reloadData];
 }
 
 
