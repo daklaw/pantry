@@ -108,6 +108,10 @@
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    [self updateTableViewFrame:self.tableView];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -294,9 +298,9 @@
     CGRect tokenFrame = self.tokenField.frame;
     
     // Take the offset between the tokenFrame and tableView adjust accordingly
-    CGFloat offset = tokenFrame.origin.y + tokenFrame.size.height - tableView.frame.origin.y;
+    CGFloat offset = tokenFrame.origin.y + tokenFrame.size.height - tableView.frame.origin.y + 9;
     
-    if (offset != 0.0f) {
+    if ((NSInteger)offset != 0) {
         CGRect oldTableFrame = tableView.frame;
         tableView.frame = CGRectMake(oldTableFrame.origin.x, oldTableFrame.origin.y+offset, oldTableFrame.size.width, oldTableFrame.size.height-offset);
     }
