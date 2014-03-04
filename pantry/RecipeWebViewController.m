@@ -21,7 +21,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"Directions";
     }
     return self;
 }
@@ -30,6 +29,7 @@
 {
     [super viewDidLoad];
 
+    self.title = self.recipeName;
     if (self.recipeURL) {
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.recipeURL];
         self.directionsView.scalesPageToFit = YES;

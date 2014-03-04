@@ -20,6 +20,7 @@
 @property NSInteger cookTime;
 // properties that are retrieved only from recipe details
 @property (nonatomic, strong) NSURL *sourceRecipeURL;
+@property (nonatomic, strong) NSString *sourceDisplayName;
 
 - (id)initWithDictionary:(NSDictionary *)data;
 - (NSUInteger)ingredientCount;
