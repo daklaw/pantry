@@ -11,5 +11,6 @@
 @interface RecipeWebViewController : UIViewController
 
 @property (nonatomic, strong) NSURL *recipeURL;
+@property (nonatomic, strong) NSString *recipeName;
 
 @end

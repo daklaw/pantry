@@ -19,10 +19,6 @@
 @interface RecipeDetailSwipeViewController () <SwipeViewDataSource, SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet SwipeView *swipeView;
-@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *recipeImage;
-@property (nonatomic, weak) IBOutlet UITableView *ingredientsView;
-@property (nonatomic, weak) IBOutlet UIWebView *directionsView;
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender;
 
@@ -68,56 +64,78 @@
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
 {
+    UIImageView *recipeImage = nil;
+    UILabel *nameLabel = nil;
+    UITableView *ingredientsView = nil;
+    UIButton *addToGroceryListButton = nil;
+    
     if (!view) {
         view = [[UIView alloc] initWithFrame:self.swipeView.bounds];
         view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        view.backgroundColor = [UIColor grayColor];
         
-        self.nameLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:16];
-        self.nameLabel.textColor = [UIColor whiteColor];
+        recipeImage = [[UIImageView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.origin.y, 320, 320)];
+        recipeImage.tag = 1;
+        [view addSubview:recipeImage];
         
-        [self.ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-        self.ingredientsView.delegate = self;
-        self.ingredientsView.dataSource = self;
-        self.ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, view.bounds.origin.y + 72, 280, 21)];
+        nameLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:16];
+        nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        nameLabel.numberOfLines = 0;
+        nameLabel.textColor = [UIColor whiteColor];
+        nameLabel.tag = 2;
+        [view addSubview:nameLabel];
+        
+        addToGroceryListButton = [[UIButton alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.size.height - 30, view.bounds.size.width, 30)];
+        addToGroceryListButton.backgroundColor = [UIColor lightGrayColor];
+        addToGroceryListButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        addToGroceryListButton.titleLabel.textColor = [UIColor whiteColor];
+        [addToGroceryListButton setTitle:@"Add to Grocery List" forState:UIControlStateNormal];
+        [addToGroceryListButton addTarget:self action:@selector(onAddToGroceryList:) forControlEvents:UIControlEventTouchUpInside];
+        addToGroceryListButton.tag = 3;
+        [view addSubview:addToGroceryListButton];
     }
-    
-    //set background color
-    CGFloat red = arc4random() / (CGFloat)INT_MAX;
-    CGFloat green = arc4random() / (CGFloat)INT_MAX;
-    CGFloat blue = arc4random() / (CGFloat)INT_MAX;
-    view.backgroundColor = [UIColor colorWithRed:red
-                                           green:green
-                                            blue:blue
-                                           alpha:1.0];
+    else
+    {
+        recipeImage = (UIImageView *)[view viewWithTag:1];
+        nameLabel = (UILabel *)[view viewWithTag:2];
+        addToGroceryListButton = (UIButton *)[view viewWithTag:3];
+    }
     
     // Populate view with recipe details
     Recipe *recipe = self.recipes[index];
-    self.nameLabel.text = recipe.name;
+    nameLabel.text = recipe.name;
+    [nameLabel sizeToFit];
+    
+    [recipeImage setImageWithURL:recipe.imageURL];
 
-    [self.recipeImage setImageWithURL:recipe.imageURL];
-
-    self.ingredientsView.tag = index;
+    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 160, view.bounds.size.width, 160)];
+    [ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    ingredientsView.allowsSelection = NO;
+    ingredientsView.delegate = self;
+    ingredientsView.dataSource = self;
+    ingredientsView.scrollEnabled = NO;
+    ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    ingredientsView.tag = index;
+    [view addSubview:ingredientsView];
     
     YummlyClient *client = [[YummlyClient alloc] init];
     [client getRecipe:recipe.yummlyID
               success:^(AFHTTPRequestOperation *operation, id response) {
                   // Populate additional fields from recipe details
                   
-                  // Create Recipe Ingredients
+                  // Recipe ingredients
                   [recipe.ingredients removeAllObjects];
                   for (id ingredient in [NSMutableArray removeDuplicates:response[@"ingredientLines"]]) {
                       [recipe.ingredients addObject:[[RecipeIngredient alloc] initWithString:ingredient]];
                   }
                   if ([recipe.ingredients count] > 0) {
-                      [self.ingredientsView reloadData];
+                      [ingredientsView reloadData];
                   }
 
-                  // Load recipe webpage in web view
+                  // Recipe source
                   recipe.sourceRecipeURL = [NSURL URLWithString:[response[@"source"] objectForKey:@"sourceRecipeUrl"]];
-                  if (recipe.sourceRecipeURL) {
-                      NSURLRequest *requestObj = [NSURLRequest requestWithURL:recipe.sourceRecipeURL];
-                      [self.directionsView loadRequest:requestObj];
-                  }
+                  recipe.sourceDisplayName = [response[@"source"] objectForKey:@"sourceDisplayName"];
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   NSLog(@"%@", error);
@@ -137,6 +155,7 @@
     RecipeWebViewController *vc = [[RecipeWebViewController alloc] init];
     Recipe *recipe = self.recipes[index];
     vc.recipeURL = recipe.sourceRecipeURL;
+    vc.recipeName = recipe.sourceDisplayName;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -162,9 +181,8 @@
     }
     
     Recipe *recipe = self.recipes[tableView.tag];
-    NSString *ingredientLine = [recipe.ingredients[indexPath.row] valueForKey:@"totalString"];
-    cell.textLabel.text = ingredientLine;
-    cell.textLabel.font = [UIFont systemFontOfSize:12.0f];
+    cell.textLabel.text = [recipe.ingredients[indexPath.row] valueForKey:@"totalString"];
+    cell.textLabel.font = [UIFont systemFontOfSize:12];
     [cell.textLabel sizeToFit];
     
     return cell;
