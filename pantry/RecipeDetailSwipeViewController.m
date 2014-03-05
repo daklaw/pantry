@@ -190,7 +190,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 20.0f;
+    static CGFloat minHeight = 20.0f;
+
+    Recipe *recipe = self.recipes[tableView.tag];
+    NSString *string = [recipe.ingredients[indexPath.row] valueForKey:@"totalString"];
+
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenRect.size.width - 40;
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"Helvetica" size:12.0f]};
+    CGRect rect = [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                           attributes:attributes
+                                              context:nil];
+
+    return MAX(rect.size.height, minHeight);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -205,6 +218,8 @@
     Recipe *recipe = self.recipes[tableView.tag];
     cell.textLabel.text = [recipe.ingredients[indexPath.row] valueForKey:@"totalString"];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0f];
+    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.textLabel.numberOfLines = 0;
     cell.textLabel.textColor = [UIColor whiteColor];
     [cell.textLabel sizeToFit];
     
