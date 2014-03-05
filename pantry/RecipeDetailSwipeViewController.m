@@ -86,6 +86,7 @@
     UIImageView *recipeImage = nil;
     UILabel *nameLabel = nil;
     UITableView *ingredientsView = nil;
+    UILabel *directionsLabel = nil;
     UIButton *addToGroceryListButton = nil;
     
     if (!view) {
@@ -112,6 +113,14 @@
         [addToGroceryListButton addTarget:self action:@selector(onAddToGroceryList:) forControlEvents:UIControlEventTouchUpInside];
         addToGroceryListButton.tag = 3;
         [view addSubview:addToGroceryListButton];
+
+        directionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, addToGroceryListButton.frame.origin.y - 20, 280, 20)];
+        directionsLabel.backgroundColor = [UIColor whiteColor];
+        directionsLabel.font = [UIFont systemFontOfSize:12];
+        directionsLabel.text = @"(Tap recipe image to navigate to source webpage)";
+        directionsLabel.textColor = [UIColor darkGrayColor];
+        directionsLabel.tag = 4;
+        [view addSubview:directionsLabel];
     }
     else
     {
@@ -127,7 +136,7 @@
     
     [recipeImage setImageWithURL:recipe.imageURL];
 
-    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 240, view.bounds.size.width, 240)];
+    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, directionsLabel.frame.origin.y - 240, view.bounds.size.width, 240)];
     [ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     ingredientsView.allowsSelection = NO;
     ingredientsView.delegate = self;
