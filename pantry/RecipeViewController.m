@@ -8,7 +8,7 @@
 
 #import "RecipeViewController.h"
 #import "YummlyClient.h"
-#import "IngredientsFilter.h"
+#import "Filter.h"
 #import "Recipe.h"
 #import "RecipeCell.h"
 //#import "RecipeDetailViewController.h"
@@ -137,8 +137,8 @@
     
     YummlyClient *client = [[YummlyClient alloc] init];
 
-    if ([[IngredientsFilter instance] filters]) {
-        [client addAllowedIngredients:[(NSSet *)[[IngredientsFilter instance] filters] allObjects]];
+    if ([[Filter instance] ingredientFilters]) {
+        [client addAllowedIngredients:[(NSSet *)[[Filter instance] ingredientFilters] allObjects]];
     }
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {

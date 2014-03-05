@@ -119,6 +119,7 @@
     ingredientsView.scrollEnabled = NO;
     ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
     ingredientsView.tag = index;
+    [ingredientsView setBackgroundColor:[UIColor darkGrayColor]];
     [view addSubview:ingredientsView];
     
     YummlyClient *client = [[YummlyClient alloc] init];
@@ -181,10 +182,12 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    [cell setBackgroundColor:[UIColor darkGrayColor]];
     
     Recipe *recipe = self.recipes[tableView.tag];
     cell.textLabel.text = [recipe.ingredients[indexPath.row] valueForKey:@"totalString"];
-    cell.textLabel.font = [UIFont systemFontOfSize:12];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0f];
+    cell.textLabel.textColor = [UIColor whiteColor];
     [cell.textLabel sizeToFit];
     
     return cell;

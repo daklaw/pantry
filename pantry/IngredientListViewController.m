@@ -9,7 +9,7 @@
 #import "IngredientListViewController.h"
 #import "RecipeViewController.h"
 #import "MMDrawerBarButtonItem.h"
-#import "IngredientsFilter.h"
+#import "Filter.h"
 
 @interface IngredientListViewController ()
 
@@ -66,6 +66,8 @@
     [searchButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
     
+    UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(onDone:)];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.selectorTableView.delegate = self;
@@ -80,11 +82,11 @@
     self.tokenField.removesTokensOnEndEditing = NO;
     
     // Place back all previous filters
-    for (id filter in [[[IngredientsFilter instance] filters] copy]) {
+    for (id filter in [[[Filter instance] ingredientFilters] copy]) {
         [self.tokenField addTokenWithTitle:(NSString *)filter];
     }
 
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:resetBarButton, searchBarButton, nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:resetBarButton, searchBarButton, doneBarButton, nil];
     
     MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
     self.navigationItem.leftBarButtonItem = button;
@@ -247,14 +249,17 @@
 - (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token {
     
     token.title = [token.title capitalizedString];
-    [[IngredientsFilter instance] addFilter:token.title];
+    [[Filter instance] addIngredientFilter:token.title];
 
     [self swapTableView:self.selectorTableView];
     [self updateTableViewFrame:self.tableView];
+    
+    NSDictionary *userInfo = @{@"ingredient": [token.title capitalizedString]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:DidAddIngredientFilter object:self userInfo:userInfo];
 }
 
 - (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token {
-    [[IngredientsFilter instance] removeFilter:token.title];
+    [[Filter instance] removeIngredientFilter:token.title];
     [self updateTableViewFrame:self.tableView];
 }
 
@@ -300,6 +305,11 @@
 
 - (void) onMenu:(id)sender {
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+- (void) onDone:(id)sender {
+        //[self dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController popViewControllerAnimated:YES]; 
 }
 
 - (void) updateTableViewFrame:(UITableView *)tableView {
