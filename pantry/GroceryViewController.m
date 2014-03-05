@@ -38,17 +38,11 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
+//    self.navigationItem.leftBarButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
     
-    UIImage *resetIcon = [UIImage imageNamed:@"Reset"];
-    CGRect resetFrame = CGRectMake(0, 0, 20, 20);
-    UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
-    [resetButton setBackgroundImage:resetIcon forState:UIControlStateNormal];
-    [resetButton addTarget:self action:@selector(clearList) forControlEvents:UIControlEventTouchUpInside];
-    [resetButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *resetBarButton = [[UIBarButtonItem alloc] initWithCustomView:resetButton];
     
-    self.navigationItem.rightBarButtonItem = resetBarButton;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearList)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(onDone)];
     self.ingredientsList = [[[[GroceryList sharedList] list] allKeys] copy];
     
     // Necessary to use GroceryListCell
@@ -59,8 +53,6 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -160,6 +152,10 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
 - (void) clearList {
     [[GroceryList sharedList] clearGroceryList];
     [self.tableView reloadData];
+}
+
+- (void) onDone {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) selectIngredient:(UIButton *)sender {
