@@ -183,16 +183,9 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     [sender setSelected:!sender.selected];
     
     if (sender.tag < RECIPE_CHECKBOX_BUTTON_TAG_OFFSET) {
-        GroceryListCell *cell = (GroceryListCell *)[[[sender superview] superview] superview];
         NSMutableDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[sender.tag]];
-        NSLog(@"%@", dict);
         for (NSString *key in [dict allKeys]) {
             dict[key][@"checked"] = [NSNumber numberWithBool:sender.selected];
-        }
-        for (int i = 0; i < [[dict allKeys] count]; i++) {
-            UIButton *detailButton = (UIButton *)[cell.contentView viewWithTag:(sender.tag+1)*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+i];
-            [detailButton setSelected:sender.selected];
-            
         }
     }
     else {
@@ -200,7 +193,6 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
         NSInteger recipeIndex = sender.tag % RECIPE_CHECKBOX_BUTTON_TAG_OFFSET;
         
         NSMutableDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[listIndex]];
-        NSLog(@"%@", dict);
         dict[[dict allKeys][recipeIndex]][@"checked"] = [NSNumber numberWithBool:sender.selected];
     }
     [[NSUserDefaults standardUserDefaults] setObject:[[GroceryList sharedList] list] forKey:@"groceryList"];
