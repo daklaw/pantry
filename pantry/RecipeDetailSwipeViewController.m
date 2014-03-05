@@ -95,7 +95,7 @@
         addToGroceryListButton.backgroundColor = [UIColor lightGrayColor];
         addToGroceryListButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         addToGroceryListButton.titleLabel.textColor = [UIColor whiteColor];
-        [addToGroceryListButton setTitle:@"Add to Grocery List" forState:UIControlStateNormal];
+        [addToGroceryListButton setTitle:@"Add Ingredients to Grocery List" forState:UIControlStateNormal];
         [addToGroceryListButton addTarget:self action:@selector(onAddToGroceryList:) forControlEvents:UIControlEventTouchUpInside];
         addToGroceryListButton.tag = 3;
         [view addSubview:addToGroceryListButton];
@@ -205,12 +205,40 @@
 - (IBAction)onAddToGroceryList:(UIButton *)sender {
     [[GroceryList sharedList] addRecipe:self.recipes[self.swipeView.currentItemIndex]];
     [sender setUserInteractionEnabled:NO];
+    [self showNotificationMessage:@"Ingredients added."];
 }
 
 - (void) onFilter:(id)sender {
     FiltersViewController *vc = [[FiltersViewController alloc] init];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void)showNotificationMessage:(NSString *)message
+{
+    CGRect startFrame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 30);
+    CGRect endFrame = CGRectMake(0, self.view.bounds.size.height - 30, self.view.bounds.size.width, 30);
+    
+    UIView *notificationView = [[UIView alloc] initWithFrame:startFrame];
+    UILabel *label = [[UILabel alloc] initWithFrame:notificationView.bounds];
+    label.backgroundColor = [[UIView appearance] tintColor];
+    label.font = [UIFont boldSystemFontOfSize:12];
+    label.text = message;
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    [notificationView addSubview:label];
+    
+    [self.view addSubview:notificationView];
+    
+    notificationView.alpha = 0;
+    [UIView animateWithDuration:0.5 animations:^{
+        notificationView.alpha = 1;
+        notificationView.frame = endFrame;
+    } completion:^(BOOL finished){
+        [UIView animateWithDuration:1 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            notificationView.alpha = 0;
+        } completion:nil];
+    }];
 }
 
 @end
