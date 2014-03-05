@@ -53,6 +53,11 @@
     [self.params setObject:query forKey:@"q"];
 }
 
+- (void)setMaximumTime:(NSInteger)time {
+    [self.params setObject:[NSNumber numberWithInt:time] forKey:@"maxTotalTimeInSeconds"];
+
+}
+
 - (void)addAllowedIngredient:(NSString *)ingredient {
     /* Add an ingredient to the list of allowed ingredient to the query on Yummly's API */
     

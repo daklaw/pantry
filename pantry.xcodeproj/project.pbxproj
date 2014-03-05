@@ -37,9 +37,11 @@
 		C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52F73F818B12901006C37D1 /* IngredientListViewController.m */; };
 		C54A27EB18C010790020E228 /* GroceryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C54A27EA18C010790020E228 /* GroceryListCell.m */; };
 		C54A27EF18C010EB0020E228 /* GroceryListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C54A27EE18C010EB0020E228 /* GroceryListCell.xib */; };
-		C57C076F18BAD8260029BC8C /* IngredientsFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = C57C076E18BAD8260029BC8C /* IngredientsFilter.m */; };
 		C57C077418BBF1FD0029BC8C /* NSMutableArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C57C077318BBF1FD0029BC8C /* NSMutableArray+Additions.m */; };
 		C591256618C68A3300181308 /* UIColor+NewColors.m in Sources */ = {isa = PBXBuildFile; fileRef = C591256518C68A3300181308 /* UIColor+NewColors.m */; };
+		C591256F18C698B900181308 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C591256D18C698B900181308 /* FiltersViewController.m */; };
+		C591257018C698B900181308 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C591256E18C698B900181308 /* FiltersViewController.xib */; };
+		C591257318C70E3100181308 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C591257218C70E3100181308 /* Filter.m */; };
 		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
 		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 		C5E7443218BD60640000F123 /* RecipeIngredient.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E7443118BD60640000F123 /* RecipeIngredient.m */; };
@@ -103,12 +105,15 @@
 		C54A27E918C010790020E228 /* GroceryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroceryListCell.h; sourceTree = "<group>"; };
 		C54A27EA18C010790020E228 /* GroceryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroceryListCell.m; sourceTree = "<group>"; };
 		C54A27EE18C010EB0020E228 /* GroceryListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroceryListCell.xib; sourceTree = "<group>"; };
-		C57C076D18BAD8260029BC8C /* IngredientsFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IngredientsFilter.h; sourceTree = "<group>"; };
-		C57C076E18BAD8260029BC8C /* IngredientsFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IngredientsFilter.m; sourceTree = "<group>"; };
 		C57C077218BBF1FD0029BC8C /* NSMutableArray+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Additions.h"; sourceTree = "<group>"; };
 		C57C077318BBF1FD0029BC8C /* NSMutableArray+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Additions.m"; sourceTree = "<group>"; };
 		C591256418C68A3300181308 /* UIColor+NewColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+NewColors.h"; sourceTree = "<group>"; };
 		C591256518C68A3300181308 /* UIColor+NewColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+NewColors.m"; sourceTree = "<group>"; };
+		C591256C18C698B900181308 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
+		C591256D18C698B900181308 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
+		C591256E18C698B900181308 /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiltersViewController.xib; sourceTree = "<group>"; };
+		C591257118C70E3100181308 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		C591257218C70E3100181308 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		C596433E18AECEEA00E0AF13 /* YummlyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YummlyClient.h; sourceTree = "<group>"; };
 		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
 		C596434518AEE18F00E0AF13 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -181,6 +186,9 @@
 				226ADB2F18C49A2D00EE9E80 /* RecipeWebViewController.h */,
 				226ADB3018C49A2D00EE9E80 /* RecipeWebViewController.m */,
 				226ADB3118C49A2D00EE9E80 /* RecipeWebViewController.xib */,
+				C591256C18C698B900181308 /* FiltersViewController.h */,
+				C591256D18C698B900181308 /* FiltersViewController.m */,
+				C591256E18C698B900181308 /* FiltersViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -206,8 +214,8 @@
 			children = (
 				C523291C18B48DB100CF906D /* GroceryList.h */,
 				C523291D18B48DB100CF906D /* GroceryList.m */,
-				C57C076D18BAD8260029BC8C /* IngredientsFilter.h */,
-				C57C076E18BAD8260029BC8C /* IngredientsFilter.m */,
+				C591257118C70E3100181308 /* Filter.h */,
+				C591257218C70E3100181308 /* Filter.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -409,6 +417,7 @@
 				22C6D9E918C402810025B898 /* RecipeDetailSwipeViewController.xib in Resources */,
 				22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */,
 				C54A27EF18C010EB0020E228 /* GroceryListCell.xib in Resources */,
+				C591257018C698B900181308 /* FiltersViewController.xib in Resources */,
 				C528D4491899F3BC00BCE380 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,6 +471,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2229A4B918B216BC00423113 /* GroceryViewController.m in Sources */,
+				C591257318C70E3100181308 /* Filter.m in Sources */,
 				C596434718AEE18F00E0AF13 /* Recipe.m in Sources */,
 				22F0269C18B1768000865313 /* RecipeDetailViewController.m in Sources */,
 				C54A27EB18C010790020E228 /* GroceryListCell.m in Sources */,
@@ -469,7 +479,6 @@
 				C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */,
 				22F0269018B0C6A400865313 /* RecipeCell.m in Sources */,
 				C52F73F918B12901006C37D1 /* IngredientListViewController.m in Sources */,
-				C57C076F18BAD8260029BC8C /* IngredientsFilter.m in Sources */,
 				C528D4431899F3BC00BCE380 /* main.m in Sources */,
 				C523291918B3EF5F00CF906D /* MenuViewController.m in Sources */,
 				226ADB3218C49A2D00EE9E80 /* RecipeWebViewController.m in Sources */,
@@ -479,6 +488,7 @@
 				C5E7443218BD60640000F123 /* RecipeIngredient.m in Sources */,
 				C523291E18B48DB100CF906D /* GroceryList.m in Sources */,
 				C5E7443518BDB9680000F123 /* NSRegularExpression+Additions.m in Sources */,
+				C591256F18C698B900181308 /* FiltersViewController.m in Sources */,
 				22C6D9EC18C402A90025B898 /* RecipeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,6 +11,7 @@
 @interface YummlyClient : AFHTTPRequestOperationManager
 
 - (void)setSearchQuery:(NSString *)query;
+- (void)setMaximumTime:(NSInteger)time;
 - (void)addAllowedIngredient:(NSString *)ingredient;
 - (void)addAllowedIngredients:(NSArray *)ingredients;
 - (AFHTTPRequestOperation *)search:(void (^) (AFHTTPRequestOperation *operation, id response))success

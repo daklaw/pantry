@@ -14,6 +14,7 @@
 #import "RecipeWebViewController.h"
 #import "SwipeView.h"
 #import "UIImageView+AFNetworking.h"
+#import "FiltersViewController.h"
 #import "YummlyClient.h"
 
 @interface RecipeDetailSwipeViewController () <SwipeViewDataSource, SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -49,6 +50,8 @@
     // Configure swipeView
     self.swipeView.pagingEnabled = YES;
     self.swipeView.currentItemIndex = self.recipeIndex;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,6 +122,7 @@
     ingredientsView.scrollEnabled = NO;
     ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
     ingredientsView.tag = index;
+    [ingredientsView setBackgroundColor:[UIColor darkGrayColor]];
     [view addSubview:ingredientsView];
     
     YummlyClient *client = [[YummlyClient alloc] init];
@@ -181,20 +185,30 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    [cell setBackgroundColor:[UIColor darkGrayColor]];
     
     Recipe *recipe = self.recipes[tableView.tag];
     cell.textLabel.text = [recipe.ingredients[indexPath.row] valueForKey:@"totalString"];
-    cell.textLabel.font = [UIFont systemFontOfSize:12];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0f];
+    cell.textLabel.textColor = [UIColor whiteColor];
     [cell.textLabel sizeToFit];
     
     return cell;
 }
+
+
 
 #pragma mark - Private methods
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender {
     [[GroceryList sharedList] addRecipe:self.recipes[self.swipeView.currentItemIndex]];
     [sender setUserInteractionEnabled:NO];
+}
+
+- (void) onFilter:(id)sender {
+    FiltersViewController *vc = [[FiltersViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 @end
