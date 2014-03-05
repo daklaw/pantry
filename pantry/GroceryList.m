@@ -63,15 +63,17 @@
         NSString *ingredientName = [[[GroceryList sanitizeItem:[ingredient valueForKey:@"ingredientName"]] capitalizedString] stringByTrimmingCharactersInSet:
         [NSCharacterSet whitespaceCharacterSet]];
         NSString *totalIngredient = [[GroceryList sanitizeItem:[ingredient valueForKey:@"totalString"]] capitalizedString];
+        NSNumber *checked = @NO;
+        NSMutableDictionary *totalIngredientDictionary = [[NSMutableDictionary alloc] init];
+        [totalIngredientDictionary setObject:totalIngredient forKey:@"ingredient"];
+        [totalIngredientDictionary setObject:checked forKey:@"checked"];
         NSMutableDictionary *item = [self.list objectForKey:ingredientName];
-        if (item) {
-            [item setObject:totalIngredient forKey:recipe.name];
-        }
-        else {
+        if (!item) {
             item = [[NSMutableDictionary alloc] init];
             [self.list setObject:item forKey:ingredientName];
-            [item setObject:totalIngredient forKey:recipe.name];
         }
+
+        [item setObject:totalIngredientDictionary forKey:recipe.name];
         
     }
     [[NSUserDefaults standardUserDefaults] setObject:self.list forKey:@"groceryList"];
