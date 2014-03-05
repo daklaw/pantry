@@ -158,6 +158,7 @@
         NSInteger seconds = [minutes integerValue] * 60;
         [[Filter instance] setMaxPrepTime:seconds];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:DidFinishFilter object:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

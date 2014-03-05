@@ -15,7 +15,9 @@
 #import "SwipeView.h"
 #import "UIImageView+AFNetworking.h"
 #import "FiltersViewController.h"
+#import "GroceryViewController.h"
 #import "YummlyClient.h"
+#import "Filter.h"
 
 @interface RecipeDetailSwipeViewController () <SwipeViewDataSource, SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -40,6 +42,9 @@
 {
     [super viewDidLoad];
     
+    self.recipes = [[NSMutableArray alloc] init];
+    [self recipesWithYummly];
+
     // Link swipe view data source and delegate
     self.swipeView.dataSource = self;
     self.swipeView.delegate = self;
@@ -49,9 +54,17 @@
     
     // Configure swipeView
     self.swipeView.pagingEnabled = YES;
-    self.swipeView.currentItemIndex = self.recipeIndex;
+    self.swipeView.currentItemIndex = 0;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Grocery List" style:UIBarButtonItemStylePlain target:self action:@selector(onGrocery:)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recipesWithYummly) name:DidFinishFilter object:nil];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -212,6 +225,39 @@
     FiltersViewController *vc = [[FiltersViewController alloc] init];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void) onGrocery:(id)sender {
+    GroceryViewController *vc = [[GroceryViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void)recipesWithYummly {
+    YummlyClient *client = [[YummlyClient alloc] init];
+    
+    if ([[Filter instance] ingredientFilters]) {
+        [client addAllowedIngredients:[(NSSet *)[[Filter instance] ingredientFilters] allObjects]];
+    }
+    
+    if ([[Filter instance] hasMaxPrepTime]) {
+        [client setMaximumTime:[[Filter instance] maximumTime]];
+    }
+    
+    [client search:^(AFHTTPRequestOperation *operation, id response) {
+//        // Yummly attribution
+//        self.attributionLogo = response[@"attribution"][@"logo"];
+//        self.attributionText = response[@"attribution"][@"text"];
+//        self.attributionURL = response[@"attribution"][@"url"];
+        [self.recipes removeAllObjects];
+        for (id data in response[@"matches"]) {
+            [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
+        }
+        [self.swipeView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (void)showNotificationMessage:(NSString *)message

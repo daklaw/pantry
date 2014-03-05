@@ -10,6 +10,7 @@
 
 NSString * const DidAddIngredientFilter = @"DidAddIngredientFilter";
 NSString * const DidRemoveIngredientFilter = @"DidRemoveIngredientFilter";
+NSString * const DidFinishFilter = @"DidFinishFilter";
 
 @implementation Filter
 

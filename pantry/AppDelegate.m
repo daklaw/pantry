@@ -7,11 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "RecipeViewController.h"
+//#import "RecipeViewController.h"
+#import "RecipeDetailSwipeViewController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "MenuViewController.h"
-#import "IngredientListViewController.h"
 #import "FiltersViewController.h"
 
 @implementation AppDelegate
@@ -22,8 +22,8 @@
     // Override point for customization after application launch.
     
     
-    RecipeViewController *recipeViewController = [[RecipeViewController alloc] init];
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:recipeViewController];
+    RecipeDetailSwipeViewController *vc = [[RecipeDetailSwipeViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     
     
     // Drawer Code

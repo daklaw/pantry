@@ -10,6 +10,7 @@
 
 extern NSString *const DidAddIngredientFilter;
 extern NSString *const DidRemoveIngredientFilter;
+extern NSString *const DidFinishFilter;
 
 @interface Filter : NSObject {
     NSMutableSet *ingredientFilters;
