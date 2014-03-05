@@ -18,12 +18,15 @@
 #import "GroceryViewController.h"
 #import "YummlyClient.h"
 #import "Filter.h"
+#import "SVProgressHUD.h"
 
 @interface RecipeDetailSwipeViewController () <SwipeViewDataSource, SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) IBOutlet UIView *overlayView;
 @property (nonatomic, strong) IBOutlet UIView *introView;
+@property (nonatomic, assign) BOOL pastIntro;
+
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender;
 
@@ -69,6 +72,7 @@
         self.overlayView.frame = self.view.frame;
     }
     
+    self.pastIntro = NO;
     self.introView = [[NSBundle mainBundle] loadNibNamed:@"IntroView" owner:self options:nil][0];
     self.introView.frame = self.view.frame;
     [self.view addSubview:self.introView];
@@ -77,6 +81,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (self.pastIntro) {
+        [SVProgressHUD showWithStatus:@"Finding Recipes"];
+    }
 }
 
 //- (void)viewDidAppear:(BOOL)animated {
@@ -282,6 +289,7 @@
     if ([[Filter instance] hasMaxPrepTime]) {
         [client setMaximumTime:[[Filter instance] maximumTime]];
     }
+
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {
 //        // Yummly attribution
@@ -296,6 +304,7 @@
         [self.swipeView setCurrentItemIndex:0];
 
         [self.introView removeFromSuperview];
+        self.pastIntro = YES;
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         if (self.overlayView && ![[NSUserDefaults standardUserDefaults] valueForKey:@"hasSeenTutorial"]) {
             UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -304,6 +313,7 @@
             [self.view addSubview:self.overlayView];
             [[NSUserDefaults standardUserDefaults] setValue:@YES forKey:@"hasSeenTutorial"];
         }
+        [SVProgressHUD dismiss];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
