@@ -64,7 +64,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Grocery List" style:UIBarButtonItemStylePlain target:self action:@selector(onGrocery:)];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recipesWithYummly) name:DidFinishFilter object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reSearchYummly) name:DidFinishFilter object:nil];
     
     if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
         self.overlayView = [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil][0];
@@ -81,14 +81,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.pastIntro) {
-        [SVProgressHUD showWithStatus:@"Finding Recipes"];
-    }
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [self.view bringSubviewToFront:self.overlayView];
-//}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -318,6 +313,11 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
+}
+
+- (void)reSearchYummly {
+    [SVProgressHUD showWithStatus:@"Finding Recipes"];
+    [self recipesWithYummly];
 }
 
 - (void)handleTap:(UIGestureRecognizer *)recognizer {

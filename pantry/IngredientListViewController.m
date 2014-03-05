@@ -50,22 +50,8 @@
     [super viewDidLoad];
 
     self.title = @"Filters";
-    UIImage *resetIcon = [UIImage imageNamed:@"Reset"];
-    CGRect resetFrame = CGRectMake(0, 0, 20, 20);
-    UIButton *resetButton = [[UIButton alloc] initWithFrame:resetFrame];
-    [resetButton setBackgroundImage:resetIcon forState:UIControlStateNormal];
-    [resetButton addTarget:self action:@selector(resetFilters) forControlEvents:UIControlEventTouchUpInside];
-    [resetButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *resetBarButton = [[UIBarButtonItem alloc] initWithCustomView:resetButton];
     
-    UIImage *searchIcon = [UIImage imageNamed:@"Search"];
-    CGRect searchFrame = CGRectMake(0, 0, 20, 20);
-    UIButton *searchButton = [[UIButton alloc] initWithFrame:searchFrame];
-    [searchButton setBackgroundImage:searchIcon forState:UIControlStateNormal];
-    [searchButton addTarget:self action:@selector(searchForRecipes) forControlEvents:UIControlEventTouchUpInside];
-    [searchButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc] initWithCustomView:searchButton];
-    
+    UIBarButtonItem *clearBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(onClear:)];
     UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(onDone:)];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -90,8 +76,8 @@
     
     //MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
     //self.navigationItem.leftBarButtonItem = button;
-    self.navigationItem.leftBarButtonItem = doneBarButton;
-    self.navigationItem.rightBarButtonItem = resetBarButton;
+    self.navigationItem.leftBarButtonItem = clearBarButton;
+    self.navigationItem.rightBarButtonItem = doneBarButton;
     
     self.autocompleteTableView = [[UITableView alloc] initWithFrame:
                              self.tableView.frame style:UITableViewStylePlain];
@@ -313,6 +299,10 @@
 - (void) onDone:(id)sender {
         //[self dismissViewControllerAnimated:NO completion:nil];
     [self.navigationController popViewControllerAnimated:YES]; 
+}
+
+- (void) onClear:(id)sender {
+    [self.tokenField removeAllTokens];
 }
 
 - (void) updateTableViewFrame:(UITableView *)tableView {
