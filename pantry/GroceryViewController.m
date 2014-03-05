@@ -123,16 +123,24 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
         [detailButton setTag:(indexPath.row+1)*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration];
         
         NSMutableDictionary *ingredientDict = [dict objectForKey:recipe];
-        UILabel *ingredientLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, 13.0f)];
-        ingredientLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
-        ingredientLabel.backgroundColor = [UIColor clearColor];
-        ingredientLabel.textColor = [UIColor whiteColor];
+        UILabel *ingredientLabel = (UILabel *)[cell viewWithTag:100*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration];
+        if (!ingredientLabel) {
+            ingredientLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, 13.0f)];
+            ingredientLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
+            ingredientLabel.backgroundColor = [UIColor clearColor];
+            ingredientLabel.textColor = [UIColor whiteColor];
+            ingredientLabel.tag = 100*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration;
+        }
         ingredientLabel.text = [ingredientDict objectForKey:@"ingredient"];
         
-        UILabel *recipeLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, CELL_RECIPE_INGREDIENT_HEIGHT+enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, CELL_RECIPE_DETAIL_HEIGHT)];
-        recipeLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
-        recipeLabel.backgroundColor = [UIColor clearColor];
-        recipeLabel.textColor = [UIColor whiteColor];
+        UILabel *recipeLabel = (UILabel *)[cell viewWithTag:200*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration];
+        if (!recipeLabel) {
+            recipeLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, CELL_RECIPE_INGREDIENT_HEIGHT+enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, CELL_RECIPE_DETAIL_HEIGHT)];
+            recipeLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
+            recipeLabel.backgroundColor = [UIColor clearColor];
+            recipeLabel.textColor = [UIColor whiteColor];
+            recipeLabel.tag = 200*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration;
+        }
         recipeLabel.text = recipe;
         
         [recipeSubview addSubview:detailButton];
@@ -152,8 +160,6 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
         enumeration += 1;
     }
 
-    
-    
     return cell;
 }
 
@@ -179,6 +185,7 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     if (sender.tag < RECIPE_CHECKBOX_BUTTON_TAG_OFFSET) {
         GroceryListCell *cell = (GroceryListCell *)[[[sender superview] superview] superview];
         NSMutableDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[sender.tag]];
+        NSLog(@"%@", dict);
         for (NSString *key in [dict allKeys]) {
             dict[key][@"checked"] = [NSNumber numberWithBool:sender.selected];
         }
@@ -193,10 +200,12 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
         NSInteger recipeIndex = sender.tag % RECIPE_CHECKBOX_BUTTON_TAG_OFFSET;
         
         NSMutableDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[listIndex]];
+        NSLog(@"%@", dict);
         dict[[dict allKeys][recipeIndex]][@"checked"] = [NSNumber numberWithBool:sender.selected];
     }
     [[NSUserDefaults standardUserDefaults] setObject:[[GroceryList sharedList] list] forKey:@"groceryList"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.tableView reloadData];
     
 }
 @end

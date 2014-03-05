@@ -257,7 +257,6 @@
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender {
     [[GroceryList sharedList] addRecipe:self.recipes[self.swipeView.currentItemIndex]];
-    [sender setUserInteractionEnabled:NO];
     [self showNotificationMessage:@"Ingredients added."];
 }
 
@@ -294,6 +293,7 @@
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
         [self.swipeView reloadData];
+        [self.swipeView setCurrentItemIndex:0];
 
         [self.introView removeFromSuperview];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
