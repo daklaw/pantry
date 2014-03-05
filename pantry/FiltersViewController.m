@@ -18,7 +18,7 @@
 @property (strong, nonatomic) IBOutlet UISlider *prepTimeSlider;
 @property (strong, nonatomic) IBOutlet UILabel *prepTimeLabel;
 @property (strong, nonatomic) IBOutlet UIView *testView;
-@property (strong, nonatomic) NSMutableArray *tokens;
+@property (strong, nonatomic) NSMutableSet *ingredients;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
 
 @end
@@ -41,18 +41,19 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.tokens = [[NSMutableArray alloc] init];
+    self.ingredients = [[NSMutableSet alloc] init];
     
     // Load previous ingredients into Ingredients Field
     if ([[Filter instance] ingredientFilters]) {
         for (NSString *ingredient in [[Filter instance] ingredientFilters]) {
-            [self.tokens addObject:[[TIToken alloc] initWithTitle:ingredient]];
+            [self.ingredients addObject:ingredient];
         }
     }
     [self layoutTokens];
     
     self.prepTimeSlider.maximumValue = 11;
     self.prepTimeSlider.minimumValue = 0;
+    // TODO: Set slider value to what it was previously (if it exists)
     [self.prepTimeSlider setValue:86400];
     [self.prepTimeSlider setContinuous:YES];
     [self.prepTimeSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -60,6 +61,7 @@
     [self.editButton addTarget:self action:@selector(onEditIngredients:) forControlEvents:UIControlEventTouchUpInside];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateIngredientsField:) name:DidAddIngredientFilter object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeIngredientField:) name:DidRemoveIngredientFilter object:nil];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(onDoneFilter:)];
@@ -86,20 +88,27 @@
     NSDictionary *userInfo = notification.userInfo;
     NSString *ingredient = [userInfo objectForKey:@"ingredient"];
     if (ingredient) {
-        [self.tokens addObject:[[TIToken alloc] initWithTitle:ingredient]];
+        [self.ingredients addObject:ingredient];
     }
+}
+
+- (void)removeIngredientField: (NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *ingredient = [userInfo objectForKey:@"ingredient"];
+    [self.ingredients removeObject:ingredient];
 }
 
 - (void) layoutTokens {
     for (UIView *subview in [self.testView subviews]) {
         [subview removeFromSuperview];
     }
-    if ([self.tokens count] > 0) {
+    if ([self.ingredients count] > 0) {
         NSInteger xMargin = 5;
         NSInteger yMargin = 5;
         CGFloat xOrigin = 0.0;
         CGFloat yOrigin = 0.0;
-        for (TIToken *token in self.tokens) {
+        for (NSString *ingredient in self.ingredients) {
+            TIToken *token = [[TIToken alloc] initWithTitle:ingredient];
             CGPoint origin = CGPointMake(xOrigin, yOrigin);
             if (xOrigin + token.frame.size.width > self.testView.bounds.size.width) {
                 xOrigin = 0.0;
@@ -128,45 +137,9 @@
 }
 
 - (void)sliderValueChanged:(UISlider *)slider {
-    self.prepTimeLabel.text = [self labelForSlide:(NSInteger)slider.value];
-}
-
-- (NSString *)labelForSlide:(NSInteger)value {
-    if (value == 0) {
-        return @"< 5 minutes";
-    }
-    else if (value == 1) {
-        return @"< 10 minutes";
-    }
-    else if (value == 2) {
-        return @"< 15 minutes";
-    }
-    else if (value == 3) {
-        return @"< 20 minutes";
-    }
-    else if (value == 4) {
-        return @"< 30 minutes";
-    }
-    else if (value == 5) {
-        return @"< 45 minutes";
-    }
-    else if (value == 6) {
-        return @"< 1 hour";
-    }
-    else if (value == 7) {
-        return @"< 2 hours";
-    }
-    else if (value == 8) {
-        return @"< 3 hours";
-    }
-    else if (value == 9) {
-        return @"< 6 hours";
-    }
-    else if (value == 10) {
-        return @"< 12 hours";
-    }
+    NSArray *labelArray = @[@"< 5 minutes", @"< 10 minutes", @"< 15 minutes", @"< 20 minutes", @"< 30 minutes", @"< 45 minutes", @"< 1 hour", @"< 2 hours", @"< 3 hours", @"< 6 hours", @"< 12 hours", @"No Limit"];
     
-    return @"No Limit";
+    self.prepTimeLabel.text = [labelArray objectAtIndex:(NSInteger)slider.value];
 }
 
 - (void)onCancel:(id)sender {
@@ -175,6 +148,16 @@
 }
 
 - (void)onDoneFilter:(id)sender {
+    NSInteger sliderValue = (NSInteger)self.prepTimeSlider.value;
+    if (sliderValue == 11) {
+        [[Filter instance] clearMaxPrepTime];
+    }
+    else {
+        NSArray *minutesArray = @[@5, @10, @15, @20, @30, @45, @60, @120, @180, @360, @720];
+        NSNumber *minutes = [minutesArray objectAtIndex:(NSInteger)self.prepTimeSlider.value];
+        NSInteger seconds = [minutes integerValue] * 60;
+        [[Filter instance] setMaxPrepTime:seconds];
+    }
     [self.navigationController pushViewController:[[RecipeViewController alloc]init] animated:NO];
 }
 

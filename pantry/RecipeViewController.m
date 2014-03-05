@@ -141,6 +141,10 @@
         [client addAllowedIngredients:[(NSSet *)[[Filter instance] ingredientFilters] allObjects]];
     }
     
+    if ([[Filter instance] hasMaxPrepTime]) {
+        [client setMaximumTime:[[Filter instance] maximumTime]];
+    }
+    
     [client search:^(AFHTTPRequestOperation *operation, id response) {
         // Yummly attribution
         self.attributionLogo = response[@"attribution"][@"logo"];

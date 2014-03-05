@@ -247,7 +247,6 @@
 #pragma mark - TiTokenField Delegate Methods
 
 - (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token {
-    
     token.title = [token.title capitalizedString];
     [[Filter instance] addIngredientFilter:token.title];
 
@@ -261,6 +260,8 @@
 - (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token {
     [[Filter instance] removeIngredientFilter:token.title];
     [self updateTableViewFrame:self.tableView];
+    NSDictionary *userInfo = @{@"ingredient": [token.title capitalizedString]};
+    [[NSNotificationCenter defaultCenter] postNotificationName:DidRemoveIngredientFilter object:self userInfo:userInfo];
 }
 
 - (BOOL)tokenField:(TITokenField *)tokenField willAddToken:(TIToken *)token {

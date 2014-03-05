@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString *const DidAddIngredientFilter;
+extern NSString *const DidRemoveIngredientFilter;
 
 @interface Filter : NSObject {
     NSMutableSet *ingredientFilters;
@@ -24,7 +25,9 @@ extern NSString *const DidAddIngredientFilter;
 - (void)removeIngredientFilter:(NSString *)ingredient;
 - (BOOL)hasIngredientFilter:(NSString *)ingredient;
 - (void)clearIngredientFilters;
-- (void)setMaximumTime:(NSInteger)time;
+- (void)setMaxPrepTime:(NSInteger)time;
+- (void)clearMaxPrepTime;
+- (BOOL)hasMaxPrepTime;
 
 
 @end

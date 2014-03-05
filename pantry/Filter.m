@@ -7,7 +7,9 @@
 //
 
 #import "Filter.h"
+
 NSString * const DidAddIngredientFilter = @"DidAddIngredientFilter";
+NSString * const DidRemoveIngredientFilter = @"DidRemoveIngredientFilter";
 
 @implementation Filter
 
@@ -25,6 +27,8 @@ NSString * const DidAddIngredientFilter = @"DidAddIngredientFilter";
     return filter;
 }
 
+
+
 - (void)addIngredientFilter:(NSString *)ingredient {
     [self.ingredientFilters addObject:ingredient];
 }
@@ -41,8 +45,16 @@ NSString * const DidAddIngredientFilter = @"DidAddIngredientFilter";
     [self.ingredientFilters removeAllObjects];
 }
 
-- (void)setMaximumTime:(NSInteger)time {
+- (void)setMaxPrepTime:(NSInteger)time {
     self.maximumTime = time;
+}
+
+- (void)clearMaxPrepTime {
+    self.maximumTime = 0;
+}
+
+- (BOOL)hasMaxPrepTime {
+    return self.maximumTime > 0;
 }
 
 
