@@ -18,6 +18,7 @@
 #import "MMDrawerBarButtonItem.h"
 #import "NSMutableArray+Additions.h"
 #import "RecipeIngredient.h"
+#import "FiltersViewController.h"
 
 @interface RecipeViewController ()
 
@@ -45,12 +46,18 @@
     
     // Navigation buttons
     self.navigationItem.leftBarButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter:)];
     
     // Load custom UITableViewCell from nib
     UINib *customNib = [UINib nibWithNibName:@"RecipeCell" bundle:nil];
     [self.tableView registerNib:customNib forCellReuseIdentifier:@"MyRecipeCell"];
     [self reload];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self reload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,6 +170,12 @@
 
 - (void) onMenu:(id)sender {
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+- (void) onFilter:(id)sender {
+    FiltersViewController *vc = [[FiltersViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (IBAction)onAttributionButton:(UIButton *)sender {

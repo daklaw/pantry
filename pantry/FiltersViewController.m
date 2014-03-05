@@ -144,7 +144,7 @@
 
 - (void)onCancel:(id)sender {
     [[Filter instance] clearIngredientFilters];
-    [self.navigationController pushViewController:[[RecipeViewController alloc] init] animated:NO];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)onDoneFilter:(id)sender {
@@ -158,7 +158,7 @@
         NSInteger seconds = [minutes integerValue] * 60;
         [[Filter instance] setMaxPrepTime:seconds];
     }
-    [self.navigationController pushViewController:[[RecipeViewController alloc]init] animated:NO];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

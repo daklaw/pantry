@@ -22,9 +22,8 @@
     // Override point for customization after application launch.
     
     
-    FiltersViewController *vc = [[FiltersViewController alloc] init];
-    //RecipeViewController *recipeViewController = [[RecipeViewController alloc] init];
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    RecipeViewController *recipeViewController = [[RecipeViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:recipeViewController];
     
     
     // Drawer Code

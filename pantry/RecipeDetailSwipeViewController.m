@@ -14,6 +14,7 @@
 #import "RecipeWebViewController.h"
 #import "SwipeView.h"
 #import "UIImageView+AFNetworking.h"
+#import "FiltersViewController.h"
 #import "YummlyClient.h"
 
 @interface RecipeDetailSwipeViewController () <SwipeViewDataSource, SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -49,6 +50,8 @@
     // Configure swipeView
     self.swipeView.pagingEnabled = YES;
     self.swipeView.currentItemIndex = self.recipeIndex;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -193,11 +196,19 @@
     return cell;
 }
 
+
+
 #pragma mark - Private methods
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender {
     [[GroceryList sharedList] addRecipe:self.recipes[self.swipeView.currentItemIndex]];
     [sender setUserInteractionEnabled:NO];
+}
+
+- (void) onFilter:(id)sender {
+    FiltersViewController *vc = [[FiltersViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 @end
