@@ -106,7 +106,7 @@
         
         addToGroceryListButton = [[UIButton alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.size.height - 30, view.bounds.size.width, 30)];
         addToGroceryListButton.backgroundColor = [UIColor lightGrayColor];
-        addToGroceryListButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        addToGroceryListButton.titleLabel.font = [UIFont systemFontOfSize:16];
         addToGroceryListButton.titleLabel.textColor = [UIColor whiteColor];
         [addToGroceryListButton setTitle:@"Add Ingredients to Grocery List" forState:UIControlStateNormal];
         [addToGroceryListButton addTarget:self action:@selector(onAddToGroceryList:) forControlEvents:UIControlEventTouchUpInside];
@@ -268,7 +268,7 @@
     UIView *notificationView = [[UIView alloc] initWithFrame:startFrame];
     UILabel *label = [[UILabel alloc] initWithFrame:notificationView.bounds];
     label.backgroundColor = [[UIView appearance] tintColor];
-    label.font = [UIFont boldSystemFontOfSize:12];
+    label.font = [UIFont systemFontOfSize:16];
     label.text = message;
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
@@ -283,6 +283,7 @@
     } completion:^(BOOL finished){
         [UIView animateWithDuration:1 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
             notificationView.alpha = 0;
+            notificationView.frame = startFrame;
         } completion:nil];
     }];
 }
