@@ -96,6 +96,7 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     [cell setBackgroundColor:[UIColor darkGrayColor]];
     [cell.ingredientLabel setTextColor:[UIColor whiteColor]];
     [cell.ingredientLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     // Configure the cell...
     NSString *ingredientString = self.ingredientsList[indexPath.row];
