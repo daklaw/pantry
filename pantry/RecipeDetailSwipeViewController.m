@@ -86,6 +86,7 @@
     UIImageView *recipeImage = nil;
     UILabel *nameLabel = nil;
     UITableView *ingredientsView = nil;
+    UILabel *directionsLabel = nil;
     UIButton *addToGroceryListButton = nil;
     
     if (!view) {
@@ -106,12 +107,20 @@
         
         addToGroceryListButton = [[UIButton alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.size.height - 30, view.bounds.size.width, 30)];
         addToGroceryListButton.backgroundColor = [UIColor lightGrayColor];
-        addToGroceryListButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+        addToGroceryListButton.titleLabel.font = [UIFont systemFontOfSize:16];
         addToGroceryListButton.titleLabel.textColor = [UIColor whiteColor];
         [addToGroceryListButton setTitle:@"Add Ingredients to Grocery List" forState:UIControlStateNormal];
         [addToGroceryListButton addTarget:self action:@selector(onAddToGroceryList:) forControlEvents:UIControlEventTouchUpInside];
         addToGroceryListButton.tag = 3;
         [view addSubview:addToGroceryListButton];
+
+        directionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, addToGroceryListButton.frame.origin.y - 20, 280, 20)];
+        directionsLabel.backgroundColor = [UIColor whiteColor];
+        directionsLabel.font = [UIFont systemFontOfSize:12];
+        directionsLabel.text = @"(Tap recipe image to navigate to source webpage)";
+        directionsLabel.textColor = [UIColor darkGrayColor];
+        directionsLabel.tag = 4;
+        [view addSubview:directionsLabel];
     }
     else
     {
@@ -127,7 +136,7 @@
     
     [recipeImage setImageWithURL:recipe.imageURL];
 
-    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 240, view.bounds.size.width, 240)];
+    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, directionsLabel.frame.origin.y - 240, view.bounds.size.width, 240)];
     [ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     ingredientsView.allowsSelection = NO;
     ingredientsView.delegate = self;
@@ -283,7 +292,7 @@
     UIView *notificationView = [[UIView alloc] initWithFrame:startFrame];
     UILabel *label = [[UILabel alloc] initWithFrame:notificationView.bounds];
     label.backgroundColor = [[UIView appearance] tintColor];
-    label.font = [UIFont boldSystemFontOfSize:12];
+    label.font = [UIFont systemFontOfSize:16];
     label.text = message;
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
@@ -298,6 +307,7 @@
     } completion:^(BOOL finished){
         [UIView animateWithDuration:1 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
             notificationView.alpha = 0;
+            notificationView.frame = startFrame;
         } completion:nil];
     }];
 }
