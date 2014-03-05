@@ -96,13 +96,15 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     [cell setBackgroundColor:[UIColor darkGrayColor]];
     [cell.ingredientLabel setTextColor:[UIColor whiteColor]];
     [cell.ingredientLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0f]];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     // Configure the cell...
     NSString *ingredientString = self.ingredientsList[indexPath.row];
     
     NSDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[indexPath.row]];
     
-    [cell.checkBox setImage:[UIImage imageNamed:@"checkboxClosed"] forState:UIControlStateSelected];
+    [cell.checkBox setImage:[UIImage imageNamed:@"checkboxChecked"] forState:UIControlStateSelected];
+    [cell.checkBox setBackgroundColor:[UIColor whiteColor]];
     [cell.checkBox addTarget:self action:@selector(selectIngredient:) forControlEvents:UIControlEventTouchUpInside];
     cell.checkBox.tag = indexPath.row;
     
@@ -111,18 +113,21 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     UIView *recipeSubview = [[UIView alloc] initWithFrame:CGRectMake(35, 25, cell.frame.size.width-35, CELL_RECIPE_HEIGHT)];
     
     NSInteger enumeration = 0;
+    BOOL checked = YES;
     for (NSString *recipe in [dict allKeys]) {
         UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0+enumeration*CELL_RECIPE_HEIGHT, 10, 10)];
-        [detailButton setImage:[UIImage imageNamed:@"checkboxUnmarked"] forState:UIControlStateNormal];
-        [detailButton setImage:[UIImage imageNamed:@"checkboxClosed"] forState:UIControlStateSelected];
+        [detailButton setImage:[UIImage imageNamed:@"checkboxUnchecked"] forState:UIControlStateNormal];
+        [detailButton setImage:[UIImage imageNamed:@"checkboxChecked"] forState:UIControlStateSelected];
         [detailButton addTarget:self action:@selector(selectIngredient:) forControlEvents:UIControlEventTouchUpInside];
-        [detailButton setTag:RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration];
+        [detailButton setBackgroundColor:[UIColor whiteColor]];
+        [detailButton setTag:(indexPath.row+1)*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+enumeration];
         
+        NSMutableDictionary *ingredientDict = [dict objectForKey:recipe];
         UILabel *ingredientLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, 13.0f)];
         ingredientLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
         ingredientLabel.backgroundColor = [UIColor clearColor];
         ingredientLabel.textColor = [UIColor whiteColor];
-        ingredientLabel.text = [dict objectForKey:recipe];
+        ingredientLabel.text = [ingredientDict objectForKey:@"ingredient"];
         
         UILabel *recipeLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, CELL_RECIPE_INGREDIENT_HEIGHT+enumeration*CELL_RECIPE_HEIGHT, cell.frame.size.width-35, CELL_RECIPE_DETAIL_HEIGHT)];
         recipeLabel.font = [UIFont fontWithName:@"Helvetica" size:10.0f];
@@ -134,6 +139,15 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
         [recipeSubview addSubview:ingredientLabel];
         [recipeSubview addSubview:recipeLabel];
         [cell.contentView addSubview:recipeSubview];
+        
+        if ([[ingredientDict objectForKey:@"checked"] boolValue]) {
+            [detailButton setSelected:[[ingredientDict objectForKey:@"checked"] boolValue]];
+        }
+        else {
+            checked = NO;
+        }
+        
+        [cell.checkBox setSelected:checked];
         
         enumeration += 1;
     }
@@ -159,16 +173,30 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
 }
 
 - (void) selectIngredient:(UIButton *)sender {
+    // Unnessarily complicated, but I'm tired will need to refactor big time
     [sender setSelected:!sender.selected];
     
     if (sender.tag < RECIPE_CHECKBOX_BUTTON_TAG_OFFSET) {
         GroceryListCell *cell = (GroceryListCell *)[[[sender superview] superview] superview];
-        NSDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[sender.tag]];
+        NSMutableDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[sender.tag]];
+        for (NSString *key in [dict allKeys]) {
+            dict[key][@"checked"] = [NSNumber numberWithBool:sender.selected];
+        }
         for (int i = 0; i < [[dict allKeys] count]; i++) {
-            UIButton *detailButton = (UIButton *)[cell.contentView viewWithTag:RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+i];
+            UIButton *detailButton = (UIButton *)[cell.contentView viewWithTag:(sender.tag+1)*RECIPE_CHECKBOX_BUTTON_TAG_OFFSET+i];
             [detailButton setSelected:sender.selected];
+            
         }
     }
+    else {
+        NSInteger listIndex = (sender.tag / RECIPE_CHECKBOX_BUTTON_TAG_OFFSET) - 1;
+        NSInteger recipeIndex = sender.tag % RECIPE_CHECKBOX_BUTTON_TAG_OFFSET;
+        
+        NSMutableDictionary *dict = [[[GroceryList sharedList] list] objectForKey:self.ingredientsList[listIndex]];
+        dict[[dict allKeys][recipeIndex]][@"checked"] = [NSNumber numberWithBool:sender.selected];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:[[GroceryList sharedList] list] forKey:@"groceryList"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
 @end
