@@ -126,26 +126,28 @@
     [view addSubview:ingredientsView];
     
     YummlyClient *client = [[YummlyClient alloc] init];
-    [client getRecipe:recipe.yummlyID
-              success:^(AFHTTPRequestOperation *operation, id response) {
-                  // Populate additional fields from recipe details
-                  
-                  // Recipe ingredients
-                  [recipe.ingredients removeAllObjects];
-                  for (id ingredient in [NSMutableArray removeDuplicates:response[@"ingredientLines"]]) {
-                      [recipe.ingredients addObject:[[RecipeIngredient alloc] initWithString:ingredient]];
-                  }
-                  if ([recipe.ingredients count] > 0) {
-                      [ingredientsView reloadData];
-                  }
+    if ([recipe.ingredients count] == 0) {
+        [client getRecipe:recipe.yummlyID
+                  success:^(AFHTTPRequestOperation *operation, id response) {
+                      // Populate additional fields from recipe details
+                      
+                      // Recipe ingredients
+                      [recipe.ingredients removeAllObjects];
+                      for (id ingredient in [NSMutableArray removeDuplicates:response[@"ingredientLines"]]) {
+                          [recipe.ingredients addObject:[[RecipeIngredient alloc] initWithString:ingredient]];
+                      }
+                      if ([recipe.ingredients count] > 0) {
+                          [ingredientsView reloadData];
+                      }
 
-                  // Recipe source
-                  recipe.sourceRecipeURL = [NSURL URLWithString:[response[@"source"] objectForKey:@"sourceRecipeUrl"]];
-                  recipe.sourceDisplayName = [response[@"source"] objectForKey:@"sourceDisplayName"];
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  NSLog(@"%@", error);
-              }];
+                      // Recipe source
+                      recipe.sourceRecipeURL = [NSURL URLWithString:[response[@"source"] objectForKey:@"sourceRecipeUrl"]];
+                      recipe.sourceDisplayName = [response[@"source"] objectForKey:@"sourceDisplayName"];
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      NSLog(@"%@", error);
+                  }];
+    }
 
     return view;
 }
