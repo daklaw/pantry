@@ -294,13 +294,9 @@
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
         [self.swipeView reloadData];
-        [UIView animateWithDuration:0.5 animations:^{
-            self.introView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self.introView removeFromSuperview];
-            [self.navigationController setNavigationBarHidden:NO animated:NO];
-        }];
-        
+
+        [self.introView removeFromSuperview];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
         if (self.overlayView && ![[NSUserDefaults standardUserDefaults] valueForKey:@"hasSeenTutorial"]) {
             UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
             [self.overlayView addGestureRecognizer:recognizer];
