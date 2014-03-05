@@ -81,7 +81,7 @@
     // Configure the cell...
     Recipe *recipe = self.recipes[indexPath.row];
     cell.nameLabel.text = recipe.name;
-    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%lu", [recipe ingredientCount]];
+    cell.numIngredientsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)[recipe ingredientCount]];
     
     [cell.recipeImage setImageWithURL:recipe.imageURL];
     
@@ -122,32 +122,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    /*
-    // navigate to Recipe Detail view controller
-    RecipeDetailViewController *vc = [[RecipeDetailViewController alloc]
-                                      initWithNibName:@"RecipeDetailViewController"
-                                               bundle:nil];
-    vc.recipe = self.recipes[indexPath.row];
-
-    YummlyClient *client = [[YummlyClient alloc] init];
-    [client getRecipe:vc.recipe.yummlyID
-              success:^(AFHTTPRequestOperation *operation, id response) {
-                  // Populate additional fields from recipe details
-                  
-                  // Create Recipe Ingredients
-                  for (id ingredient in [NSMutableArray removeDuplicates:response[@"ingredientLines"]]) {
-                      [vc.recipe.ingredients addObject:[[RecipeIngredient alloc] initWithString:ingredient]];
-                  }
-                  vc.recipe.sourceRecipeURL = [NSURL URLWithString:[response[@"source"]
-                                                                    objectForKey:@"sourceRecipeUrl"]];
-                  
-                  // Navigate to recipe details
-                  [self.navigationController pushViewController:vc animated:YES];
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  NSLog(@"%@", error);
-              }];
-    */
 
     // navigate to Recipe Detail view controller
     RecipeDetailSwipeViewController *vc = [[RecipeDetailSwipeViewController alloc] init];
@@ -164,7 +138,7 @@
     YummlyClient *client = [[YummlyClient alloc] init];
 
     if ([[IngredientsFilter instance] filters]) {
-        [client addAllowedIngredients:[[IngredientsFilter instance] filters]];
+        [client addAllowedIngredients:[(NSSet *)[[IngredientsFilter instance] filters] allObjects]];
     }
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {

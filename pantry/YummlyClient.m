@@ -27,7 +27,7 @@
     if (self) {
         // establish empty parameters
         self.params = [[NSMutableDictionary alloc] init];
-        [self.params setObject:[[NSMutableSet alloc] init] forKey:@"allowedIngredient"];
+        [self.params setObject:[[NSMutableArray alloc] init] forKey:@"allowedIngredient"];
     }
     
     return self;
