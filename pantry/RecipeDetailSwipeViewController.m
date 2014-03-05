@@ -22,6 +22,8 @@
 @interface RecipeDetailSwipeViewController () <SwipeViewDataSource, SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet SwipeView *swipeView;
+@property (nonatomic, strong) IBOutlet UIView *overlayView;
+@property (nonatomic, strong) IBOutlet UIView *introView;
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender;
 
@@ -33,6 +35,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+
         // Custom initialization
     }
     return self;
@@ -41,7 +44,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.recipes = [[NSMutableArray alloc] init];
     [self recipesWithYummly];
 
@@ -60,12 +62,26 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Grocery List" style:UIBarButtonItemStylePlain target:self action:@selector(onGrocery:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recipesWithYummly) name:DidFinishFilter object:nil];
-
+    
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
+        self.overlayView = [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil][0];
+        [self.overlayView setBackgroundColor:[UIColor clearColor]];
+        self.overlayView.frame = self.view.frame;
+    }
+    
+    self.introView = [[NSBundle mainBundle] loadNibNamed:@"IntroView" owner:self options:nil][0];
+    self.introView.frame = self.view.frame;
+    [self.view addSubview:self.introView];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
+
+//- (void)viewDidAppear:(BOOL)animated {
+//    [self.view bringSubviewToFront:self.overlayView];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -97,7 +113,7 @@
         recipeImage.tag = 1;
         [view addSubview:recipeImage];
         
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, view.bounds.origin.y + 72, 280, 21)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, view.bounds.origin.y + 72, 300, 21)];
         nameLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:20];
         nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         nameLabel.numberOfLines = 0;
@@ -278,10 +294,28 @@
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
         [self.swipeView reloadData];
+        [UIView animateWithDuration:0.5 animations:^{
+            self.introView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self.introView removeFromSuperview];
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+        }];
+        
+        if (self.overlayView && ![[NSUserDefaults standardUserDefaults] valueForKey:@"hasSeenTutorial"]) {
+            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+            [self.overlayView addGestureRecognizer:recognizer];
+            [self.overlayView setUserInteractionEnabled:YES];
+            [self.view addSubview:self.overlayView];
+            [[NSUserDefaults standardUserDefaults] setValue:@YES forKey:@"hasSeenTutorial"];
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
+}
+
+- (void)handleTap:(UIGestureRecognizer *)recognizer {
+    [self.overlayView removeFromSuperview];
 }
 
 - (void)showNotificationMessage:(NSString *)message
