@@ -86,10 +86,12 @@
         [self.tokenField addTokenWithTitle:(NSString *)filter];
     }
 
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:resetBarButton, searchBarButton, doneBarButton, nil];
+    //self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:resetBarButton, searchBarButton, doneBarButton, nil];
     
-    MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
-    self.navigationItem.leftBarButtonItem = button;
+    //MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
+    //self.navigationItem.leftBarButtonItem = button;
+    self.navigationItem.leftBarButtonItem = doneBarButton;
+    self.navigationItem.rightBarButtonItem = resetBarButton;
     
     self.autocompleteTableView = [[UITableView alloc] initWithFrame:
                              self.tableView.frame style:UITableViewStylePlain];
