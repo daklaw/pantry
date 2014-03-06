@@ -122,14 +122,19 @@
         recipeImage = [[UIImageView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.origin.y, 320, 320)];
         recipeImage.tag = 1;
         [view addSubview:recipeImage];
+
+        UIView *translucentView = [[UIView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.origin.y + 64, view.bounds.size.width, 40)];
+        translucentView.backgroundColor = [UIColor darkGrayColor];
+        translucentView.alpha = 0.7;
         
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, view.bounds.origin.y + 72, 300, 21)];
-        nameLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:20];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 8, 280, 21)];
+        nameLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:16];
         nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         nameLabel.numberOfLines = 0;
         nameLabel.textColor = [UIColor whiteColor];
         nameLabel.tag = 2;
-        [view addSubview:nameLabel];
+        [translucentView addSubview:nameLabel];
+        [view addSubview:translucentView];
         
         addToGroceryListButton = [[UIButton alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.size.height - 30, view.bounds.size.width, 30)];
         addToGroceryListButton.backgroundColor = [UIColor lightGrayColor];
@@ -170,6 +175,8 @@
 
     nameLabel.text = recipe.name;
     [nameLabel sizeToFit];
+    NSLog(@"%d", nameLabel.numberOfLines);
+    [nameLabel.superview sizeToFit];
     
     [recipeImage setImageWithURL:recipe.imageURL];
 
@@ -178,7 +185,6 @@
     ingredientsView.allowsSelection = NO;
     ingredientsView.delegate = self;
     ingredientsView.dataSource = self;
-    ingredientsView.scrollEnabled = NO;
     ingredientsView.separatorStyle = UITableViewCellSeparatorStyleNone;
     ingredientsView.tag = index;
     [ingredientsView setBackgroundColor:[UIColor darkGrayColor]];
