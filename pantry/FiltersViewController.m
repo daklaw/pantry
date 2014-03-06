@@ -10,7 +10,6 @@
 #import "Filter.h"
 #import "TiTokenField.h"
 #import "IngredientListViewController.h"
-#import "RecipeViewController.h"
 
 static const NSInteger maxSliderValue = 11;
 static const NSInteger minSliderValue = 0;

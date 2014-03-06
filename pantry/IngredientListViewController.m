@@ -7,7 +7,6 @@
 //
 
 #import "IngredientListViewController.h"
-#import "RecipeViewController.h"
 #import "MMDrawerBarButtonItem.h"
 #import "Filter.h"
 
@@ -26,7 +25,6 @@
 @property (nonatomic, assign) BOOL canAddPersonalIngredient;
 
 - (void) resetFilters;
-- (void) searchForRecipes;
 - (void) onMenu:(id)sender;
 
 @end
@@ -72,10 +70,6 @@
         [self.tokenField addTokenWithTitle:(NSString *)filter];
     }
 
-    //self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:resetBarButton, searchBarButton, doneBarButton, nil];
-    
-    //MMDrawerBarButtonItem *button = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(onMenu:)];
-    //self.navigationItem.leftBarButtonItem = button;
     self.navigationItem.leftBarButtonItem = clearBarButton;
     self.navigationItem.rightBarButtonItem = doneBarButton;
     
@@ -285,11 +279,6 @@
 
 - (void) resetFilters {
     [self.tokenField removeAllTokens];
-}
-
-- (void) searchForRecipes {
-    RecipeViewController *recipeViewController = [[RecipeViewController alloc] init];
-    [self.navigationController pushViewController:recipeViewController animated:YES];
 }
 
 - (void) onMenu:(id)sender {

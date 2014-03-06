@@ -11,7 +11,6 @@
 #import "RecipeDetailSwipeViewController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
-#import "MenuViewController.h"
 #import "FiltersViewController.h"
 
 @implementation AppDelegate
@@ -25,16 +24,7 @@
     RecipeDetailSwipeViewController *vc = [[RecipeDetailSwipeViewController alloc] init];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     
-    
-    // Drawer Code
-    MMDrawerController *drawerController = [[MMDrawerController alloc] initWithCenterViewController:nvc
-            leftDrawerViewController:[[MenuViewController alloc] init]];
-    [drawerController setMaximumLeftDrawerWidth:200.0];
-    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
-    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
-    drawerController.centerViewController = nvc;
-    
-    self.window.rootViewController = drawerController;
+    self.window.rootViewController = nvc;
     
     
     self.window.backgroundColor = [UIColor whiteColor];
