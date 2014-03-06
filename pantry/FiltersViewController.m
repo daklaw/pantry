@@ -174,6 +174,10 @@ static const NSInteger minSliderValue = 0;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return NO;
+}
+
 
 
 @end

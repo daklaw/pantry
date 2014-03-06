@@ -44,6 +44,7 @@
 		C591257318C70E3100181308 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C591257218C70E3100181308 /* Filter.m */; };
 		C591257818C7CAE600181308 /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C591257718C7CAE600181308 /* OverlayView.xib */; };
 		C591257A18C7D5AB00181308 /* IntroView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C591257918C7D5AB00181308 /* IntroView.xib */; };
+		C591257C18C7F21400181308 /* NoResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C591257B18C7F21400181308 /* NoResultsView.xib */; };
 		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
 		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 		C5E7443218BD60640000F123 /* RecipeIngredient.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E7443118BD60640000F123 /* RecipeIngredient.m */; };
@@ -118,6 +119,7 @@
 		C591257218C70E3100181308 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		C591257718C7CAE600181308 /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = "<group>"; };
 		C591257918C7D5AB00181308 /* IntroView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroView.xib; sourceTree = "<group>"; };
+		C591257B18C7F21400181308 /* NoResultsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoResultsView.xib; sourceTree = "<group>"; };
 		C596433E18AECEEA00E0AF13 /* YummlyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YummlyClient.h; sourceTree = "<group>"; };
 		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
 		C596434518AEE18F00E0AF13 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				22F0269118B0C7A000865313 /* RecipeCell.xib */,
 				C591257718C7CAE600181308 /* OverlayView.xib */,
 				C591257918C7D5AB00181308 /* IntroView.xib */,
+				C591257B18C7F21400181308 /* NoResultsView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				22F0269D18B1768000865313 /* RecipeDetailViewController.xib in Resources */,
 				2229A4BA18B216BC00423113 /* GroceryViewController.xib in Resources */,
 				22C6D9E918C402810025B898 /* RecipeDetailSwipeViewController.xib in Resources */,
+				C591257C18C7F21400181308 /* NoResultsView.xib in Resources */,
 				22F0269218B0C7A000865313 /* RecipeCell.xib in Resources */,
 				C54A27EF18C010EB0020E228 /* GroceryListCell.xib in Resources */,
 				C591257018C698B900181308 /* FiltersViewController.xib in Resources */,

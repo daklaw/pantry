@@ -25,6 +25,7 @@
 @property (nonatomic, weak) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) IBOutlet UIView *overlayView;
 @property (nonatomic, strong) IBOutlet UIView *introView;
+@property (nonatomic, strong) IBOutlet UIView *noResultsView;
 @property (nonatomic, assign) BOOL pastIntro;
 
 
@@ -75,8 +76,13 @@
     self.pastIntro = NO;
     self.introView = [[NSBundle mainBundle] loadNibNamed:@"IntroView" owner:self options:nil][0];
     self.introView.frame = self.view.frame;
-    [self.view addSubview:self.introView];
+    
+    self.noResultsView = [[NSBundle mainBundle] loadNibNamed:@"NoResultsView" owner:self options:nil][0];
+    self.noResultsView.frame = [[UIScreen mainScreen] bounds];
+    
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.introView setHidden:YES];
+    [self.view addSubview:self.introView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,7 +110,7 @@
     UIImageView *recipeImage = nil;
     UILabel *nameLabel = nil;
     UITableView *ingredientsView = nil;
-    UILabel *directionsLabel = nil;
+//    UILabel *directionsLabel = nil;
     UIButton *addToGroceryListButton = nil;
     
     if (!view) {
@@ -132,13 +138,13 @@
         addToGroceryListButton.tag = 3;
         [view addSubview:addToGroceryListButton];
 
-        directionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, addToGroceryListButton.frame.origin.y - 20, 280, 20)];
-        directionsLabel.backgroundColor = [UIColor whiteColor];
-        directionsLabel.font = [UIFont systemFontOfSize:12];
-        directionsLabel.text = @"(Tap recipe image to navigate to source webpage)";
-        directionsLabel.textColor = [UIColor darkGrayColor];
-        directionsLabel.tag = 4;
-        [view addSubview:directionsLabel];
+//        directionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, addToGroceryListButton.frame.origin.y - 20, 280, 20)];
+//        directionsLabel.backgroundColor = [UIColor whiteColor];
+//        directionsLabel.font = [UIFont systemFontOfSize:12];
+//        directionsLabel.text = @"(Tap recipe image to navigate to source webpage)";
+//        directionsLabel.textColor = [UIColor darkGrayColor];
+//        directionsLabel.tag = 4;
+//        [view addSubview:directionsLabel];
     }
     else
     {
@@ -154,7 +160,7 @@
     
     [recipeImage setImageWithURL:recipe.imageURL];
 
-    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, directionsLabel.frame.origin.y - 240, view.bounds.size.width, 240)];
+    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 240, view.bounds.size.width, 240)];
     [ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     ingredientsView.allowsSelection = NO;
     ingredientsView.delegate = self;
@@ -295,8 +301,16 @@
         for (id data in response[@"matches"]) {
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
-        [self.swipeView reloadData];
-        [self.swipeView setCurrentItemIndex:0];
+        if ([self.recipes count] == 0) {
+            [self.view addSubview:self.noResultsView];
+
+        }
+        else {
+            [self.swipeView reloadData];
+            [self.swipeView setCurrentItemIndex:0];
+
+            [self.noResultsView removeFromSuperview];
+        }
 
         [self.introView removeFromSuperview];
         self.pastIntro = YES;
@@ -350,6 +364,10 @@
             notificationView.frame = startFrame;
         } completion:nil];
     }];
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return NO;
 }
 
 @end

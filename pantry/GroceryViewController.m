@@ -200,4 +200,9 @@ static const CGFloat CELL_RECIPE_INGREDIENT_HEIGHT = 13.0f;
     [self.tableView reloadData];
     
 }
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return NO;
+}
+
 @end
