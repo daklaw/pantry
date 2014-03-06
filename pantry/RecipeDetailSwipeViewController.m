@@ -76,13 +76,14 @@
     self.pastIntro = NO;
     self.introView = [[NSBundle mainBundle] loadNibNamed:@"IntroView" owner:self options:nil][0];
     self.introView.frame = self.view.frame;
+    [self.view addSubview:self.introView];
     
     self.noResultsView = [[NSBundle mainBundle] loadNibNamed:@"NoResultsView" owner:self options:nil][0];
     self.noResultsView.frame = [[UIScreen mainScreen] bounds];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self.introView setHidden:YES];
-    [self.view addSubview:self.introView];
+
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
