@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FiltersViewController">
             <connections>
+                <outlet property="clearButton" destination="U66-zL-olN" id="aew-KY-Msf"/>
                 <outlet property="editButton" destination="MWS-tG-ZUh" id="OZ6-7P-E0e"/>
                 <outlet property="prepTimeLabel" destination="Xnv-Rt-rjC" id="3nE-5c-uGB"/>
                 <outlet property="prepTimeSlider" destination="uzx-Hg-RvW" id="6mg-iV-Ffb"/>
@@ -55,6 +56,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U66-zL-olN">
+                    <rect key="frame" x="212" y="48" width="37" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Clear">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

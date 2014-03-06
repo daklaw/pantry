@@ -42,6 +42,10 @@ NSString * const DidFinishFilter = @"DidFinishFilter";
     return [self.ingredientFilters containsObject:ingredient];
 }
 
+- (void)removeAllIngredientFilters {
+    [self.ingredientFilters removeAllObjects];
+}
+
 - (void)clearIngredientFilters {
     [self.ingredientFilters removeAllObjects];
 }

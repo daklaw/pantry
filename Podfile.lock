@@ -30,18 +30,21 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.5.3):
     - MMDrawerController/Core
+  - SVProgressHUD (1.0)
   - SwipeView (1.3)
   - TITokenField (0.9.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - MMDrawerController (~> 0.5.3)
+  - SVProgressHUD
   - SwipeView (~> 1.3)
   - TITokenField (~> 0.9.5)
 
 SPEC CHECKSUMS:
   AFNetworking: e8cfd8f3fe3bfe19124a0cc63f4d45752d892a56
   MMDrawerController: 4445e1927e8947b7e2382136c9b7109840efbfb9
+  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   SwipeView: 9533067753d80f15049f70cf903ef7980f79acf2
   TITokenField: 664250352a44196ffe640f3a5c47ee6244599216
 

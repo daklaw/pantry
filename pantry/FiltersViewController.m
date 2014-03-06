@@ -10,16 +10,17 @@
 #import "Filter.h"
 #import "TiTokenField.h"
 #import "IngredientListViewController.h"
-#import "RecipeViewController.h"
 
+static const NSInteger maxSliderValue = 11;
+static const NSInteger minSliderValue = 0;
 @interface FiltersViewController ()
 
-@property (strong, nonatomic) IBOutlet TITokenField *ingredientsField;
 @property (strong, nonatomic) IBOutlet UISlider *prepTimeSlider;
 @property (strong, nonatomic) IBOutlet UILabel *prepTimeLabel;
 @property (strong, nonatomic) IBOutlet UIView *testView;
 @property (strong, nonatomic) NSMutableSet *ingredients;
 @property (strong, nonatomic) IBOutlet UIButton *editButton;
+@property (strong, nonatomic) IBOutlet UIButton *clearButton;
 
 @end
 
@@ -51,14 +52,15 @@
     }
     [self layoutTokens];
     
-    self.prepTimeSlider.maximumValue = 11;
-    self.prepTimeSlider.minimumValue = 0;
+    self.prepTimeSlider.maximumValue = maxSliderValue;
+    self.prepTimeSlider.minimumValue = minSliderValue;
     // TODO: Set slider value to what it was previously (if it exists)
     [self.prepTimeSlider setValue:86400];
     [self.prepTimeSlider setContinuous:YES];
     [self.prepTimeSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     
     [self.editButton addTarget:self action:@selector(onEditIngredients:) forControlEvents:UIControlEventTouchUpInside];
+    [self.clearButton addTarget:self action:@selector(onClearIngredients:) forControlEvents:UIControlEventTouchUpInside];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateIngredientsField:) name:DidAddIngredientFilter object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeIngredientField:) name:DidRemoveIngredientFilter object:nil];
@@ -120,6 +122,7 @@
             xOrigin = xOrigin + token.bounds.size.width + xMargin;
         }
         [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+        [self.clearButton setHidden:NO];
     }
     else {
         CGFloat yOrigin = self.testView.bounds.size.height / 2.0 - 10.0f;
@@ -132,6 +135,7 @@
         [noIngredients setFrame:(CGRect){CGPointMake(xOrigin, yOrigin), noIngredients.bounds.size}];
         [self.testView addSubview:noIngredients];
         [self.editButton setTitle:@"Add" forState:UIControlStateNormal];
+        [self.clearButton setHidden:YES];
     }
     
 }
@@ -147,6 +151,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)onClearIngredients:(id)sender {
+    // Reset Ingredients
+    [self.ingredients removeAllObjects];
+    [[Filter instance] removeAllIngredientFilters];
+    [self layoutTokens];
+}
+
 - (void)onDoneFilter:(id)sender {
     NSInteger sliderValue = (NSInteger)self.prepTimeSlider.value;
     if (sliderValue == 11) {
@@ -160,6 +171,10 @@
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:DidFinishFilter object:self];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return NO;
 }
 
 

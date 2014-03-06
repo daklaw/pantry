@@ -18,12 +18,16 @@
 #import "GroceryViewController.h"
 #import "YummlyClient.h"
 #import "Filter.h"
+#import "SVProgressHUD.h"
 
 @interface RecipeDetailSwipeViewController () <SwipeViewDataSource, SwipeViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) IBOutlet UIView *overlayView;
 @property (nonatomic, strong) IBOutlet UIView *introView;
+@property (nonatomic, strong) IBOutlet UIView *noResultsView;
+@property (nonatomic, assign) BOOL pastIntro;
+
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender;
 
@@ -61,7 +65,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilter:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Grocery List" style:UIBarButtonItemStylePlain target:self action:@selector(onGrocery:)];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recipesWithYummly) name:DidFinishFilter object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reSearchYummly) name:DidFinishFilter object:nil];
     
     if (![[NSUserDefaults standardUserDefaults] valueForKey:@"seenTutorial"]) {
         self.overlayView = [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil][0];
@@ -69,19 +73,23 @@
         self.overlayView.frame = self.view.frame;
     }
     
+    self.pastIntro = NO;
     self.introView = [[NSBundle mainBundle] loadNibNamed:@"IntroView" owner:self options:nil][0];
     self.introView.frame = self.view.frame;
-    [self.view addSubview:self.introView];
+    
+    self.noResultsView = [[NSBundle mainBundle] loadNibNamed:@"NoResultsView" owner:self options:nil][0];
+    self.noResultsView.frame = [[UIScreen mainScreen] bounds];
+    
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.introView setHidden:YES];
+    [self.view addSubview:self.introView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [self.view bringSubviewToFront:self.overlayView];
-//}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -101,9 +109,10 @@
 {
     UIImageView *recipeImage = nil;
     UILabel *nameLabel = nil;
+    UILabel *prepTimeLabel = nil;
     UITableView *ingredientsView = nil;
-    UILabel *directionsLabel = nil;
     UIButton *addToGroceryListButton = nil;
+    Recipe *recipe = self.recipes[index];
     
     if (!view) {
         view = [[UIView alloc] initWithFrame:self.swipeView.bounds];
@@ -129,30 +138,41 @@
         [addToGroceryListButton addTarget:self action:@selector(onAddToGroceryList:) forControlEvents:UIControlEventTouchUpInside];
         addToGroceryListButton.tag = 3;
         [view addSubview:addToGroceryListButton];
-
-        directionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, addToGroceryListButton.frame.origin.y - 20, 280, 20)];
-        directionsLabel.backgroundColor = [UIColor whiteColor];
-        directionsLabel.font = [UIFont systemFontOfSize:12];
-        directionsLabel.text = @"(Tap recipe image to navigate to source webpage)";
-        directionsLabel.textColor = [UIColor darkGrayColor];
-        directionsLabel.tag = 4;
-        [view addSubview:directionsLabel];
+        
+        UILabel *prepTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.origin.y+320, view.bounds.size.width, 20.0f)];
+        prepTimeLabel.font = [UIFont fontWithName:@"Helvetica" size:14.0f];
+        prepTimeLabel.textColor = [UIColor whiteColor];
+        prepTimeLabel.backgroundColor = [UIColor darkGrayColor];
+        prepTimeLabel.numberOfLines = 1;
+        prepTimeLabel.tag = 4;
+        NSInteger cookTime = recipe.cookTime;
+        if (cookTime) {
+            cookTime = cookTime / 60;
+            prepTimeLabel.text = [NSString stringWithFormat:@"Estimated Prep Time: %d minutes", cookTime];
+            
+        }
+        else {
+            prepTimeLabel.text = @"No Prep Time Specified";
+        }
+        
+        [view addSubview:prepTimeLabel];
     }
     else
     {
         recipeImage = (UIImageView *)[view viewWithTag:1];
         nameLabel = (UILabel *)[view viewWithTag:2];
         addToGroceryListButton = (UIButton *)[view viewWithTag:3];
+        prepTimeLabel = (UILabel *)[view viewWithTag:4];
     }
     
     // Populate view with recipe details
-    Recipe *recipe = self.recipes[index];
+
     nameLabel.text = recipe.name;
     [nameLabel sizeToFit];
     
     [recipeImage setImageWithURL:recipe.imageURL];
 
-    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, directionsLabel.frame.origin.y - 240, view.bounds.size.width, 240)];
+    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 200, view.bounds.size.width, 200)];
     [ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     ingredientsView.allowsSelection = NO;
     ingredientsView.delegate = self;
@@ -257,7 +277,6 @@
 
 - (IBAction)onAddToGroceryList:(UIButton *)sender {
     [[GroceryList sharedList] addRecipe:self.recipes[self.swipeView.currentItemIndex]];
-    [sender setUserInteractionEnabled:NO];
     [self showNotificationMessage:@"Ingredients added."];
 }
 
@@ -283,6 +302,7 @@
     if ([[Filter instance] hasMaxPrepTime]) {
         [client setMaximumTime:[[Filter instance] maximumTime]];
     }
+
     
     [client search:^(AFHTTPRequestOperation *operation, id response) {
 //        // Yummly attribution
@@ -293,9 +313,19 @@
         for (id data in response[@"matches"]) {
             [self.recipes addObject:[[Recipe alloc] initWithDictionary:data]];
         }
-        [self.swipeView reloadData];
+        if ([self.recipes count] == 0) {
+            [self.view addSubview:self.noResultsView];
+
+        }
+        else {
+            [self.swipeView reloadData];
+            [self.swipeView setCurrentItemIndex:0];
+
+            [self.noResultsView removeFromSuperview];
+        }
 
         [self.introView removeFromSuperview];
+        self.pastIntro = YES;
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         if (self.overlayView && ![[NSUserDefaults standardUserDefaults] valueForKey:@"hasSeenTutorial"]) {
             UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -304,10 +334,16 @@
             [self.view addSubview:self.overlayView];
             [[NSUserDefaults standardUserDefaults] setValue:@YES forKey:@"hasSeenTutorial"];
         }
+        [SVProgressHUD dismiss];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
+}
+
+- (void)reSearchYummly {
+    [SVProgressHUD showWithStatus:@"Finding Recipes"];
+    [self recipesWithYummly];
 }
 
 - (void)handleTap:(UIGestureRecognizer *)recognizer {
@@ -330,16 +366,17 @@
     
     [self.view addSubview:notificationView];
     
-    notificationView.alpha = 0;
     [UIView animateWithDuration:0.5 animations:^{
-        notificationView.alpha = 1;
         notificationView.frame = endFrame;
     } completion:^(BOOL finished){
         [UIView animateWithDuration:1 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            notificationView.alpha = 0;
             notificationView.frame = startFrame;
         } completion:nil];
     }];
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return NO;
 }
 
 @end

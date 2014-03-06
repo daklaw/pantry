@@ -24,6 +24,7 @@ extern NSString *const DidFinishFilter;
 
 - (void)addIngredientFilter:(NSString *)ingredient;
 - (void)removeIngredientFilter:(NSString *)ingredient;
+- (void)removeAllIngredientFilters;
 - (BOOL)hasIngredientFilter:(NSString *)ingredient;
 - (void)clearIngredientFilters;
 - (void)setMaxPrepTime:(NSInteger)time;

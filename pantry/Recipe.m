@@ -26,6 +26,7 @@ static const NSString *imageDimension = @"320";
         // Cook Time can be null
         if (seconds && ![seconds isKindOfClass:[NSNull class]]) {
             self.cookTime = [seconds integerValue];
+            NSLog(@"Here");
         }
         // Extract a URL from the response, then replace the Size Value with 360 px
         NSDictionary *imageUrls = data[@"imageUrlsBySize"];
