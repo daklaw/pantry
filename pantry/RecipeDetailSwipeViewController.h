@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RecipeDetailSwipeViewController : UIViewController 
+@interface RecipeDetailSwipeViewController : UIViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *recipes;
 @property (nonatomic) NSInteger recipeIndex;

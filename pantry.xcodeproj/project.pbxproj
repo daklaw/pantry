@@ -42,6 +42,8 @@
 		C591256F18C698B900181308 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C591256D18C698B900181308 /* FiltersViewController.m */; };
 		C591257018C698B900181308 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C591256E18C698B900181308 /* FiltersViewController.xib */; };
 		C591257318C70E3100181308 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = C591257218C70E3100181308 /* Filter.m */; };
+		C591257818C7CAE600181308 /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C591257718C7CAE600181308 /* OverlayView.xib */; };
+		C591257A18C7D5AB00181308 /* IntroView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C591257918C7D5AB00181308 /* IntroView.xib */; };
 		C596434018AECEEA00E0AF13 /* YummlyClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C596433F18AECEEA00E0AF13 /* YummlyClient.m */; };
 		C596434718AEE18F00E0AF13 /* Recipe.m in Sources */ = {isa = PBXBuildFile; fileRef = C596434618AEE18F00E0AF13 /* Recipe.m */; };
 		C5E7443218BD60640000F123 /* RecipeIngredient.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E7443118BD60640000F123 /* RecipeIngredient.m */; };
@@ -114,6 +116,8 @@
 		C591256E18C698B900181308 /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiltersViewController.xib; sourceTree = "<group>"; };
 		C591257118C70E3100181308 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		C591257218C70E3100181308 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
+		C591257718C7CAE600181308 /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = "<group>"; };
+		C591257918C7D5AB00181308 /* IntroView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroView.xib; sourceTree = "<group>"; };
 		C596433E18AECEEA00E0AF13 /* YummlyClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YummlyClient.h; sourceTree = "<group>"; };
 		C596433F18AECEEA00E0AF13 /* YummlyClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YummlyClient.m; sourceTree = "<group>"; };
 		C596434518AEE18F00E0AF13 /* Recipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recipe.h; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 				22F0268E18B0C6A400865313 /* RecipeCell.h */,
 				22F0268F18B0C6A400865313 /* RecipeCell.m */,
 				22F0269118B0C7A000865313 /* RecipeCell.xib */,
+				C591257718C7CAE600181308 /* OverlayView.xib */,
+				C591257918C7D5AB00181308 /* IntroView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -409,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C528D4411899F3BC00BCE380 /* InfoPlist.strings in Resources */,
+				C591257818C7CAE600181308 /* OverlayView.xib in Resources */,
 				C523291A18B3EF5F00CF906D /* MenuViewController.xib in Resources */,
 				C5F6B4FE18C3278100EA626A /* IngredientListViewController.xib in Resources */,
 				226ADB3318C49A2D00EE9E80 /* RecipeWebViewController.xib in Resources */,
@@ -419,6 +426,7 @@
 				C54A27EF18C010EB0020E228 /* GroceryListCell.xib in Resources */,
 				C591257018C698B900181308 /* FiltersViewController.xib in Resources */,
 				C528D4491899F3BC00BCE380 /* Images.xcassets in Resources */,
+				C591257A18C7D5AB00181308 /* IntroView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
