@@ -109,9 +109,10 @@
 {
     UIImageView *recipeImage = nil;
     UILabel *nameLabel = nil;
+    UILabel *prepTimeLabel = nil;
     UITableView *ingredientsView = nil;
-//    UILabel *directionsLabel = nil;
     UIButton *addToGroceryListButton = nil;
+    Recipe *recipe = self.recipes[index];
     
     if (!view) {
         view = [[UIView alloc] initWithFrame:self.swipeView.bounds];
@@ -137,30 +138,41 @@
         [addToGroceryListButton addTarget:self action:@selector(onAddToGroceryList:) forControlEvents:UIControlEventTouchUpInside];
         addToGroceryListButton.tag = 3;
         [view addSubview:addToGroceryListButton];
-
-//        directionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x + 20, addToGroceryListButton.frame.origin.y - 20, 280, 20)];
-//        directionsLabel.backgroundColor = [UIColor whiteColor];
-//        directionsLabel.font = [UIFont systemFontOfSize:12];
-//        directionsLabel.text = @"(Tap recipe image to navigate to source webpage)";
-//        directionsLabel.textColor = [UIColor darkGrayColor];
-//        directionsLabel.tag = 4;
-//        [view addSubview:directionsLabel];
+        
+        UILabel *prepTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(view.bounds.origin.x, view.bounds.origin.y+320, view.bounds.size.width, 20.0f)];
+        prepTimeLabel.font = [UIFont fontWithName:@"Helvetica" size:14.0f];
+        prepTimeLabel.textColor = [UIColor whiteColor];
+        prepTimeLabel.backgroundColor = [UIColor darkGrayColor];
+        prepTimeLabel.numberOfLines = 1;
+        prepTimeLabel.tag = 4;
+        NSInteger cookTime = recipe.cookTime;
+        if (cookTime) {
+            cookTime = cookTime / 60;
+            prepTimeLabel.text = [NSString stringWithFormat:@"Estimated Prep Time: %d minutes", cookTime];
+            
+        }
+        else {
+            prepTimeLabel.text = @"No Prep Time Specified";
+        }
+        
+        [view addSubview:prepTimeLabel];
     }
     else
     {
         recipeImage = (UIImageView *)[view viewWithTag:1];
         nameLabel = (UILabel *)[view viewWithTag:2];
         addToGroceryListButton = (UIButton *)[view viewWithTag:3];
+        prepTimeLabel = (UILabel *)[view viewWithTag:4];
     }
     
     // Populate view with recipe details
-    Recipe *recipe = self.recipes[index];
+
     nameLabel.text = recipe.name;
     [nameLabel sizeToFit];
     
     [recipeImage setImageWithURL:recipe.imageURL];
 
-    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 240, view.bounds.size.width, 240)];
+    ingredientsView = [[UITableView alloc] initWithFrame:CGRectMake(view.bounds.origin.x, addToGroceryListButton.frame.origin.y - 200, view.bounds.size.width, 200)];
     [ingredientsView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     ingredientsView.allowsSelection = NO;
     ingredientsView.delegate = self;
@@ -354,13 +366,10 @@
     
     [self.view addSubview:notificationView];
     
-    notificationView.alpha = 0;
     [UIView animateWithDuration:0.5 animations:^{
-        notificationView.alpha = 1;
         notificationView.frame = endFrame;
     } completion:^(BOOL finished){
         [UIView animateWithDuration:1 delay:2 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            notificationView.alpha = 0;
             notificationView.frame = startFrame;
         } completion:nil];
     }];
